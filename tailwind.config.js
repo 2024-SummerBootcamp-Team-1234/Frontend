@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       fontFamily: {
@@ -12,8 +12,10 @@ export default {
       backgroundPosition: {
         'center-bottom': 'center bottom', // 커스텀 배경 위치 추가
       },
+      width: {
+        custom: '66%', // 사용자 정의 폭 (66%)
+      },
     },
   },
   plugins: [],
-}
-
+};
