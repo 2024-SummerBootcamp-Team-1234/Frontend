@@ -57,16 +57,17 @@ const CategoryPage: React.FC = () => {
                 재판하고 싶은 분야를 선택해주세요. (다중 선택 가능)
             </p>
 
-            <div className="p-4 w-full max-w-5xl mx-auto">
+            <div className="p-4 w-full mx-auto" style={{ maxWidth:'100rem'}}>
 
-                {/* 카테고리 선택 그리드 */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mb-8 place-items-center">
+                {/* 카테고리 선택 그리드 시작 */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-12 mb-8 place-items-center">
                     {categories.map(category => (
                         <div
                             key={category.id}
-                            className={`w-40 h-40 p-4 rounded-lg shadow-md bg-opacity-80 ${selectedCategories.some(c => c.id === category.id)
+                            // 너비40 /높이40 /패딩4 /테두리둥글게 /그림자중간 /커서포인터변경 /호버를 사용하기 위한 함수 / 호버했을때 1.05배 커짐
+                            className={`w-60 h-60 p-4 rounded-lg shadow-md cursor-pointer transition-transform transform hover:scale-105 ${selectedCategories.some(c => c.id === category.id)
                                 ? 'bg-white bg-opacity-100 text-black'
-                                : 'bg-white'
+                                : 'bg-white bg-opacity-80 text-black'
                                 }`}
                             onClick={() => handleCategoryClick(category)}
                         >
@@ -78,8 +79,9 @@ const CategoryPage: React.FC = () => {
                         </div>
                     ))}
                 </div>
-            </div>
-            <div className="avsolute bottom-4 right-4">
+                {/* 카테고리 선택 그리드 끝 */}
+            </div>  
+            <div className="absolute bottom-16 right-16">
                 <MainPageButton text='재판 참여 시작하기' onClick={handleButtonClick} />
             </div>
         </div>
