@@ -16,7 +16,7 @@ const MainPage: React.FC = () => {
       <div style={{ position: 'absolute', top: '33%', left: '75%' }} className="text-gray-500 font-sans font-normal text-2xl mr-16">
         Unlock the power of AI-driven justice with our cutting-edge AI judge. Streamline your legal processes, make informed decisions, and achieve unparalleled accuracy.
       </div>
-      <div style={{ position: 'absolute', top: '56%', left: '75%' }}> 
+      <div style={{ position: 'absolute', top: '56%', left: '75%' }}>
         <MainPageButton text='Login' onClick={handleButtonClick} />
       </div>
     </div>
