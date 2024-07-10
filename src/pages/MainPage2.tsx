@@ -9,7 +9,7 @@ const MainPage: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center bg-black bg-custom-image bg-contain bg-center-bottom bg-solomon-size bg-no-repeat min-h-screen">
+    <div className="flex items-center bg-black bg-custom-image bg-center-bottom bg-solomon-size bg-no-repeat min-h-screen">
       <div className="flex items-center justify-between">
         <div className="flex-col pl-8">
           <div className="text-white font-sans font-bold text-6xl">
