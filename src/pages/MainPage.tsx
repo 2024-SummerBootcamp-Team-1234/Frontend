@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import MainPageButton from '../components/MainPageButton';
+import MainPageWhiteButton from '../components/MainPageWhiteButton';
 
 const MainPage: React.FC = () => {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ const MainPage: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center bg-black bg-custom-image bg-contain bg-center-bottom bg-solomon-size bg-no-repeat min-h-screen">
+    <div className="flex items-center bg-black bg-custom-image bg-center-bottom bg-solomon-size bg-contain bg-no-repeat min-h-screen">
       <div className="flex items-center justify-between">
         <div className="flex-col pl-8">
           <div className="text-white font-sans font-bold text-6xl">
@@ -27,7 +27,7 @@ const MainPage: React.FC = () => {
             achieve unparalleled accuracy.
           </div>
           <div className="mt-4">
-            <MainPageButton text="Login" onClick={handleButtonClick} />
+            <MainPageWhiteButton text="Login" onClick={handleButtonClick} />
           </div>
         </div>
       </div>
