@@ -1,15 +1,30 @@
 import { useNavigate } from 'react-router-dom';
-import MainPageButton from '../components/MainPageButton';
+import MainPageWhiteButton from '../components/MainPageWhiteButton';
+import MainPageBlackButton from '../components/MainPageBlackButton';
 
-const MainPage: React.FC = () => {
+const MainPage2: React.FC = () => {
   const navigate = useNavigate();
 
-  const handleButtonClick = () => {
+  const startButtonClick = () => {
+    navigate('/');
+  };
+  const forumButtonClick = () => {
+    navigate('/');
+  };
+  const myTrialButtonClick = () => {
+    navigate('/');
+  };
+  const logoutButtonClick = () => {
     navigate('/');
   };
 
   return (
-    <div className="flex items-center bg-black bg-custom-image bg-center-bottom bg-solomon-size bg-no-repeat min-h-screen">
+    <div className="flex-col items-center space-y-72 bg-black bg-custom-image bg-center-bottom bg-solomon-size bg-contain bg-no-repeat min-h-screen">
+      <div className="flex justify-end pt-6 pr-24 space-x-4">
+        <MainPageBlackButton text="My trial" onClick={myTrialButtonClick} />
+        <MainPageBlackButton text="Logout" onClick={logoutButtonClick} />
+      </div>
+
       <div className="flex items-center justify-between">
         <div className="flex-col pl-8">
           <div className="text-white font-sans font-bold text-6xl">
@@ -22,12 +37,12 @@ const MainPage: React.FC = () => {
 
         <div className="flex-col justify-between mr-10 w-1/4">
           <div className="text-gray-500 font-sans font-normal text-2xl mr-10">
-            Unlock the power of AI-driven justice with our cutting-edge AI
-            judge. Streamline your legal processes, make informed decisions, and
-            achieve unparalleled accuracy.
+            If you want Solomon’s Judgment, press the Start button. If you want
+            to see others' judgments, press the Forum button.
           </div>
-          <div className="mt-4">
-            <MainPageButton text="Login" onClick={handleButtonClick} />
+          <div className="flex mt-4 mr-10 space-x-4">
+            <MainPageWhiteButton text="Start" onClick={startButtonClick} />
+            <MainPageWhiteButton text="Forum" onClick={forumButtonClick} />
           </div>
         </div>
       </div>
@@ -35,4 +50,4 @@ const MainPage: React.FC = () => {
   );
 };
 
-export default MainPage;
+export default MainPage2;
