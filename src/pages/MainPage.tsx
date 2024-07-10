@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import MainPageButton from '../components/MainPageButton';
 
 const MainPage: React.FC = () => {
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleButtonClick = () => {
     navigate('/');

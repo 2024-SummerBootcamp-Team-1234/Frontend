@@ -1,8 +1,16 @@
+import { Link } from 'react-router-dom';
+
+import { FaUser, FaLock } from 'react-icons/fa';
+
 const LoginPage = () => (
   <div className="relative w-full h-screen flex justify-center items-center bg-cover bg-login-image">
+    <Link to="/" className="absolute top-[73px] left-[59px]">
+      <div className="w-12 h-12 bg-arrow-image bg-cover bg-center"></div>
+    </Link>
+
     <div className="relative w-[692px] h-[694px] bg-white bg-opacity-25 rounded-3xl shadow backdrop-blur-md flex flex-col items-center justify-center p-6">
       <div
-        className="text-black font-bold mb-6 font-sans"
+        className="text-black font-semibold mb-6 font-sans"
         style={{ fontSize: '58pt' }}
       >
         LOGIN
@@ -11,37 +19,54 @@ const LoginPage = () => (
       <form
         action="/submit-url"
         method="POST"
-        className=" p-8 rounded-lg  w-full max-w-md"
+        className="w-full max-w-md flex flex-col items-center"
       >
-        <div className="mb-6">
+        <div className="mb-6 relative w-[517px]">
+          <FaUser className="absolute left-9 top-1/2 transform -translate-y-1/2 text-gray-400" />
           <input
             type="text"
-            placeholder="Username"
+            placeholder="ID"
             required
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+            className="w-full h-[53px] px-4 py-2 pl-[74px] border rounded-[30px] focus:outline-none focus:ring-2 bg-[#E2DFD8] focus:ring-gray-600 shadow-inner"
           />
         </div>
-        <div className="mb-6">
+        <div className="mb-6 relative w-[517px]">
+          <FaLock className="absolute left-9 top-1/2 transform -translate-y-1/2 text-gray-400" />
           <input
             type="password"
             placeholder="Password"
             required
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+            className="w-[517px] h-[53px] px-4 py-2 pl-[74px] border rounded-[30px] focus:outline-none focus:ring-2 bg-customColor focus:ring-slate-600 shadow-inner"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full py-2 bg-black text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
+          className="w-[517px] h-[53px] bg-black text-white rounded-[30px] hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600 shadow-inner font-bold text-2xl "
         >
           Login
         </button>
-        <div className="text-neutral-50 text-sm underline mt-6 font-sans text-center">
+
+        <Link
+          to="/signup"
+          className="text-neutral-50 text-[20px] underline mt-[31px] font-sans text-center"
+        >
           SIGN UP
+        </Link>
+        <div className="flex flex-col items-center mt-6 text-center">
+          <span className="text-stone-200 mb-2">or continue with</span>
+          <div className="flex flex-row gap-6 justify-center">
+            <Link to="/facebook">
+              <div className="w-12 h-12 bg-facebook-image bg-cover bg-center rounded-full"></div>
+            </Link>
+            <Link to="/apple">
+              <div className="w-12 h-12 bg-apple-image bg-cover bg-center rounded-full"></div>
+            </Link>
+            <Link to="/google">
+              <div className="w-12 h-12 bg-google-image bg-cover bg-center rounded-full"></div>
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col items-center mt-6"> </div>
-        <span className="text-stone-200 text-sm mb-2">or continue with</span>
-        <div className="flex justify-between w-32"> </div>
       </form>
     </div>
   </div>
