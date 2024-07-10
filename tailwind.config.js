@@ -3,11 +3,19 @@ export default {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
+      colors: {
+        customColor: '#E2DFD8',
+      },
       fontFamily: {
         sans: ['Noto Sans', 'sans-serif'],
       },
       backgroundImage: {
         'custom-image': "url('./public/main_solomon.png')", // 경로를 실제 이미지 파일 위치로 수정하세요
+        'login-image': "url('./public/login_solomon.png')",
+        'facebook-image': "url('./public/Facebook.png')",
+        'apple-image': "url('./public/apple.png')",
+        'google-image': "url('./public/google.png')",
+        'arrow-image': "url('./public/Arrow_left.png')",
       },
       backgroundSize: {
         contain: 'contain', // 이미지를 전체 형태를 유지하며 줄이기
