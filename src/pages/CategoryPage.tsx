@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MainPageButton from '../components/MainPageButton';
+import MainPageButton from '../components/MainPageWhiteButton';
 
 interface Category {
     id: number;
