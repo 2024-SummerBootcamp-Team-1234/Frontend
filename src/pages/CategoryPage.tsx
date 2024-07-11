@@ -16,7 +16,7 @@ const categories: Category[] = [
     { id: 5, name: '성범죄', description: '성범죄 설명' },
     { id: 6, name: '디지털 프라이버시', description: '디지털 프라이버시 설명' },
     { id: 7, name: '의료 과실', description: '의료 과실 설명' },
-    { id: 8, name: '학교 폭력', description: '학교 폭력 설명' },
+    { id: 8, name: '학교 폭력', description: '조진우 학교 폭력 해명하세요' },
     { id: 9, name: '폭행', description: '폭행 설명' },
     { id: 10, name: '환경오염', description: '환경오염 설명' },
 ];
@@ -49,32 +49,32 @@ const CategoryPage: React.FC = () => {
             {/* 이미지 + Category + Skip > */}
             <div className="text-white flex justify-start items-center mb-4 ml-8 pl-12">
                 <div className="w-12 h-12 bg-categoryIcon-image bg-no-repeat bg-contain mb-4 mr-4"></div>
-                <span className="text-6xl font-bold mb-4">Category</span>
-                <button className="pl-4 text-2xl"> Skip {'>'} </button>
+                <span className="text-6xl font-sans font-bold mb-4">Category</span>
+                <button className="pl-4 text-2xl font-sans font-normal"> Skip {'>'} </button>
             </div>
 
-            <p className="text-2xl text-white text-start mb-8 ml-8 pl-12">
+            <p className="text-2xl text-white text-start mb-8 ml-8 pl-12 font-sans font-normal">
                 재판하고 싶은 분야를 선택해주세요. (다중 선택 가능)
             </p>
 
-            <div className="p-4 w-full mx-auto" style={{ maxWidth:'100rem'}}>
-
+            {/* 카테고리를 담는 컴포넌트,,,불필요한 것일까... */}
+            <div className="w-full mx-auto" style={{ maxWidth:'100rem'}}>
                 {/* 카테고리 선택 그리드 시작 */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-12 mb-8 place-items-center">
+                <div className="grid grid-cols-5 gap-y-4 place-items-center">
                     {categories.map(category => (
                         <div
                             key={category.id}
                             // 너비40 /높이40 /패딩4 /테두리둥글게 /그림자중간 /커서포인터변경 /호버를 사용하기 위한 함수 / 호버했을때 1.05배 커짐
-                            className={`w-60 h-60 p-4 rounded-lg shadow-md cursor-pointer transition-transform transform hover:scale-105 ${selectedCategories.some(c => c.id === category.id)
+                            className={`w-60 h-60 rounded-lg shadow-md cursor-pointer transition-transform transform hover:scale-105 ${selectedCategories.some(c => c.id === category.id)
                                 ? 'bg-white bg-opacity-100 text-black'
                                 : 'bg-white bg-opacity-80 text-black'
                                 }`}
                             onClick={() => handleCategoryClick(category)}
                         >
                             <div className="text-center">
-                                <h2 className="text-xl font-semibold mb-2">{category.name}</h2>
-                                <div className="m-2 h-0.5 bg-gray-400"></div>
-                                <p className="text-sm">{category.description}</p>
+                                <h2 className="text-3xl font-sans font-normal m-4">{category.name}</h2>
+                                <div className="mx-6 h-0.5 bg-gray-400"></div>
+                                <p className="text-xl my-5 mx-6 font-sans font-normal">{category.description}</p>
                             </div>
                         </div>
                     ))}
