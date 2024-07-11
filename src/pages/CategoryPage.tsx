@@ -63,16 +63,16 @@ const CategoryPage: React.FC = () => {
                         <div
                             key={category.id}
                             // 너비40 /높이40 /패딩4 /테두리둥글게 /그림자중간 /커서포인터변경 /호버를 사용하기 위한 함수 / 호버했을때 1.05배 커짐
-                            className={`w-60 h-60 rounded-lg shadow-md cursor-pointer transition-transform transform hover:scale-105 ${selectedCategories.some(c => c.id === category.id)
-                                ? 'bg-white bg-opacity-100 text-black'
-                                : 'bg-white bg-opacity-80 text-black'
+                            className={`w-60 h-60 rounded-lg shadow-md cursor-pointer transition-transform hover:scale-105 transition-colors duration-300 hover:bg-White hover:bg-opacity-100 hover:text-black ${selectedCategories.some(c => c.id === category.id)
+                                ? 'bg-white bg-opacity-100 text-Black'
+                                : 'bg-GainsboroColor bg-opacity-80 text-DarkLiverColor'
                                 }`}
                             onClick={() => handleCategoryClick(category)}
                         >
                             <div className="text-center">
-                                <h2 className="text-3xl font-sans font-bold m-4">{category.name}</h2>
-                                <div className="mx-6 h-0.5 bg-gray-400"></div>
-                                <p className="text-xl my-5 mx-6 font-sans font-normal">{category.description}</p>
+                                <h2 className="m-4 font-sans font-bold text-3xl text-DarkLiverColor">{category.name}</h2>
+                                <div className="mx-6 h-0.5 bg-DarkLiverColor"></div>
+                                <p className="my-5 mx-6 font-sans font-normal text-xl text-DarkLiverColor">{category.description}</p>
                             </div>
                         </div>
                     ))}

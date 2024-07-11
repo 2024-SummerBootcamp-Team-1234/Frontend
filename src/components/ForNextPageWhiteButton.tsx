@@ -9,7 +9,7 @@ const ForNextPageWhiteButton: React.FC<ForNextPageWhiteButtonProps> = ({
 }) => {
     return (
         <button
-      className= "bg-white text-black font-sans font-bold py-4 px-6 text-2xl rounded-full flex items-center"
+      className= "bg-opacity-80 bg-GainsboroColor text-DarkLiverColor font-sans font-bold py-4 px-6 text-2xl rounded-full flex items-center transition-colors duration-300 hover:bg-White hover:bg-opacity-100 hover:text-black"
     onClick = { onClick }
         >
         { text }

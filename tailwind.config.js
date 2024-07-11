@@ -3,12 +3,18 @@ export default {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
+
       colors: {
-        customColor: '#E2DFD8',
+        WhiteCoffeeColor: '#E2DFD8',
+        DarkLiverColor: '#57524A',
+        GainsboroColor: '#DFDFDF',
+        
       },
+
       fontFamily: {
         sans: ['Noto Sans', 'sans-serif'],
       },
+
       backgroundImage: {
         'custom-image': "url('./public/main_solomon.png')", // 경로를 실제 이미지 파일 위치로 수정하세요
         'login-image': "url('./public/login_solomon.png')",
@@ -20,18 +26,23 @@ export default {
         'category-image':"url('./public/CategoryPageBg.png')",
         'categoryIcon-image':"url('./public/CategoryIcon.png')",
       },
+
       backgroundSize: {
         contain: 'contain', // 이미지를 전체 형태를 유지하며 줄이기
       },
+
       backgroundPosition: {
         'center-bottom': 'center bottom', // 커스텀 배경 위치 추가
       },
+
       backgroundSize: {
         'solomon-size': '85%', // 커스텀 배경 크기 추가
       },
+
       backgroundRepeat: {
         'no-repeat': 'no-repeat', // 이미지 반복 없음을 위해 만듦
       },
+
       height: {
         //부모 요소의 퍼센트로 높이를 나타내기 위해 사용
         '10p': '10%',
