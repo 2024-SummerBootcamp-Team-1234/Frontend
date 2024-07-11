@@ -21,8 +21,11 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
+    // Enable compatibility between CommonJS and ES Modules
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+
+    // Allow default imports from modules with no default export
+    "allowSyntheticDefaultImports": true,
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

@@ -5,7 +5,7 @@ const MainPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate('/');
+    navigate('/Login');
   };
 
   return (
