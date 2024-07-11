@@ -16,6 +16,9 @@ export default {
         'apple-image': "url('./public/apple.png')",
         'google-image': "url('./public/google.png')",
         'arrow-image': "url('./public/Arrow_left.png')",
+        'arrowRight-image':"url('./public/Arrow_right.png')",
+        'category-image':"url('./public/CategoryPageBg.png')",
+        'categoryIcon-image':"url('./public/CategoryIcon.png')",
       },
       backgroundSize: {
         contain: 'contain', // 이미지를 전체 형태를 유지하며 줄이기

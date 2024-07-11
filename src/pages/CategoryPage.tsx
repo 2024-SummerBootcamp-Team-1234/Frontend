@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MainPageButton from '../components/MainPageWhiteButton';
+import ForNextPageWhiteButton from '../components/ForNextPageWhiteButton';
 
 interface Category {
     id: number;
@@ -41,14 +41,12 @@ const CategoryPage: React.FC = () => {
     };
 
     return (
-        <div className="bg-black bg-categoryPage-image bg-cover bg-center min-h-screen flex flex-col items-start p-4 relative">
-            <button className="text-2xl text-white items-center my-4 ml-4">
-                Back
-            </button>
+        <div className="bg-black bg-category-image bg-cover bg-center min-h-screen flex flex-col items-start p-4 relative">
+            <button className="bg-arrow-image w-12 h-12 bg-no-repeat bg-contain my-4 ml-4" onClick={handleButtonClick}></button>
 
             {/* 이미지 + Category + Skip > */}
             <div className="text-white flex justify-start items-center mb-4 ml-8 pl-12">
-                <div className="w-12 h-12 bg-categoryIcon-image bg-no-repeat bg-contain mb-4 mr-4"></div>
+                <button className="w-12 h-12 bg-categoryIcon-image bg-no-repeat bg-contain mb-4 mr-4"/>
                 <span className="text-6xl font-sans font-bold mb-4">Category</span>
                 <button className="pl-4 text-2xl font-sans font-normal"> Skip {'>'} </button>
             </div>
@@ -60,7 +58,7 @@ const CategoryPage: React.FC = () => {
             {/* 카테고리를 담는 컴포넌트,,,불필요한 것일까... */}
             <div className="w-full mx-auto" style={{ maxWidth:'100rem'}}>
                 {/* 카테고리 선택 그리드 시작 */}
-                <div className="grid grid-cols-5 gap-y-4 place-items-center">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 place-items-center">
                     {categories.map(category => (
                         <div
                             key={category.id}
@@ -72,7 +70,7 @@ const CategoryPage: React.FC = () => {
                             onClick={() => handleCategoryClick(category)}
                         >
                             <div className="text-center">
-                                <h2 className="text-3xl font-sans font-normal m-4">{category.name}</h2>
+                                <h2 className="text-3xl font-sans font-bold m-4">{category.name}</h2>
                                 <div className="mx-6 h-0.5 bg-gray-400"></div>
                                 <p className="text-xl my-5 mx-6 font-sans font-normal">{category.description}</p>
                             </div>
@@ -82,7 +80,7 @@ const CategoryPage: React.FC = () => {
                 {/* 카테고리 선택 그리드 끝 */}
             </div>  
             <div className="absolute bottom-16 right-16">
-                <MainPageButton text='재판 참여 시작하기' onClick={handleButtonClick} />
+                <ForNextPageWhiteButton text='재판 참여 시작하기' onClick={handleButtonClick} />
             </div>
         </div>
     );
