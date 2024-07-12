@@ -5,6 +5,7 @@ import CategoryPage from './pages/CategoryPage';
 import LoginPage from './pages/LoginPage';
 import MainPage2 from './pages/MainPage2';
 import SignupPage from './pages/SignupPage';
+import ResultPage from './pages/ResultPage';
 
 function App() {
   return (
@@ -14,7 +15,12 @@ function App() {
       <Route path="/CategoryPage" element={<CategoryPage />}/>
       <Route path="/Login" element={<LoginPage />} />
       <Route path="/MainPage2" element={<MainPage2 />} />
+<<<<<<< Updated upstream
       <Route path="/SignUp" element={<SignupPage />} />
+=======
+      <Route path="/signup" element={<SignupPage />} />
+      <Route path="/result" element={<ResultPage />} />
+>>>>>>> Stashed changes
     </Routes>
   );
 }
