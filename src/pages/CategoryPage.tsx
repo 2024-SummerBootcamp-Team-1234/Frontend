@@ -17,8 +17,8 @@ const categories: Category[] = [
     { id: 6, name: '디지털 프라이버시', description: '인터넷과 디지털 환경에서 프라이버시와 데이터 보호 문제를 다룸' },
     { id: 7, name: '의료 과실', description: '의료 제공자의 과실 또는 의료 행위로 인한 환자의 손해에 대한 법적 쟁점' },
     { id: 8, name: '학교 폭력', description: '학생 간의 신체적, 정신적 폭력 행위에 대해 학교와 관련 법률에 다라 처벌과 예방 조치를 요구하는 법적 문제' },
-    { id: 9, name: '폭행', description: '다른 사람의 신체를 고의' },
-    { id: 10, name: '환경오염', description: '환경오염 설명' },
+    { id: 9, name: '폭행', description: '다른 사람의 신체를 고의로 공격하거나 위협하여 상해를 입히는 행위' },
+    { id: 10, name: '환경오염', description: '인간의 활동으로 인해 대기, 토양, 수질 등을 요염시켜 생태계와 인간 건강에 해를 끼치는 행위' },
 ];
 
 const CategoryPage: React.FC = () => {
