@@ -1,53 +1,73 @@
-import React, { useState } from 'react';
+import React, { useRef } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-interface Post {
-    title:string;
-    hashtag:string;
-    judgement: string;
-    judgementDescription: string;
-}
+const MultipleItems: React.FC = () => {
+    const sliderRef = useRef<Slider>(null);
 
-const posts = [
-    {title: '최근 재판 결과1', hashtag:'이혼', judgement:'판결 :', judgementDescription:'이혼하면 너무너무 슬프고 돈이 많이 들고 전적이 남고 다음 결혼이 어려워지고 뿌엥~'},
-    {title: '최근 재판 결과2', hashtag:'이혼', judgement:'판결 :', judgementDescription:'이혼하면 너무너무 슬프고 돈이 많이 들고 전적이 남고 다음 결혼이 어려워지고 뿌엥~'},
-    {title: '최근 재판 결과3', hashtag:'이혼', judgement:'판결 :', judgementDescription:'이혼하면 너무너무 슬프고 돈이 많이 들고 전적이 남고 다음 결혼이 어려워지고 뿌엥~'},
-    {title: '최근 재판 결과4', hashtag:'이혼', judgement:'판결 :', judgementDescription:'이혼하면 너무너무 슬프고 돈이 많이 들고 전적이 남고 다음 결혼이 어려워지고 뿌엥~'},
-    {title: '최근 재판 결과5', hashtag:'이혼', judgement:'판결 :', judgementDescription:'이혼하면 너무너무 슬프고 돈이 많이 들고 전적이 남고 다음 결혼이 어려워지고 뿌엥~'},
-    {title: '최근 재판 결과6', hashtag:'이혼', judgement:'판결 :', judgementDescription:'이혼하면 너무너무 슬프고 돈이 많이 들고 전적이 남고 다음 결혼이 어려워지고 뿌엥~'},
-    {title: '최근 재판 결과7', hashtag:'이혼', judgement:'판결 :', judgementDescription:'이혼하면 너무너무 슬프고 돈이 많이 들고 전적이 남고 다음 결혼이 어려워지고 뿌엥~'},
-];
+    const settings = {
+        dots: true,
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+    };
 
-const PostPage: React.FC = () => {
-    // const [selectedPost, setSelectedPost] = useState<Post[]>([]);
+    const handlePrevious = () => {
+        sliderRef.current?.slickPrev();
+    };
 
-    // const handleCarouselSelect =(post:Post) => {
-    //     setSelectedPost(prevPost => {
-    //         if(prevPost.some(p => p.{index} === post.{index} )) {
-    //             return prevPost.filter(p=>p.{index} !== post.{index});
-    //         }else {
-    //             return [...prevPost, post];
-    //         }
-    //     });
-    // };
+    const handleNext = () => {
+        sliderRef.current?.slickNext();
+    };
 
-    return(
-        <div className="w-3/4 m-auto">
-            <div className="mt-20">
-                {posts.map((p) => (
-                    <div>
-                        <div>
-                            <div className={p.title}></div>
-                        </div>
-
-                        <div>
-                            <p></p>
-                        </div>
+    return (
+        <div className="container mx-auto mt-8 flex items-center justify-center">
+            <button
+                className="bg-blue-500 text-white w-10 h-10 rounded-full"
+                onClick={handlePrevious}
+            >
+                {'<'}
+            </button>
+            <div className="w-full mx-auto" style={{ maxWidth: '30rem' }}>
+                <Slider ref={sliderRef} {...settings}>
+                    <div className="p-4">
+                        <h3 className="text-center bg-gray-300 p-4 rounded">1</h3>
                     </div>
-                ))}
+                    <div className="p-4">
+                        <h3 className="text-center bg-gray-300 p-4 rounded">2</h3>
+                    </div>
+                    <div className="p-4">
+                        <h3 className="text-center bg-gray-300 p-4 rounded">3</h3>
+                    </div>
+                    <div className="p-4">
+                        <h3 className="text-center bg-gray-300 p-4 rounded">4</h3>
+                    </div>
+                    <div className="p-4">
+                        <h3 className="text-center bg-gray-300 p-4 rounded">5</h3>
+                    </div>
+                    <div className="p-4">
+                        <h3 className="text-center bg-gray-300 p-4 rounded">6</h3>
+                    </div>
+                    <div className="p-4">
+                        <h3 className="text-center bg-gray-300 p-4 rounded">7</h3>
+                    </div>
+                    <div className="p-4">
+                        <h3 className="text-center bg-gray-300 p-4 rounded">8</h3>
+                    </div>
+                    <div className="p-4">
+                        <h3 className="text-center bg-gray-300 p-4 rounded">9</h3>
+                    </div>
+                </Slider>
             </div>
+            <button
+                className="bg-blue-500 text-white w-10 h-10 rounded-full"
+                onClick={handleNext}
+            >
+                {'>'}
+            </button>
         </div>
     );
+}
 
-};
-
-export default PostPage;
+export default MultipleItems;

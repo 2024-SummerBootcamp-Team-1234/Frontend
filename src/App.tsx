@@ -1,10 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
 import MainPage from './pages/MainPage';
-import CategoryPage from './pages/CategoryPage';
-
 import LoginPage from './pages/LoginPage';
-import MainPage2 from './pages/MainPage2';
 import SignupPage from './pages/SignupPage';
+import MainPage2 from './pages/MainPage2';
+import CategoryPage from './pages/CategoryPage';
+import PostPage from './pages/PostPage';
+
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route path="/Login" element={<LoginPage />} />
       <Route path="/MainPage2" element={<MainPage2 />} />
       <Route path="/SignUp" element={<SignupPage />} />
+      <Route path="/PostPage" element={<PostPage />} />
     </Routes>
   );
 }
