@@ -24,7 +24,7 @@ const MultipleItems: React.FC = () => {
     return (
         <div className="container mx-auto mt-8 flex items-center justify-center">
             <button
-                className="bg-blue-500 text-white w-10 h-10 rounded-full"
+                className="bg-blue-500 text-white w-10 h-10 rounded-full mr-4"
                 onClick={handlePrevious}
             >
                 {'<'}
@@ -61,7 +61,7 @@ const MultipleItems: React.FC = () => {
                 </Slider>
             </div>
             <button
-                className="bg-blue-500 text-white w-10 h-10 rounded-full"
+                className="bg-blue-500 text-white w-10 h-10 rounded-full ml-4"
                 onClick={handleNext}
             >
                 {'>'}

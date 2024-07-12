@@ -25,6 +25,7 @@ export default {
         'arrowRight-image':"url('./public/Arrow_right.png')",
         'category-image':"url('./public/CategoryPageBg.png')",
         'categoryIcon-image':"url('./public/CategoryIcon.png')",
+        'postPageBg-iamge':"url(./public/PostPageBg/png')",
       },
 
       backgroundSize: {
