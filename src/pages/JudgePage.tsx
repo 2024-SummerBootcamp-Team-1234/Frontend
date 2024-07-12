@@ -22,22 +22,19 @@ const JudgePage: React.FC = () => {
                 <div className="flex justify-end items-center my-3">
                   <div className="min-w-1/4 max-w-[75%] min-h-[10vh] flex-wrap bg-black p-3 rounded-2xl flex items-center border-2 border-white">
                     <p>
-                      현재 남편이 바람펴서 이혼하는 상황이야. 재산분할은
-                      어떻게재산분할은 어떻게재산분할은 어떻게재산분할은
-                      어떻게재산분할은 어떻게재산분할은 어떻게재산분할은
-                      어떻게재산분할은 어떻게재산분할은 어떻게재산분할은
-                      어떻게재산분할은 어떻게
-                      될까?어떻게재산분할은어떻게재산분할은어떻게재산분할은어떻게재산분할은어떻게재산분할은
+                      현재 남편이 바람펴서 이혼하는 상황이야. 재산분할은 어떻게
+                      될까?
                     </p>
                   </div>
                 </div>
+
                 <div className="flex items-center my-3">
                   <img
                     src={Profile}
                     alt="Profile"
                     className="w-10 h-10 rounded-full mr-4 mb-7"
                   />
-                  <div className="w-[40%] min-h-[10vh] bg-black p-4 rounded-xl flex items-center border-2 border-white">
+                  <div className="min-w-1/4 max-w-[75%] min-h-[10vh] flex-wrap bg-black p-3 rounded-2xl flex items-center border-2 border-white">
                     <p>
                       상황을 확인하였습니다. 다음 2가지 선택 중 1가지를
                       선택해주세요.
