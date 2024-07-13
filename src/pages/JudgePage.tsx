@@ -20,10 +20,11 @@ const JudgePage: React.FC = () => {
             <div className="w-full h-full overflow-y-auto flex flex-col p-4">
               <div className="w-full h-fit flex flex-col justify-center gap-y-3 text-white pr-3">
                 <div className="flex justify-end items-center my-3">
-                  <div className="min-w-1/4 max-w-[75%] mb-3 flex-wrap bg-black p-4 rounded-2xl flex items-center border-2 border-white">
+                  <div className="min-w-1/4 max-w-[60%] mb-3 flex-wrap bg-black p-4 rounded-2xl flex items-center border-2 border-white">
                     <p>
                       현재 남편이 바람펴서 이혼하는 상황이야. 재산분할은 어떻게
-                      될까?
+                      될까? 궁금한게 너무 많아서 여기에 다 적을 수 있을까? 너는
+                      어떻게 생각해?
                     </p>
                   </div>
                 </div>
@@ -34,7 +35,7 @@ const JudgePage: React.FC = () => {
                     alt="Profile"
                     className="w-10 h-10 rounded-full mr-4 mb-7"
                   />
-                  <div className="min-w-1/4 max-w-[75%]  flex-wrap bg-black p-4 rounded-2xl flex items-center border-2 border-white">
+                  <div className="min-w-1/4 max-w-[60%]  flex-wrap bg-black p-4 rounded-2xl flex items-center border-2 border-white">
                     <p>
                       상황을 확인하였습니다. 다음 2가지 선택 중 1가지를
                       선택해주세요.
