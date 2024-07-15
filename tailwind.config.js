@@ -33,7 +33,6 @@ export default {
         'texture-image': "url('./public/texture.png')",
 
         'postPageBg-image': "url('./public/PostPageBg.png')",
-        develop,
       },
 
       backgroundSize: {
