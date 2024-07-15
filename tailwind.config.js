@@ -1,18 +1,19 @@
+import { BiBorderRadius } from 'react-icons/bi';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
-
       colors: {
         WhiteCoffeeColor: '#E2DFD8',
         DarkLiverColor: '#57524A',
         GainsboroColor: '#DFDFDF',
-        
       },
 
       fontFamily: {
         sans: ['Noto Sans', 'sans-serif'],
+        aref: ['Aref Ruqaa', 'serif'],
       },
 
       backgroundImage: {
@@ -22,10 +23,16 @@ export default {
         'apple-image': "url('./public/apple.png')",
         'google-image': "url('./public/google.png')",
         'arrow-image': "url('./public/Arrow_left.png')",
-        'arrowRight-image':"url('./public/Arrow_right.png')",
-        'category-image':"url('./public/CategoryPageBg.png')",
-        'categoryIcon-image':"url('./public/CategoryIcon.png')",
-        'postPageBg-image':"url('./public/PostPageBg.png')",
+
+        'arrowRight-image': "url('./public/Arrow_right.png')",
+        'category-image': "url('./public/CategoryPageBg.png')",
+        'categoryIcon-image': "url('./public/CategoryIcon.png')",
+        'result.back-image': "url('./public/result_background.png')",
+        'home-image': "url('./public/home.png')",
+        'result-image': "url('./public/reresult.png')",
+        'texture-image': "url('./public/texture.png')",
+
+        'postPageBg-image': "url('./public/PostPageBg.png')",
       },
 
       backgroundSize: {
@@ -59,5 +66,29 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.scrollbar-thin': {
+          scrollbarWidth: 'thin',
+          scrollbarColor: 'rgb(31 29 29) white',
+        },
+        '.scrollbar-webkit': {
+          '&::-webkit-scrollbar': {
+            width: '8px',
+          },
+          '&::-webkit-scrollbar-track': {
+            background: 'white',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'rgb(31 41 55)',
+            borderRadius: '20px',
+            border: '1px solid white',
+          },
+        },
+      };
+
+      addUtilities(newUtilities, ['responsive', 'hover']);
+    },
+  ],
 };
