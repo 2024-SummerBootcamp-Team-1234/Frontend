@@ -5,17 +5,10 @@ export default {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
-
       colors: {
-<<<<<<< Updated upstream
         WhiteCoffeeColor: '#E2DFD8',
         DarkLiverColor: '#57524A',
         GainsboroColor: '#DFDFDF',
-        
-=======
-        customColor: '#E2DFD8',
-        customColor2: '#585858',
->>>>>>> Stashed changes
       },
 
       fontFamily: {
@@ -30,16 +23,17 @@ export default {
         'apple-image': "url('./public/apple.png')",
         'google-image': "url('./public/google.png')",
         'arrow-image': "url('./public/Arrow_left.png')",
-<<<<<<< Updated upstream
-        'arrowRight-image':"url('./public/Arrow_right.png')",
-        'category-image':"url('./public/CategoryPageBg.png')",
-        'categoryIcon-image':"url('./public/CategoryIcon.png')",
-=======
+
+        'arrowRight-image': "url('./public/Arrow_right.png')",
+        'category-image': "url('./public/CategoryPageBg.png')",
+        'categoryIcon-image': "url('./public/CategoryIcon.png')",
         'result.back-image': "url('./public/result_background.png')",
         'home-image': "url('./public/home.png')",
         'result-image': "url('./public/reresult.png')",
         'texture-image': "url('./public/texture.png')",
->>>>>>> Stashed changes
+
+        'postPageBg-image': "url('./public/PostPageBg.png')",
+        develop,
       },
 
       backgroundSize: {

@@ -5,11 +5,7 @@ const MainPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-<<<<<<< Updated upstream
     navigate('/Login');
-=======
-    navigate('/login');
->>>>>>> Stashed changes
   };
 
   return (
