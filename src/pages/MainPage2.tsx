@@ -6,7 +6,7 @@ const MainPage2: React.FC = () => {
   const navigate = useNavigate();
 
   const startButtonClick = () => {
-    navigate('/');
+    navigate('/CategoryPage');
   };
   const forumButtonClick = () => {
     navigate('/');
