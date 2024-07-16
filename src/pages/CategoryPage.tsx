@@ -90,34 +90,31 @@ const CategoryPage: React.FC = () => {
   return (
     <div className="bg-black bg-category-image bg-cover bg-center min-h-screen flex flex-col items-start p-4 relative">
       <button
-        className="bg-arrow-image bg-no-repeat bg-contain w-full h-[5vh] flex flex-col imtes-start mt-7 ml-5"
+        className="bg-arrow-image bg-no-repeat bg-contain w-full h-[5vh] flex flex-col items-center mt-7 ml-5"
         style={{ maxWidth: '3rem' }}
         onClick={handleButtonClick}
       ></button>
 
       {/* 이미지 + Category + Skip > */}
       <div
-        className="w-full mx-auto flex justify-start text-white items-center "
-        style={{ maxWidth: '97rem' }}
+        className="flex justify-start text-white items-center ml-[7rem]"
       >
         <button className="w-12 h-12 bg-categoryIcon-image bg-no-repeat bg-contain mb-4 mr-4" />
-        <span className="text-6xl font-sans font-bold mb-4">Category</span>
-        <button className="pt-4 pl-10 text-2xl font-sans font-normal">
-          {' '}
-          Skip {'>'}{' '}
+        <span className="text-7xl font-sans font-bold mb-4">Category</span>
+        <button className="pt-4 pl-10 text-3xl font-sans font-normal">
+          Skip {'>'}
         </button>
       </div>
 
       <p
-        className="w-full mx-auto flex justify-start mb-8 text-white text-2xl font-sans font-normal"
-        style={{ maxWidth: '97rem' }}
+        className="flex justify-start mb-8 text-white text-3xl font-sans font-normal  ml-[7rem]"
       >
         재판하고 싶은 분야를 선택해주세요. (다중 선택 가능)
       </p>
 
       {/* 카테고리를 담는 컴포넌트,,,불필요한 것일까... */}
 
-      <div className="w-full mx-auto" style={{ maxWidth: '84rem' }}>
+      <div className="w-full mx-auto" style={{ maxWidth: '120rem' }}>
         {/* 카테고리 선택 그리드 시작 */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-6 gap-y-10 place-items-center">
           {categories.map((category) => (
@@ -125,19 +122,18 @@ const CategoryPage: React.FC = () => {
               key={category.id}
               // 너비40 /높이40 /패딩4 /테두리둥글게 /그림자중간 /커서포인터변경 /호버를 사용하기 위한 함수 / 호버했을때 1.05배 커짐
 
-              className={`w-full h-[28vh] rounded-lg shadow-md cursor-pointer transition-transform hover:scale-105 transition-colors duration-300 hover:bg-White hover:bg-opacity-100 hover:text-black ${
-                selectedCategories.some((c) => c.id === category.id)
-                  ? 'bg-white bg-opacity-100 text-Black'
-                  : 'bg-GainsboroColor bg-opacity-80 text-DarkLiverColor'
-              }`}
+              className={`w-full h-[28vh] rounded-lg shadow-md cursor-pointer transition-transform hover:scale-105 transition-colors duration-300 hover:bg-White hover:bg-opacity-100 hover:text-black ${selectedCategories.some((c) => c.id === category.id)
+                ? 'bg-white bg-opacity-100 text-Black'
+                : 'bg-GainsboroColor bg-opacity-80 text-DarkLiverColor'
+                }`}
               onClick={() => handleCategoryClick(category)}
             >
               <div className="text-center">
-                <h2 className="mt-6 mb-4 font-sans font-bold text-3xl text-DarkLiverColor">
+                <h2 className="mt-5 mb-3 font-sans font-bold text-[43px]">
                   {category.name}
                 </h2>
                 <div className="mx-10 h-0.5 bg-DarkLiverColor"></div>
-                <p className="my-4 mx-12 font-sans font-normal text-xl text-DarkLiverColor">
+                <p className="my-4 mx-12 font-sans font-normal text-3xl">
                   {category.description}
                 </p>
               </div>
@@ -146,7 +142,7 @@ const CategoryPage: React.FC = () => {
         </div>
         {/* 카테고리 선택 그리드 끝 */}
       </div>
-      <div className="absolute bottom-14 right-16">
+      <div className="absolute bottom-16 right-20">
         <ForNextPageWhiteButton
           text="재판 참여 시작하기"
           onClick={handleButtonClick}
