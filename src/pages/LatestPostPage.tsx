@@ -86,7 +86,7 @@ const MultipleItems: React.FC = () => {
 
     const settings = {
         dots: true,
-        infinite: false,
+        infinite: true,
         slidesToShow: 3,
         slidesToScroll: 1,
         arrows: false,
@@ -115,7 +115,7 @@ const MultipleItems: React.FC = () => {
     };
 
     const handleButtonClickToMyPost = () => {
-        navigate('/');
+        navigate('/MyPostPage');
       };
 
     const renderPost = (post: Post, index: number) => (
