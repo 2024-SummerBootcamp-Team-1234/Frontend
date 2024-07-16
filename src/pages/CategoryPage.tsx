@@ -100,7 +100,7 @@ const CategoryPage: React.FC = () => {
         className="flex justify-start text-white items-center ml-[7rem]"
       >
         <button className="w-12 h-12 bg-categoryIcon-image bg-no-repeat bg-contain mb-4 mr-4" />
-        <span className="text-8xl font-sans font-bold mb-4">Category</span>
+        <span className="text-7xl font-sans font-bold mb-4">Category</span>
         <button className="pt-4 pl-10 text-3xl font-sans font-normal">
           Skip {'>'}
         </button>
@@ -129,7 +129,7 @@ const CategoryPage: React.FC = () => {
               onClick={() => handleCategoryClick(category)}
             >
               <div className="text-center">
-                <h2 className="mt-6 mb-4 font-sans font-bold text-5xl">
+                <h2 className="mt-5 mb-3 font-sans font-bold text-[43px]">
                   {category.name}
                 </h2>
                 <div className="mx-10 h-0.5 bg-DarkLiverColor"></div>
