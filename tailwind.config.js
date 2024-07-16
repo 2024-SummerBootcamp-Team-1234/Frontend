@@ -10,7 +10,8 @@ export default {
         DarkLiverColor: '#57524A',
         GainsboroColor: '#DFDFDF',
         VeryLightGrayColor : '#CCCCCC',
-        DimGrayColor:'616161'
+        DimGrayColor:'#616161',
+        ConcordColor:'#7c7a77',
       },
 
       fontFamily: {
@@ -35,6 +36,7 @@ export default {
         'texture-image': "url('./public/texture.png')",
 
         'postPageBg-image': "url('./public/PostPageBg.png')",
+        'homeButton-image': "url('./public/HomeButton.png')",
       },
 
       backgroundSize: {

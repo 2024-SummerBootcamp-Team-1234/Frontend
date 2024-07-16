@@ -1,7 +1,10 @@
 import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
+import ForNextPageWhiteButton from '../components/ForNextPageWhiteButton';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+
 
 interface Post {
     title: string;
@@ -83,12 +86,12 @@ const MultipleItems: React.FC = () => {
 
     const settings = {
         dots: true,
-        infinite: true,
+        infinite: false,
         slidesToShow: 3,
         slidesToScroll: 1,
         arrows: false,
         centerMode: true,
-        focusOnSelect : true,
+        focusOnSelect: true,
         centerPadding: '150px',
         beforeChange: (current: number, next: number) => setActiveSlide(next),
     };
@@ -101,6 +104,20 @@ const MultipleItems: React.FC = () => {
         sliderRef.current?.slickNext();
     };
 
+    const navigate = useNavigate();
+
+    const handleButtonClickToBack = () => {
+        navigate('/JudgePageCopy');
+    };
+
+    const handleButtonClickToHome = () => {
+        navigate('/');
+    };
+
+    const handleButtonClickToMyPost = () => {
+        navigate('/');
+      };
+
     const renderPost = (post: Post, index: number) => (
         <div key={index}>
             <div className="flex justify-center">
@@ -111,18 +128,19 @@ const MultipleItems: React.FC = () => {
                             : 'bg-gray-300 bg-opacity-80 text-gray-800 transform scale-90'
                         }`}
                 >
-                    <div className="p-16">
+                    <div className="p-14">
                         <div className="text-center">
-                            <div className="mb-4 font-sans font-bold text-3xl">{post.title}</div>
+                            <div className="mb-3 font-sans font-bold text-4xl">{post.title}</div>
                         </div>
-                        <div className="font-sans font-bold text-xl">{post.categories}</div>
-                        <div className="text-end my-4 font-sans font-normal text-md">
+                        <div className="bg-ConcordColor text-white font-sans font-bold text-xl inline-block px-3 py-1 rounded-lg">{post.categories}</div>
+                        <div className="text-end my-3 text-black font-sans font-normal text-2xl">
                             <span>{post.judgement} : </span>
                             <span>{post.judgementTitle}</span>
                         </div>
-                        <div className="bg-VeryLightGrayColor w-[500px] h-[432px] rounded-4xl py-7 pl-7 pr-4 relative">
-                            <div className="overflow-y-auto scrollbar-slider h-full p-4">
-                                <div className="font-sans font-normal text-xl">{post.judgementDescription}</div>
+                        <div className="bg-VeryLightGrayColor w-[514px] h-[432px] rounded-4xl py-7 pl-7 pr-4 relative">
+                            <div className="overflow-y-auto scrollbar-slider h-full">
+                                <div className="font-sans font-normal text-xl mx-2">{post.judgementDescription}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -132,30 +150,52 @@ const MultipleItems: React.FC = () => {
     );
 
     return (
-    <div className="bg-postPageBg-image bg-cover bg-center min-h-screen flex flex-col justify-center relative">
-        <div className="w-full h-screen flex flex-col justify-center relative">
-            <div className="overflow-hidden w-full max-w-[calc(100vw - 300px)] mx-auto relative">
-                <div className="relative flex items-center">
+        <div className="bg-postPageBg-image bg-cover bg-center min-h-screen flex flex-col justify-center relative">
+            <div className="w-full h-screen flex flex-col justify-start relative">
+                <span className="flex flex-row">
+
                     <button
-                        onClick={handlePrevious}
-                        className="absolute left-[47rem] px-4 py-2 font-bold text-3xl bg-gray-300 rounded-full z-10"
-                    >
-                        {'<'}
-                    </button>
-                    <Slider ref={sliderRef} {...settings} className={'w-full'}>
-                        {posts.map(renderPost)}
-                    </Slider>
+                        className="bg-arrow-image bg-no-repeat bg-contain w-full h-[5vh] flex flex-col items-center mt-7 ml-5 "
+                        style={{ maxWidth: '64px' }}
+                        onClick={handleButtonClickToBack}
+                    ></button>
                     <button
-                        onClick={handleNext}
-                        className="absolute right-[47rem] px-4 py-2 font-bold text-3xl bg-gray-300 rounded-full z-10"
-                    >
-                        {'>'}
-                    </button>
+                        className="bg-homeButton-image bg-no-repeat bg-contain w-full h-[5vh] flex flex-col items-center mt-7 ml-2 "
+                        style={{ maxWidth: '64px' }}
+                        onClick={handleButtonClickToHome}
+                    ></button>
+
+                </span>
+
+                <div className="overflow-hidden w-full max-w-[calc(100vw - 300px)] mx-auto">
+                    <div className="relative flex items-center">
+                        <button
+                            onClick={handlePrevious}
+                            className="absolute left-[46.5rem] px-4 py-2 font-bold text-3xl bg-gray-300 rounded-full z-10 border-2 border-solid border-white"
+                        >
+                            {'<'}
+                        </button>
+                        <Slider ref={sliderRef} {...settings} className={'w-full'}>
+                            {posts.map(renderPost)}
+                        </Slider>
+                        <button
+                            onClick={handleNext}
+                            className="absolute right-[46.5rem] px-4 py-2 font-bold text-3xl bg-gray-300 rounded-full z-10 border-2 border-solid border-white"
+                        >
+                            {'>'}
+                        </button>
+                    </div>
                 </div>
+
+                <div className="absolute bottom-16 right-20">
+        <ForNextPageWhiteButton
+          text="내 게시물 보러가기"
+          onClick={handleButtonClickToMyPost}
+        />
+      </div>
             </div>
         </div>
-    </div>
-);
+    );
 };
 
 export default MultipleItems;
