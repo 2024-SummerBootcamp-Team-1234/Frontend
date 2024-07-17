@@ -1,12 +1,17 @@
 interface ScrollableBoxProps {
   content: string;
+  className?: string;
 }
 
 // ScrollableBox라는 함수형 컴포넌트를 만듦. content를 속성으로 받음
-const ScrollableBox: React.FC<ScrollableBoxProps> = ({ content }) => {
+const ScrollableBox: React.FC<ScrollableBoxProps> = ({
+  content,
+  className,
+}) => {
   return (
-    // 네모난 상자 스타일을 적용하고, 내용이 넘칠 때 스크롤 가능하게 설정
-    <div className="w-64 h-64 p-4 border border-gray-300 overflow-auto">
+    <div
+      className={`pt-10 pb-10 pr-10 pl-10 rounded-[20px] text-white  overflow-auto ${className}`}
+    >
       {content}
     </div>
   );
