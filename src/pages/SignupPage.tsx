@@ -6,13 +6,13 @@ import axios from 'axios';
 const LoginPage = () => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassowrd, setConfirmPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (password !== confirmPassowrd) {
+    if (password !== confirmPassword) {
       alert('비밀번호가 일치하지 않습니다.');
       return;
     }
@@ -79,7 +79,7 @@ const LoginPage = () => {
               type="password"
               placeholder="Confirm Password"
               required
-              value={confirmPassowrd}
+              value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-[517px] h-[53px] px-4 py-2 pl-[40px] border rounded-[30px] focus:outline-none focus:ring-2 bg-WhiteCoffeeColor focus:ring-slate-600 shadow-inner"
             />
@@ -123,3 +123,5 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+

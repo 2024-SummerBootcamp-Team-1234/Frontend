@@ -114,15 +114,11 @@ const MultipleItems: React.FC = () => {
     navigate('/');
   };
 
-  const handleButtonClickToMyPost = () => {
-    navigate('/');
-  };
-
   const renderPost = (post: Post, index: number) => (
     <div key={index}>
       <div className="flex justify-center">
         <div
-          className={`min-w-[630px] h-[700px] my-40 rounded-6xl shadow-6xl transition-all duration-500 border-2 border-solid border-white
+          className={`w-[90%] h-[64vh] my-40 rounded-6xl shadow-6xl transition-all duration-500 border-2 border-solid border-white
                     ${activeSlide === index
               ? 'bg-GainsboroColor bg-opacity-100 text-black transform scale-125'
               : 'bg-gray-300 bg-opacity-80 text-gray-800 transform scale-90'
@@ -137,7 +133,7 @@ const MultipleItems: React.FC = () => {
               <span>{post.judgement} : </span>
               <span>{post.judgementTitle}</span>
             </div>
-            <div className="bg-VeryLightGrayColor w-[514px] h-[432px] rounded-4xl py-7 pl-7 pr-4 relative">
+            <div className="bg-VeryLightGrayColor w-[100%] h-[40vh] rounded-4xl py-7 pl-7 pr-4 relative">
               <div className="overflow-y-auto scrollbar-slider h-full">
                 <div className="font-sans font-normal text-xl mx-2">{post.judgementDescription}
                 </div>
