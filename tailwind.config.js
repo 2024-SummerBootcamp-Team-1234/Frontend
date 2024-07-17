@@ -9,13 +9,16 @@ export default {
         WhiteCoffeeColor: '#E2DFD8',
         DarkLiverColor: '#57524A',
         GainsboroColor: '#DFDFDF',
+        VeryLightGrayColor : '#CCCCCC',
+        DimGrayColor:'#616161',
+        ConcordColor:'#7c7a77',
       },
 
       fontFamily: {
         sans: ['Noto Sans', 'sans-serif'],
         aref: ['Aref Ruqaa', 'serif'],
       },
-
+      
       backgroundImage: {
         'custom-image': "url('./public/main_solomon.png')", // 경로를 실제 이미지 파일 위치로 수정하세요
         'login-image': "url('./public/login_solomon.png')",
@@ -33,6 +36,7 @@ export default {
         'texture-image': "url('./public/texture.png')",
 
         'postPageBg-image': "url('./public/PostPageBg.png')",
+        'homeButton-image': "url('./public/HomeButton.png')",
       },
 
       backgroundSize: {
@@ -64,6 +68,12 @@ export default {
         '90p': '90%',
         '100p': '100%',
       },
+
+      borderRadius:{
+        '4xl':'2.25rem',
+        '5xl':'3rem',
+        '6xl':'3.75rem',
+      },
     },
   },
   plugins: [
@@ -84,6 +94,20 @@ export default {
             backgroundColor: 'rgb(31 41 55)',
             borderRadius: '20px',
             border: '1px solid white',
+          },
+        },
+
+        '.scrollbar-slider': {
+          '&::-webkit-scrollbar': {
+            width: '7px',
+          },
+          '&::-webkit-scrollbar-track': {
+            background: 'rgb(204 204 204)',
+            borderRadius:'20px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'rgb(97 97 97)',
+            borderRadius: '20px',
           },
         },
       };
