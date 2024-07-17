@@ -171,7 +171,7 @@ const MultipleItems: React.FC = () => {
                     <div className="relative flex items-center">
                         <button
                             onClick={handlePrevious}
-                            className="absolute left-[46.5rem] px-4 py-2 font-bold text-3xl bg-gray-300 rounded-full z-10 border-2 border-solid border-white"
+                            className="absolute left-[31%] px-4 py-2 font-bold text-3xl bg-gray-300 rounded-full z-10 border-2 border-solid border-white"
                         >
                             {'<'}
                         </button>
@@ -180,7 +180,7 @@ const MultipleItems: React.FC = () => {
                         </Slider>
                         <button
                             onClick={handleNext}
-                            className="absolute right-[46.5rem] px-4 py-2 font-bold text-3xl bg-gray-300 rounded-full z-10 border-2 border-solid border-white"
+                            className="absolute right-[31%] px-4 py-2 font-bold text-3xl bg-gray-300 rounded-full z-10 border-2 border-solid border-white"
                         >
                             {'>'}
                         </button>
