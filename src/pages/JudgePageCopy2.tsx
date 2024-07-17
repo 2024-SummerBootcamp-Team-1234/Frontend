@@ -18,8 +18,12 @@ const JudgePageCopy2: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [isAiTurn, setIsAiTurn] = useState(true); // AI가 메시지를 보낼 차례인지 여부를 나타내는 상태
+  const [isListening, setIsListening] = useState(false);
+  const [cursorPosition, setCursorPosition] = useState(0);
   const [aiResponseIndex, setAiResponseIndex] = useState(0); // AI 응답의 현재 인덱스
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const navigate = useNavigate();
 
@@ -91,6 +95,90 @@ const JudgePageCopy2: React.FC = () => {
     }
   }, [messages]);
 
+  const handleMicClick = () => {
+    const SpeechRecognition =
+      (window as any).SpeechRecognition ||
+      (window as any).webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      alert('Your browser does not support speech recognition.');
+      return;
+    }
+
+    if (!recognitionRef.current) {
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'ko-KR'; // Korean language
+      recognition.continuous = true; // Continuous recognition
+      recognition.interimResults = true; // Get interim results
+
+      recognition.onstart = () => {
+        setIsListening(true);
+        console.log('Speech recognition started');
+      };
+
+      recognition.onspeechend = () => {
+        console.log('Speech recognition stopped');
+      };
+
+      recognition.onresult = (event: any) => {
+        const interimTranscript = Array.from(event.results)
+          .map((result: any) => result[0].transcript)
+          .join('');
+        if (event.results[0].isFinal) {
+          insertAtCursor(interimTranscript); // 최종 결과를 커서 위치에 삽입
+        } else {
+          // Interim result handling can be added if needed
+          console.log('Interim result:', interimTranscript);
+        }
+      };
+
+      recognition.onerror = (event: any) => {
+        console.error('Speech recognition error', event);
+      };
+
+      recognition.onend = () => {
+        if (isListening) {
+          recognition.start(); // Automatically restart recognition if still listening
+        }
+      };
+
+      recognitionRef.current = recognition;
+    }
+
+    recognitionRef.current.start();
+  };
+
+  const stopListening = () => {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setNewMessage(e.target.value);
+    setCursorPosition(e.target.selectionStart);
+    e.target.style.height = 'auto';
+    e.target.style.height = `${e.target.scrollHeight}px`;
+  };
+
+  const handleTextareaClick = (e: React.MouseEvent<HTMLTextAreaElement>) => {
+    setCursorPosition((e.target as HTMLTextAreaElement).selectionStart);
+  };
+
+  const insertAtCursor = (text: string) => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      const start = cursorPosition;
+      const end = textarea.selectionEnd;
+      const newText =
+        newMessage.substring(0, start) + text + newMessage.substring(end);
+      setNewMessage(newText);
+      setCursorPosition(start + text.length);
+      textarea.setSelectionRange(start + text.length, start + text.length);
+    }
+  };
+
   // 컴포넌트가 화면에 렌더링하는 부분입니다.
   return (
     <div
@@ -133,17 +221,24 @@ const JudgePageCopy2: React.FC = () => {
           </div>
           {/* 메시지를 입력하는 부분입니다. */}
           <div className="flex items-center bg-black bg-opacity-70 text-white rounded-3xl py-4 px-3 w-[100%] h-[60px]">
-            <button>
+            <button onClick={isListening ? stopListening : handleMicClick}>
               <img src={Mic} alt="Mic" className="h-[2.5vh] ml-2" />{' '}
               {/* 마이크 아이콘 버튼 */}
             </button>
-            <input
-              type="text" // 텍스트 입력 필드입니다.
+            <textarea
+              ref={textareaRef}
               placeholder="이곳에 내용을 적어주세요" // 안내 문구입니다.
-              className="flex-1 bg-transparent text-white placeholder-white focus:outline-none ml-[2%]"
+              className="flex-1 bg-transparent text-white placeholder-white focus:outline-none ml-[2%] resize-none overflow-y-auto"
               value={newMessage} // 입력 필드의 값을 상태와 연결합니다.
-              onChange={(e) => setNewMessage(e.target.value)} // 입력 필드의 값이 바뀔 때 상태를 업데이트합니다.
-              onKeyPress={(e) => e.key === 'Enter' && sendMessage()} // 엔터 키를 누르면 메시지를 보냅니다.
+              onChange={handleInputChange} // 입력 필드의 값이 바뀔 때 상태를 업데이트합니다.
+              onClick={handleTextareaClick}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  sendMessage();
+                }
+              }} // 엔터 키를 누르면 메시지를 보냅니다.
+              style={{ maxHeight: '25px' }} // 최대 높이 설정
             />
             <button onClick={sendMessage}>
               {' '}
