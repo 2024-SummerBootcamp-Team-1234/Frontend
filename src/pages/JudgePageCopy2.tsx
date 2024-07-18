@@ -17,7 +17,7 @@ interface ChatMessage {
 const JudgePageCopy2: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState('');
-  const [isAiTurn, setIsAiTurn] = useState(true); // AI가 메시지를 보낼 차례인지 여부를 나타내는 상태
+  //const [isAiTurn, setIsAiTurn] = useState(true); // AI가 메시지를 보낼 차례인지 여부를 나타내는 상태
   const [isListening, setIsListening] = useState(false);
   const [cursorPosition, setCursorPosition] = useState(0);
   const [aiResponseIndex, setAiResponseIndex] = useState(0); // AI 응답의 현재 인덱스
@@ -68,7 +68,7 @@ const JudgePageCopy2: React.FC = () => {
         },
       ]);
       setAiResponseIndex(aiResponseIndex + 1);
-      setIsAiTurn(false);
+      //setIsAiTurn(false);
     }
   };
 
@@ -83,7 +83,7 @@ const JudgePageCopy2: React.FC = () => {
     ]);
 
     setNewMessage(''); // 메시지를 보낸 후 입력 필드를 비웁니다.
-    setIsAiTurn(true); // 사용자가 메시지를 보낸 후에는 AI가 응답할 차례
+    //setIsAiTurn(true); // 사용자가 메시지를 보낸 후에는 AI가 응답할 차례
 
     // AI가 응답하도록 설정 (딜레이를 줄 수도 있음)
     setTimeout(aiRespond, 1000);

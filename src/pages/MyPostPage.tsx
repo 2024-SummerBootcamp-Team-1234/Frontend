@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
-import ForNextPageWhiteButton from '../components/ForNextPageWhiteButton';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -93,7 +92,7 @@ const MultipleItems: React.FC = () => {
     centerMode: true,
     focusOnSelect: true,
     centerPadding: '150px',
-    beforeChange: (current: number, next: number) => setActiveSlide(next),
+    beforeChange: (_: number, next: number) => setActiveSlide(next),
   };
 
   const handlePrevious = () => {
@@ -111,10 +110,6 @@ const MultipleItems: React.FC = () => {
   };
 
   const handleButtonClickToHome = () => {
-    navigate('/');
-  };
-
-  const handleButtonClickToMyPost = () => {
     navigate('/');
   };
 
