@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { FaUser, FaLock } from 'react-icons/fa';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const LoginPage: React.FC = () => {
   const [id, setId] = useState('');
@@ -16,11 +16,10 @@ const LoginPage: React.FC = () => {
     if (token) {
       navigate('/MainPage2');
     }
-  }, []);
+  }, [navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Logging in with ID:', id);
 
     try {
       const response = await axios.post(
@@ -30,13 +29,12 @@ const LoginPage: React.FC = () => {
           password,
         },
       );
-      console.log('Login response:', response.data);
 
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('refresh_token', response.data.refresh_token);
+      const { access, refresh } = response.data.token;
+      localStorage.setItem('token', access);
+      localStorage.setItem('refresh_token', refresh);
       navigate('/MainPage2');
     } catch (err) {
-      console.error('Login error:', err); // 추가된 로그
       setError('로그인에 실패했습니다. 다시 시도해주세요.');
     }
   };

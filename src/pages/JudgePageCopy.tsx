@@ -15,10 +15,18 @@ interface ChatMessage {
   showButtons?: boolean; // 버튼을 표시할지 여부를 나타내는 속성 추가
 }
 
+declare global {
+  type SpeechRecognition = any;
+  interface Window {
+    SpeechRecognition: SpeechRecognition;
+    webkitSpeechRecognition: SpeechRecognition;
+  }
+}
+
 const JudgePageCopy: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState('');
-  const [isAiTurn, setIsAiTurn] = useState(true); // AI가 메시지를 보낼 차례인지 여부를 나타내는 상태
+  //const [isAiTurn, setIsAiTurn] = useState(true); // AI가 메시지를 보낼 차례인지 여부를 나타내는 상태
   const [isListening, setIsListening] = useState(false);
   const [cursorPosition, setCursorPosition] = useState(0);
   const [channelId, setChannelId] = useState<string | null>(null);
@@ -75,7 +83,7 @@ const JudgePageCopy: React.FC = () => {
         ),
       },
     ]);
-    setIsAiTurn(false); // AI 응답 후에는 사용자가 메시지를 보낼 차례
+    //setIsAiTurn(false); // AI 응답 후에는 사용자가 메시지를 보낼 차례
   };
 
   // 메시지를 전송하고 AI 응답을 처리하는 함수
@@ -89,7 +97,7 @@ const JudgePageCopy: React.FC = () => {
     ]);
 
     setNewMessage(''); // 메시지를 보낸 후 입력 필드를 비웁니다.
-    setIsAiTurn(true); // 사용자가 메시지를 보낸 후에는 AI가 응답할 차례
+    //setIsAiTurn(true); // 사용자가 메시지를 보낸 후에는 AI가 응답할 차례
 
     // 사용자 메시지를 서버에 전송
     if (channelId) {
