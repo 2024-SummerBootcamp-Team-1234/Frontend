@@ -87,21 +87,18 @@ const CategoryPage: React.FC = () => {
     navigate('/JudgePageCopy');
   };
 
-  const categoryGrid= ():JSX.Element => {
-      {/* 카테고리를 담는 컴포넌트,,,불필요한 것일까... */}
-
+  const categoryGrid = () => {
+    return ( // 여기에서 return 키워드를 추가합니다.
       <div className="w-full mx-auto" style={{ maxWidth: '100rem' }}>
         {/* 카테고리 선택 그리드 시작 */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-6 gap-y-10 place-items-center">
           {categories.map((category) => (
             <div
               key={category.id}
-              // 너비40 /높이40 /패딩4 /테두리둥글게 /그림자중간 /커서포인터변경 /호버를 사용하기 위한 함수 / 호버했을때 1.05배 커짐
-
               className={`w-full h-[28vh] rounded-lg shadow-md cursor-pointer transition-transform hover:scale-105 transition-colors duration-300 hover:bg-White hover:bg-opacity-100 hover:text-black ${selectedCategories.some((c) => c.id === category.id)
                 ? 'bg-white bg-opacity-100 text-Black'
                 : 'bg-GainsboroColor bg-opacity-80 text-DarkLiverColor'
-                }`}
+              }`}
               onClick={() => handleCategoryClick(category)}
             >
               <div className="text-center">
@@ -118,43 +115,44 @@ const CategoryPage: React.FC = () => {
         </div>
         {/* 카테고리 선택 그리드 끝 */}
       </div>
+    );
   };
 
-  return (
-    <div className="bg-black bg-category-image bg-cover bg-center min-h-screen flex flex-col items-start p-4 relative">
-      <button
-        className="bg-arrow-image bg-no-repeat bg-contain w-full h-[5vh] flex flex-col items-center mt-7 ml-5"
-        style={{ maxWidth: '3rem' }}
-        onClick={handleButtonClick}
-      ></button>
+return (
+  <div className="bg-black bg-category-image bg-cover bg-center min-h-screen flex flex-col items-start p-4 relative">
+    <button
+      className="bg-arrow-image bg-no-repeat bg-contain w-full h-[5vh] flex flex-col items-center mt-7 ml-5"
+      style={{ maxWidth: '3rem' }}
+      onClick={handleButtonClick}
+    ></button>
 
-      {/* 이미지 + Category + Skip > */}
-      <div
-        className="flex justify-start text-white items-center ml-[7rem]"
-      >
-        <button className="w-12 h-12 bg-categoryIcon-image bg-no-repeat bg-contain mb-4 mr-4" />
-        <span className="text-7xl font-sans font-bold mb-4">Category</span>
-        <button className="pt-4 pl-10 text-3xl font-sans font-normal">
-          Skip {'>'}
-        </button>
-      </div>
-
-      <p
-        className="flex justify-start mb-8 text-white text-3xl font-sans font-normal  ml-[7rem]"
-      >
-        재판하고 싶은 분야를 선택해주세요. (다중 선택 가능)
-      </p>
-
-      {categoryGrid()}
-      
-      <div className="absolute bottom-16 right-20">
-        <ForNextPageWhiteButton
-          text="재판 참여 시작하기"
-          onClick={handleButtonClick}
-        />
-      </div>
+    {/* 이미지 + Category + Skip > */}
+    <div
+      className="flex justify-start text-white items-center ml-[7rem]"
+    >
+      <button className="w-12 h-12 bg-categoryIcon-image bg-no-repeat bg-contain mb-4 mr-4" />
+      <span className="text-7xl font-sans font-bold mb-4">Category</span>
+      <button className="pt-4 pl-10 text-3xl font-sans font-normal">
+        Skip {'>'}
+      </button>
     </div>
-  );
+
+    <p
+      className="flex justify-start mb-8 text-white text-3xl font-sans font-normal  ml-[7rem]"
+    >
+      재판하고 싶은 분야를 선택해주세요. (다중 선택 가능)
+    </p>
+
+    {categoryGrid()}
+
+    <div className="absolute bottom-16 right-20">
+      <ForNextPageWhiteButton
+        text="재판 참여 시작하기"
+        onClick={handleButtonClick}
+      />
+    </div>
+  </div>
+);
 };
 
 export default CategoryPage;
