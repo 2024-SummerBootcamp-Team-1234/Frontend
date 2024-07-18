@@ -1,75 +1,103 @@
 import { Link } from 'react-router-dom';
-
 import { FaUser, FaLock } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const LoginPage = () => (
-  <div className="relative w-full h-screen flex justify-center items-center bg-cover bg-login-image">
-    <Link to="/" className="absolute top-[73px] left-[59px]">
-      <div className="w-12 h-12 bg-arrow-image bg-cover bg-center"></div>
-    </Link>
+const LoginPage: React.FC = () => {
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-    <div className="relative w-[692px] h-[694px] bg-white bg-opacity-25 rounded-3xl shadow backdrop-blur-md flex flex-col items-center justify-center p-6">
-      <div
-        className="text-black font-semibold mb-6 font-sans"
-        style={{ fontSize: '58pt' }}
-      >
-        LOGIN
-      </div>
+  const navigate = useNavigate();
 
-      <form
-        action="/submit-url"
-        method="POST"
-        className="w-full max-w-md flex flex-col items-center"
-      >
-        <div className="mb-6 relative w-[517px]">
-          <FaUser className="absolute left-9 top-1/2 transform -translate-y-1/2 text-gray-400" />
-          <input
-            type="text"
-            placeholder="ID"
-            required
-            className="w-full h-[53px] px-4 py-2 pl-[74px] border rounded-[30px] focus:outline-none focus:ring-2 bg-[#E2DFD8] focus:ring-gray-600 shadow-inner"
-          />
-        </div>
-        <div className="mb-6 relative w-[517px]">
-          <FaLock className="absolute left-9 top-1/2 transform -translate-y-1/2 text-gray-400" />
-          <input
-            type="password"
-            placeholder="Password"
-            required
-            className="w-[517px] h-[53px] px-4 py-2 pl-[74px] border rounded-[30px] focus:outline-none focus:ring-2 bg-customColor focus:ring-slate-600 shadow-inner"
-          />
-        </div>
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/MainPage2');
+    }
+  }, []);
 
-        <button
-          type="submit"
-          className="w-[517px] h-[53px] bg-black text-white rounded-[30px] hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600 shadow-inner font-bold text-2xl "
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Logging in with ID:', id);
+
+    try {
+      const response = await axios.post(
+        'http://localhost:8000/api/v1/users/login/',
+        {
+          id,
+          password,
+        },
+      );
+      console.log('Login response:', response.data);
+
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('refresh_token', response.data.refresh_token);
+      navigate('/MainPage2');
+    } catch (err) {
+      console.error('Login error:', err); // 추가된 로그
+      setError('로그인에 실패했습니다. 다시 시도해주세요.');
+    }
+  };
+
+  return (
+    <div className="relative w-full h-screen flex justify-center items-center bg-cover bg-login-image">
+      <Link to="/" className="absolute top-[73px] left-[59px]">
+        <div className="w-12 h-12 bg-arrow-image bg-cover bg-center"></div>
+      </Link>
+
+      <div className="relative w-[692px] h-[694px] bg-white bg-opacity-25 rounded-3xl shadow backdrop-blur-md flex flex-col items-center justify-center p-6">
+        <div
+          className="text-black font-semibold mb-6 font-sans"
+          style={{ fontSize: '58pt' }}
         >
-          Login
-        </button>
+          LOGIN
+        </div>
 
-        <Link
-          to="/signup"
-          className="text-neutral-50 text-[20px] underline mt-[31px] font-sans text-center"
+        <form
+          onSubmit={handleLogin}
+          className="w-full max-w-md flex flex-col items-center"
         >
-          SIGN UP
-        </Link>
-        <div className="flex flex-col items-center mt-6 text-center">
-          <span className="text-stone-200 mb-2">or continue with</span>
-          <div className="flex flex-row gap-6 justify-center">
-            <Link to="/facebook">
-              <div className="w-12 h-12 bg-facebook-image bg-cover bg-center rounded-full"></div>
-            </Link>
-            <Link to="/apple">
-              <div className="w-12 h-12 bg-apple-image bg-cover bg-center rounded-full"></div>
-            </Link>
-            <Link to="/google">
-              <div className="w-12 h-12 bg-google-image bg-cover bg-center rounded-full"></div>
-            </Link>
+          <div className="mb-6 relative w-[517px]">
+            <FaUser className="absolute left-9 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <input
+              type="text"
+              placeholder="ID"
+              required
+              className="w-full h-[53px] px-4 py-2 pl-[74px] border rounded-[30px] focus:outline-none focus:ring-2 bg-[#E2DFD8] focus:ring-gray-600 shadow-inner"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+            />
           </div>
-        </div>
-      </form>
+          <div className="mb-6 relative w-[517px]">
+            <FaLock className="absolute left-9 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <input
+              type="password"
+              placeholder="Password"
+              required
+              className="w-[517px] h-[53px] px-4 py-2 pl-[74px] border rounded-[30px] focus:outline-none focus:ring-2 bg-[#E2DFD8] focus:ring-slate-600 shadow-inner"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          {error && <div className="mb-4 text-red-600">{error}</div>}
+          <button
+            type="submit"
+            className="w-[517px] h-[53px] bg-black text-white rounded-[30px] hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600 shadow-inner font-bold text-2xl"
+          >
+            Login
+          </button>
+          <Link
+            to="/signup"
+            className="text-neutral-50 text-[20px] underline mt-[31px] font-sans text-center"
+          >
+            SIGN UP
+          </Link>
+        </form>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default LoginPage;
