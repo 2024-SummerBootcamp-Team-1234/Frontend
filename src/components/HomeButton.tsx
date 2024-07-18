@@ -15,7 +15,6 @@ const handleButtonClick = () => {
 
 
 const HomeButton: React.FC<HomeButtonProps> = ({
-  text,
   onClick,
 }) => {
   return (
