@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import Background from '../assets/Background.png';
 import Chatting from '../assets/Chatting.png';
 import Mic from '../assets/Mic.png';
@@ -20,6 +21,7 @@ const JudgePageCopy: React.FC = () => {
   const [isAiTurn, setIsAiTurn] = useState(true); // AI가 메시지를 보낼 차례인지 여부를 나타내는 상태
   const [isListening, setIsListening] = useState(false);
   const [cursorPosition, setCursorPosition] = useState(0);
+  const [channelId, setChannelId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -39,8 +41,25 @@ const JudgePageCopy: React.FC = () => {
     const initialAiMessage =
       '안녕하세요. 솔로몬 AI입니다. 당신의 상황을 정확히 알아야합니다. 아래 프롬프트에 당신의 상황을 입력해주세요.';
     setMessages([{ message: initialAiMessage, sender: 'ai' }]);
-  }, []);
 
+    // 채팅이 시작되면 채널을 생성하기 위한 POST 요청
+    const createChannel = async () => {
+      try {
+        const response = await axios.post(
+          'http://localhost:8000/api/v1/channels/',
+        );
+        setChannelId(response.data.id); // 채널 ID 저장
+        console.log('Channel created successfully:', response.data.id);
+      } catch (error) {
+        console.error(
+          '채널 생성 실패:',
+          error.response ? error.response.data : error.message,
+        );
+      }
+    };
+
+    createChannel();
+  }, []);
   // AI가 응답하는 함수
   const aiRespond = () => {
     const aiResponses = ['다음 2가지 선택 중 1가지를 선택해주세요.'];
@@ -60,7 +79,7 @@ const JudgePageCopy: React.FC = () => {
   };
 
   // 메시지를 전송하고 AI 응답을 처리하는 함수
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (!newMessage.trim()) return; // 빈 메시지 방지
 
     // 사용자 메시지를 화면에 추가
@@ -71,6 +90,20 @@ const JudgePageCopy: React.FC = () => {
 
     setNewMessage(''); // 메시지를 보낸 후 입력 필드를 비웁니다.
     setIsAiTurn(true); // 사용자가 메시지를 보낸 후에는 AI가 응답할 차례
+
+    // 사용자 메시지를 서버에 전송
+    if (channelId) {
+      try {
+        await axios.post(
+          `http://localhost:8000/api/v1/channels/virtual_messages/${channelId}`,
+          {
+            message: newMessage,
+          },
+        );
+      } catch (error) {
+        console.error('메시지 전송 실패:', error);
+      }
+    }
 
     // AI가 응답하도록 설정 (딜레이를 줄 수도 있음)
     setTimeout(aiRespond, 1000);

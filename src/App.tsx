@@ -23,6 +23,7 @@ function App() {
       <Route path="/SignUp" element={<SignupPage />} />
       <Route path="/LatestPostPage" element={<LatestPostPage />} />
       <Route path="/MyPostPage" element={<MyPostPage />} />
+      <Route path="/ResultPage" element={<ResultPage />} />
     </Routes>
   );
 }
