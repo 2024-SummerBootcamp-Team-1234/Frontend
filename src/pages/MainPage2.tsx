@@ -15,20 +15,22 @@ const MainPage2: React.FC = () => {
   const myTrialButtonClick = () => {
     navigate('/');
   };
+
   const logoutButtonClick = async () => {
     try {
-      // 로그아웃 API 호출
       const token = localStorage.getItem('token');
+      console.log('Token:', token); // 토큰 확인용 로그
+
       if (token) {
-        await axios.post(
+        await axios.delete(
           'http://localhost:8000/api/v1/users/logout/', // 로그아웃 엔드포인트
-          {},
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           },
         );
+        console.log('Logout successful');
       }
     } catch (error) {
       console.error('로그아웃 실패:', error);
