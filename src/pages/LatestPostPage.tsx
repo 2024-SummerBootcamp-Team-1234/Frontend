@@ -10,7 +10,7 @@ import 'slick-carousel/slick/slick-theme.css';
 // Post 인터페이스 정의
 interface Post {
     id: number;
-    host: string;
+    name: string;
     title: string;
     content: string;
     categories: string[];
@@ -24,13 +24,13 @@ const CarouselItems: React.FC = () => {
     const settings = {
         dots: true,
         infinite: true,
-        slidesToShow: 3,
+        slidesToShow: 1,
         slidesToScroll: 1,
         arrows: false,
         centerMode: true,
         focusOnSelect: true,
         centerPadding: '150px',
-        beforeChange: (current: number, next: number) => setActiveSlide(next),
+        beforeChange: (_: number, next: number) => setActiveSlide(next),
     };
 
     const handlePrevious = () => {
@@ -65,7 +65,6 @@ const CarouselItems: React.FC = () => {
                 console.error('게시물을 가져오는 중 에러 발생:', error);
             }
         };
-
         fetchPosts();
     }, []);
 
@@ -81,7 +80,7 @@ const CarouselItems: React.FC = () => {
                 >
                     <div className="p-14">
                         <div className="text-center">
-                            <div className="mb-3 font-sans font-bold text-4xl">{post.host}님의 재판 결과</div>
+                            <div className="mb-3 font-sans font-bold text-4xl">{post.name}님의 재판 결과</div>
                         </div>
                         <div className="bg-ConcordColor text-white font-sans font-bold text-xl inline-block px-3 py-1 rounded-lg">
                             {post.categories.join(', ')}

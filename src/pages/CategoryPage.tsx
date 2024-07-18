@@ -114,7 +114,7 @@ const CategoryPage: React.FC = () => {
 
       {/* 카테고리를 담는 컴포넌트,,,불필요한 것일까... */}
 
-      <div className="w-full mx-auto" style={{ maxWidth: '120rem' }}>
+      <div className="w-full mx-auto" style={{ maxWidth: '100rem' }}>
         {/* 카테고리 선택 그리드 시작 */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-6 gap-y-10 place-items-center">
           {categories.map((category) => (
@@ -129,11 +129,11 @@ const CategoryPage: React.FC = () => {
               onClick={() => handleCategoryClick(category)}
             >
               <div className="text-center">
-                <h2 className="mt-5 mb-3 font-sans font-bold text-[43px]">
+                <h2 className="mt-5 mb-3 font-sans font-bold text-[40px]">
                   {category.name}
                 </h2>
                 <div className="mx-10 h-0.5 bg-DarkLiverColor"></div>
-                <p className="my-4 mx-12 font-sans font-normal text-3xl">
+                <p className="my-4 mx-12 font-sans font-normal text-2xl">
                   {category.description}
                 </p>
               </div>
