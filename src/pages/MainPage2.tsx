@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import MainPageWhiteButton from '../components/MainPageWhiteButton';
 import MainPageBlackButton from '../components/MainPageBlackButton';
+import axios from 'axios';
 
 const MainPage2: React.FC = () => {
   const navigate = useNavigate();
@@ -9,13 +10,34 @@ const MainPage2: React.FC = () => {
     navigate('/CategoryPage');
   };
   const forumButtonClick = () => {
-    navigate('/');
+    navigate('/MyPostPage');
   };
   const myTrialButtonClick = () => {
     navigate('/');
   };
-  const logoutButtonClick = () => {
-    navigate('/');
+  const logoutButtonClick = async () => {
+    try {
+      // 로그아웃 API 호출
+      const token = localStorage.getItem('token');
+      if (token) {
+        await axios.post(
+          'http://localhost:8000/api/v1/users/logout/', // 로그아웃 엔드포인트
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+      }
+    } catch (error) {
+      console.error('로그아웃 실패:', error);
+    } finally {
+      // 토큰 삭제 및 리디렉션
+      localStorage.removeItem('token');
+      localStorage.removeItem('refresh_token');
+      navigate('/');
+    }
   };
 
   return (

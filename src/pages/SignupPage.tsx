@@ -101,21 +101,6 @@ const LoginPage = () => {
           >
             sign up
           </button>
-
-          <div className="flex flex-col items-center mt-6 text-center">
-            <span className="text-stone-200 mb-2">or continue with</span>
-            <div className="flex flex-row gap-6 justify-center">
-              <Link to="/facebook">
-                <div className="w-12 h-12 bg-facebook-image bg-cover bg-center rounded-full"></div>
-              </Link>
-              <Link to="/apple">
-                <div className="w-12 h-12 bg-apple-image bg-cover bg-center rounded-full"></div>
-              </Link>
-              <Link to="/google">
-                <div className="w-12 h-12 bg-google-image bg-cover bg-center rounded-full"></div>
-              </Link>
-            </div>
-          </div>
         </form>
       </div>
     </div>
