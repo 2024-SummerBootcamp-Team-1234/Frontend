@@ -17,6 +17,7 @@ function App() {
       <Route path="/" element={<MainPage />} />
       <Route path="/JudgePageCopy" element={<JudgePageCopy />} />
       <Route path="/JudgePageCopy2" element={<JudgePageCopy2 />} />
+
       <Route path="/CategoryPage" element={<CategoryPage />} />
       <Route path="/Login" element={<LoginPage />} />
       <Route path="/MainPage2" element={<MainPage2 />} />
