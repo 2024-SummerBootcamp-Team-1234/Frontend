@@ -93,7 +93,7 @@ const MultipleItems: React.FC = () => {
         centerMode: true,
         focusOnSelect: true,
         centerPadding: '150px',
-        beforeChange: (current: number, next: number) => setActiveSlide(next),
+        beforeChange: (_: number, next: number) => setActiveSlide(next),
     };
 
     const handlePrevious = () => {
