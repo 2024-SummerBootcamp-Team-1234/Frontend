@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface HomeButtonProps {
@@ -15,7 +14,6 @@ const handleButtonClick = () => {
 
 
 const HomeButton: React.FC<HomeButtonProps> = ({
-  text,
   onClick,
 }) => {
   return (
