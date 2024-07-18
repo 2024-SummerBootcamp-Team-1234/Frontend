@@ -23,7 +23,7 @@ const MainPage2: React.FC = () => {
 
       if (token) {
         await axios.delete(
-          'http://localhost:8000/api/v1/users/logout/', // 로그아웃 엔드포인트
+          'http://localhost:8000/api/v1/users/logout', // 로그아웃 엔드포인트
           {
             headers: {
               Authorization: `Bearer ${token}`,
