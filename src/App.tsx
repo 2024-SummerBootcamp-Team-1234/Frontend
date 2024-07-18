@@ -15,12 +15,9 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<MainPage />} />
-<<<<<<< HEAD
-      <Route path="/judgepage" element={<JudgePage />} />
-=======
       <Route path="/JudgePageCopy" element={<JudgePageCopy />} />
       <Route path="/JudgePageCopy2" element={<JudgePageCopy2 />} />
->>>>>>> 49494c2ec159240172241b72bc08e2a5ddc96cc6
+
       <Route path="/CategoryPage" element={<CategoryPage />} />
       <Route path="/Login" element={<LoginPage />} />
       <Route path="/MainPage2" element={<MainPage2 />} />
