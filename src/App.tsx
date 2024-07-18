@@ -7,6 +7,9 @@ import SignupPage from './pages/SignupPage';
 import ResultPage from './pages/ResultPage';
 import MainPage2 from './pages/MainPage2';
 import LatestPostPage from './pages/LatestPostPage';
+
+import LatestPostPageT from './pages/LatestPostPageT';
+
 import MyPostPage from './pages/MyPostPage';
 import JudgePageCopy from './pages/JudgePageCopy';
 import JudgePageCopy2 from './pages/JudgePageCopy2';
@@ -25,6 +28,9 @@ function App() {
       <Route path="/result" element={<ResultPage />} />
 
       <Route path="/LatestPostPage" element={<LatestPostPage />} />
+
+      <Route path="/LatestPostPageT" element={<LatestPostPageT />} />
+
       <Route path="/MyPostPage" element={<MyPostPage />} />
     </Routes>
   );

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
+import ForNextPageWhiteButton from '../components/ForNextPageWhiteButton';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -113,11 +114,13 @@ const MultipleItems: React.FC = () => {
     navigate('/');
   };
 
+
+
   const renderPost = (post: Post, index: number) => (
     <div key={index}>
       <div className="flex justify-center">
         <div
-          className={`w-[90%] h-[64vh] my-40 rounded-6xl shadow-6xl transition-all duration-500 border-2 border-solid border-white
+          className={`w-[450px] h-[570px] my-[80px] rounded-6xl shadow-6xl transition-all duration-500 border-2 border-solid border-white
                     ${activeSlide === index
               ? 'bg-GainsboroColor bg-opacity-100 text-black transform scale-125'
               : 'bg-gray-300 bg-opacity-80 text-gray-800 transform scale-90'
@@ -132,7 +135,7 @@ const MultipleItems: React.FC = () => {
               <span>{post.judgement} : </span>
               <span>{post.judgementTitle}</span>
             </div>
-            <div className="bg-VeryLightGrayColor w-[100%] h-[40vh] rounded-4xl py-7 pl-7 pr-4 relative">
+            <div className="bg-VeryLightGrayColor w-[100%] h-[30vh] rounded-4xl py-7 pl-7 pr-4 relative">
               <div className="overflow-y-auto scrollbar-slider h-full">
                 <div className="font-sans font-normal text-xl mx-2">{post.judgementDescription}
                 </div>
@@ -146,7 +149,7 @@ const MultipleItems: React.FC = () => {
 
   return (
     <div className="bg-postPageBg-image bg-cover bg-center min-h-screen flex flex-col justify-center relative">
-      <div className="w-full h-screen flex flex-col justify-start relative">
+      <div className="w-full h-screen flex flex-col relative">
         <span className="flex flex-row">
 
           <button
@@ -163,7 +166,7 @@ const MultipleItems: React.FC = () => {
         </span>
 
         <div className="overflow-hidden w-full max-w-[calc(100vw - 300px)] mx-auto">
-          <div className="relative flex items-center">
+          <div className="relative flex flex-col justify-center pt-12">
             <button
               onClick={handlePrevious}
               className="absolute left-[31%] px-4 py-2 font-bold text-3xl bg-gray-300 rounded-full z-10 border-2 border-solid border-white"
