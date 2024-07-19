@@ -20,10 +20,8 @@ function App() {
       <Route path="/CategoryPage" element={<CategoryPage />} />
       <Route path="/Login" element={<LoginPage />} />
       <Route path="/MainPage2" element={<MainPage2 />} />
-
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/result" element={<ResultPage />} />
-
       <Route path="/LatestPostPage" element={<LatestPostPage />} />
       <Route path="/MyPostPage" element={<MyPostPage />} />
     </Routes>
