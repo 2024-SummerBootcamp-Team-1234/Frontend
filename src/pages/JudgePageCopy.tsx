@@ -59,10 +59,7 @@ const JudgePageCopy: React.FC = () => {
         setChannelId(response.data.id); // 채널 ID 저장
         console.log('Channel created successfully:', response.data.id);
       } catch (error) {
-        console.error(
-          '채널 생성 실패:',
-          error.response ? error.response.data : error.message,
-        );
+        console.error('채널 생성 실패:');
       }
     };
 
