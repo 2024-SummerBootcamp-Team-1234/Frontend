@@ -1,37 +1,45 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import ScrollableBox from '../components/ScrollableBox';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
+import api from '../api';
+import React, { useState, useEffect } from 'react';
 
 const ResultPage: React.FC = () => {
-  const longText = `쏜애플(Thornapple)은 대한민국의 4인조 록 밴드이며 주 장르는 사이키델릭 록이다. 2009년에 밴드 '가시사과'라는 이름으로 
-  데뷔하였고, 결성 초반에는 홍대 부근에서 공연 위주의 활동으로 이름을 알리기 시작하였다. 2010년 '가시사과'에서 '쏜애플'로 밴드 이름을 바꾸고
-   그해 7월, 첫번째 정규 앨범 '난 자꾸 말을 더듬고 잠드는 법도 잊었네'를 발매하였다. 앨범 발매 직후 윤성현과 심재현의 군입대로 2년여간의 
-   공백기를 가지다 2012년 12월에 복귀, 2013년 Mnet 프로그램 'MUST 밴드의 시대'에서 기량을 드러내고 그 해 6월 해피로봇 레코드와 전속계약을 
-   맺고 본격적인 활동을 시작하였다. 계약 1년 후 2집 '이상기후'를 발매하였다. 이후 2016년엔 5곡이 담긴 EP '서울병'을 발매하고 공연 활동을 
-   이어나갔다. 3년 뒤인 2019년 7월, 정규 3집 '계몽'을 발매하였다. 2021년, 문화콘서트 난장에서 올해 하반기 발매를 목표로 새 EP를 준비하고 
-   있다고 밝혔다. 쏜애플(Thornapple)은 대한민국의 4인조 록 밴드이며 주 장르는 사이키델릭 록이다. 2009년에 밴드 '가시사과'라는 이름으로 
-  데뷔하였고, 결성 초반에는 홍대 부근에서 공연 위주의 활동으로 이름을 알리기 시작하였다. 2010년 '가시사과'에서 '쏜애플'로 밴드 이름을 바꾸고
-   그해 7월, 첫번째 정규 앨범 '난 자꾸 말을 더듬고 잠드는 법도 잊었네'를 발매하였다. 앨범 발매 직후 윤성현과 심재현의 군입대로 2년여간의 
-   공백기를 가지다 2012년 12월에 복귀, 2013년 Mnet 프로그램 'MUST 밴드의 시대'에서 기량을 드러내고 그 해 6월 해피로봇 레코드와 전속계약을 
-   맺고 본격적인 활동을 시작하였다. 계약 1년 후 2집 '이상기후'를 발매하였다. 이후 2016년엔 5곡이 담긴 EP '서울병'을 발매하고 공연 활동을 
-   이어나갔다. 3년 뒤인 2019년 7월, 정규 3집 '계몽'을 발매하였다. 2021년, 문화콘서트 난장에서 올해 하반기 발매를 목표로 새 EP를 준비하고 
-   있다고 밝혔다. 쏜애플(Thornapple)은 대한민국의 4인조 록 밴드이며 주 장르는 사이키델릭 록이다. 2009년에 밴드 '가시사과'라는 이름으로 
-   데뷔하였고, 결성 초반에는 홍대 부근에서 공연 위주의 활동으로 이름을 알리기 시작하였다. 2010년 '가시사과'에서 '쏜애플'로 밴드 이름을 바꾸고
-    그해 7월, 첫번째 정규 앨범 '난 자꾸 말을 더듬고 잠드는 법도 잊었네'를 발매하였다. 앨범 발매 직후 윤성현과 심재현의 군입대로 2년여간의 
-    공백기를 가지다 2012년 12월에 복귀, 2013년 Mnet 프로그램 'MUST 밴드의 시대'에서 기량을 드러내고 그 해 6월 해피로봇 레코드와 전속계약을 
-    맺고 본격적인 활동을 시작하였다. 계약 1년 후 2집 '이상기후'를 발매하였다. 이후 2016년엔 5곡이 담긴 EP '서울병'을 발매하고 공연 활동을 
-    이어나갔다. 3년 뒤인 2019년 7월, 정규 3집 '계몽'을 발매하였다. 2021년, 문화콘서트 난장에서 올해 하반기 발매를 목표로 새 EP를 준비하고 
-    있다고 밝혔다. 쏜애플(Thornapple)은 대한민국의 4인조 록 밴드이며 주 장르는 사이키델릭 록이다. 2009년에 밴드 '가시사과'라는 이름으로 
-   데뷔하였고, 결성 초반에는 홍대 부근에서 공연 위주의 활동으로 이름을 알리기 시작하였다. 2010년 '가시사과'에서 '쏜애플'로 밴드 이름을 바꾸고
-    그해 7월, 첫번째 정규 앨범 '난 자꾸 말을 더듬고 잠드는 법도 잊었네'를 발매하였다. 앨범 발매 직후 윤성현과 심재현의 군입대로 2년여간의 
-    공백기를 가지다 2012년 12월에 복귀, 2013년 Mnet 프로그램 'MUST 밴드의 시대'에서 기량을 드러내고 그 해 6월 해피로봇 레코드와 전속계약을 
-    맺고 본격적인 활동을 시작하였다. 계약 1년 후 2집 '이상기후'를 발매하였다. 이후 2016년엔 5곡이 담긴 EP '서울병'을 발매하고 공연 활동을 
-    이어나갔다. 3년 뒤인 2019년 7월, 정규 3집 '계몽'을 발매하였다. 2021년, 문화콘서트 난장에서 올해 하반기 발매를 목표로 새 EP를 준비하고 
-    있다고 밝혔다..........
-    
-  `;
+  const { channel_id } = useParams<{ channel_id: string }>();
   const navigate = useNavigate();
+  const [chars, setChars] = useState('');
+
+  useEffect(() => {
+    console.log('Component mounted or channel_id changed:', channel_id);
+    if (!channel_id) {
+      console.error('Channel ID is required');
+      return;
+    }
+
+    const channelIdNumber = parseInt(channel_id, 10); // channel_id를 숫자로 변환합니다.
+    if (isNaN(channelIdNumber)) {
+      console.error('Invalid Channel ID');
+      return;
+    }
+
+    // 페이지 로드 시 POST 요청 보내기
+    const postMessage = async () => {
+      try {
+        const response = await api.post(
+          `/channels/virtual_messages/${channel_id}`,
+          {
+            message: 'string',
+          },
+        );
+        console.log('POST request successful:', response.data);
+      } catch (error) {
+        console.error('Error posting message:', error);
+      }
+    };
+
+    postMessage();
+  }, [channel_id]);
 
   const handleButtonClick = () => {
     Swal.fire({
@@ -115,7 +123,7 @@ const ResultPage: React.FC = () => {
             <div className="flex-col bg-black opacity-90 rounded-[25px]">
               <div className="flex">
                 <ScrollableBox
-                  content={longText}
+                  content={chars}
                   className="w-full h-full max-w-[700px] max-h-[430px]"
                 />
               </div>

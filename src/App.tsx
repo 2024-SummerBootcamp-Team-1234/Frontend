@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import CategoryPage from './pages/CategoryPage';
-
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ResultPage from './pages/ResultPage';
@@ -20,10 +19,8 @@ function App() {
       <Route path="/CategoryPage" element={<CategoryPage />} />
       <Route path="/Login" element={<LoginPage />} />
       <Route path="/MainPage2" element={<MainPage2 />} />
-
       <Route path="/signup" element={<SignupPage />} />
-      <Route path="/result" element={<ResultPage />} />
-
+      <Route path="/result/:channel_id" element={<ResultPage />} />
       <Route path="/LatestPostPage" element={<LatestPostPage />} />
       <Route path="/MyPostPage" element={<MyPostPage />} />
     </Routes>
