@@ -22,6 +22,8 @@ const categories: Category[] = [
 ];
 
 const CategoryPage: React.FC = () => {
+
+  // useState를 사용해서 Category 페이지를 빈 배열로 초기화한 값을 selectedCategories 변수에 저장
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
 
   const handleCategoryClick = (category: Category) => {
