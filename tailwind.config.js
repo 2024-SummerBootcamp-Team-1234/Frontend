@@ -9,16 +9,16 @@ export default {
         WhiteCoffeeColor: '#E2DFD8',
         DarkLiverColor: '#57524A',
         GainsboroColor: '#DFDFDF',
-        VeryLightGrayColor : '#CCCCCC',
-        DimGrayColor:'#616161',
-        ConcordColor:'#7c7a77',
+        VeryLightGrayColor: '#CCCCCC',
+        DimGrayColor: '#616161',
+        ConcordColor: '#7c7a77',
       },
 
       fontFamily: {
         sans: ['Noto Sans', 'sans-serif'],
         aref: ['Aref Ruqaa', 'serif'],
       },
-      
+
       backgroundImage: {
         'custom-image': "url('./public/main_solomon.png')", // 경로를 실제 이미지 파일 위치로 수정하세요
         'login-image': "url('./public/login_solomon.png')",
@@ -37,6 +37,7 @@ export default {
 
         'postPageBg-image': "url('./public/PostPageBg.png')",
         'homeButton-image': "url('./public/HomeButton.png')",
+        'like-image': "url('./public/like_icon.png')",
       },
 
       backgroundSize: {
@@ -70,26 +71,26 @@ export default {
       },
 
       scale: {
-        '25': '0.25',
-        '50': '0.5',
-        '75': '0.75',
-        '80': '0.8',
-        '85': '0.85',
-        '95': '0.95',
-        '97': '0.97',
-        '105': '1.05',
-        '115': '1.15',
-        '120': '1.2',
-        '140': '1.4',
-        '160': '1.6',
-        '180': '1.8',
-        '200': '2',
+        25: '0.25',
+        50: '0.5',
+        75: '0.75',
+        80: '0.8',
+        85: '0.85',
+        95: '0.95',
+        97: '0.97',
+        105: '1.05',
+        115: '1.15',
+        120: '1.2',
+        140: '1.4',
+        160: '1.6',
+        180: '1.8',
+        200: '2',
       },
 
-      borderRadius:{
-        '4xl':'2.25rem',
-        '5xl':'3rem',
-        '6xl':'3.75rem',
+      borderRadius: {
+        '4xl': '2.25rem',
+        '5xl': '3rem',
+        '6xl': '3.75rem',
       },
     },
   },
@@ -120,7 +121,7 @@ export default {
           },
           '&::-webkit-scrollbar-track': {
             background: 'rgb(204 204 204)',
-            borderRadius:'20px',
+            borderRadius: '20px',
           },
           '&::-webkit-scrollbar-thumb': {
             backgroundColor: 'rgb(97 97 97)',
