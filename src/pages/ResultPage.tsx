@@ -1,9 +1,25 @@
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import ScrollableBox from '../components/ScrollableBox';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
+import { useLocation } from 'react-router-dom';
 
 const ResultPage: React.FC = () => {
+  // useLocation 훅을 사용하여 현재 페이지로 전달된 데이터를 가져옴.
+  // location.state를 통해 이전 페이지에서 넘겨받은 userInput과 channelId를 추출
+  // 만약 state가 없을 경우를 대비해 기본값을 설정
+  const location = useLocation();
+  const { combinedMessages, channelId } = location.state || {
+    combinedMessages: [],
+    channelId: '',
+  };
+
+  useEffect(() => {
+    console.log('Combined Messages:', combinedMessages);
+    console.log('Channel ID:', channelId);
+  }, [combinedMessages, channelId]);
+
   const longText = `쏜애플(Thornapple)은 대한민국의 4인조 록 밴드이며 주 장르는 사이키델릭 록이다. 2009년에 밴드 '가시사과'라는 이름으로 
   데뷔하였고, 결성 초반에는 홍대 부근에서 공연 위주의 활동으로 이름을 알리기 시작하였다. 2010년 '가시사과'에서 '쏜애플'로 밴드 이름을 바꾸고
    그해 7월, 첫번째 정규 앨범 '난 자꾸 말을 더듬고 잠드는 법도 잊었네'를 발매하였다. 앨범 발매 직후 윤성현과 심재현의 군입대로 2년여간의 

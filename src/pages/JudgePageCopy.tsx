@@ -30,6 +30,7 @@ const JudgePageCopy: React.FC = () => {
   const [isListening, setIsListening] = useState(false);
   const [cursorPosition, setCursorPosition] = useState(0);
   const [channelId, setChannelId] = useState<string | null>(null);
+  const [combinedMessages, setCombinedMessages] = useState<string[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -39,13 +40,13 @@ const JudgePageCopy: React.FC = () => {
 
   const handleButtonClick = () => {
     navigate('/ResultPage', {
-      state: { userInput: messageToSendRef.current, channelId },
+      state: { combinedMessages, channelId },
     });
   };
 
   const handleButtonClick2 = () => {
     navigate('/JudgePageCopy2', {
-      state: { userInput: messageToSendRef.current, channelId },
+      state: { combinedMessages, channelId },
     });
   };
 
@@ -99,6 +100,7 @@ const JudgePageCopy: React.FC = () => {
       ...prevMessages,
       { message: newMessage, sender: 'user' },
     ]);
+    setCombinedMessages((prevMessages) => [...prevMessages, newMessage]);
 
     setNewMessage(''); // 메시지를 보낸 후 입력 필드를 비웁니다.
     //setIsAiTurn(true); // 사용자가 메시지를 보낸 후에는 AI가 응답할 차례

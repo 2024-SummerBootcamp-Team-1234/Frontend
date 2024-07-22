@@ -23,21 +23,19 @@ const JudgePageCopy2: React.FC = () => {
   const [cursorPosition, setCursorPosition] = useState(0);
   const [aiResponseIndex, setAiResponseIndex] = useState(0); // AI 응답의 현재 인덱스
   const [combinedMessages, setCombinedMessages] = useState<string[]>([]);
-  const [currentAiMessage, setCurrentAiMessage] = useState<string>('');
+  const [, setCurrentAiMessage] = useState<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const eventSourceRef = useRef<EventSource | null>(null);
 
   // useLocation 훅을 사용하여 현재 페이지로 전달된 데이터를 가져옴.
   const location = useLocation();
   // location.state를 통해 이전 페이지에서 넘겨받은 userInput과 channelId를 추출
   // 만약 state가 없을 경우를 대비해 기본값을 설정
-  const { userInput, channelId } = location.state || {
-    userInput: '',
+  const { combinedMessages: initialMessages, channelId } = location.state || {
+    combinedMessages: [],
     channelId: '',
   };
-
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
@@ -54,7 +52,7 @@ const JudgePageCopy2: React.FC = () => {
     if (channelId) {
       const initialAiMessage = '원고(소송을 제기한 사람)의 입장을 적어주세요.';
       setMessages([{ message: initialAiMessage, sender: 'ai' }]);
-      setCombinedMessages([userInput]); // 처음에 combinedMessages에 userInput을 설정
+      setCombinedMessages(initialMessages);
       setAiResponseIndex(1); // 첫 번째 응답 이후로 인덱스 설정
     }
   }, [channelId]);
@@ -103,6 +101,10 @@ const JudgePageCopy2: React.FC = () => {
         },
       );
 
+      if (!response.body) {
+        throw new Error('Response body is null');
+      }
+
       const reader = response.body.getReader();
       const decoder = new TextDecoder('utf-8');
       let done = false;
@@ -132,8 +134,12 @@ const JudgePageCopy2: React.FC = () => {
                           ...lastMessage,
                           message:
                             lastMessage.message + parsedLine.content + ' ',
+                          sender: 'ai' as 'ai',
                         }
-                      : { message: parsedLine.content + ' ', sender: 'ai' };
+                      : {
+                          message: parsedLine.content + ' ',
+                          sender: 'ai' as 'ai',
+                        };
                   return [...prevMessages.slice(0, -1), updatedMessage];
                 });
               }
