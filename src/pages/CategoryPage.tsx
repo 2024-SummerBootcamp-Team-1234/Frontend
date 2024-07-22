@@ -28,9 +28,11 @@ const CategoryPage: React.FC = () => {
 
   const handleCategoryClick = (category: Category) => {
     setSelectedCategories((prevCategories) => {
+      //some :  조회, filter : 삭제
       if (prevCategories.some((c) => c.id === category.id)) {
         return prevCategories.filter((c) => c.id !== category.id);
       } else {
+        // 배열 확장 => 기존 카테고리에서 새 카테고리 추가
         return [...prevCategories, category];
       }
     });
@@ -43,7 +45,7 @@ const CategoryPage: React.FC = () => {
   };
 
   const categoryGrid = () => {
-    return ( // 여기에서 return 키워드를 추가합니다.
+    return (
       <div className="w-full mx-auto" style={{ maxWidth: '85rem' }}>
         {/* 카테고리 선택 그리드 시작 */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-6 gap-y-10 place-items-center">
