@@ -59,15 +59,15 @@ const ResultPage: React.FC = () => {
     Swal.fire({
       title: '게시판 공유',
       html: `<div class="text-left mb-4">게시판 제목을 입력해주세요.</div>
-             <div class="relative w-full">
-               <input
-                 type="text"
-                 id="boardTitle"
-                 placeholder="oo님의 판결결과"
-                 required
-                 class="w-full h-[53px] px-4 py-2 pl-[40px] border rounded focus:outline-none focus:ring-2 bg-WhiteCoffeeColor focus:ring-slate-600 shadow-inner"
-               />
-             </div>`,
+            <div class="relative w-full">
+              <input
+                type="text"
+                id="boardTitle"
+                placeholder="oo님의 판결결과"
+                required
+                class="w-full h-[53px] px-4 py-2 pl-[40px] border rounded focus:outline-none focus:ring-2 bg-WhiteCoffeeColor focus:ring-slate-600 shadow-inner"
+              />
+            </div>`,
       showCancelButton: true,
       cancelButtonColor: '#ffffff',
       confirmButtonColor: '#000000',

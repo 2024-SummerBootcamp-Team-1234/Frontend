@@ -7,10 +7,19 @@ import ForNextPageWhiteButton from '../components/ForNextPageWhiteButton';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+type CategoryMap = {
+    [key: number]: string;
+};
+
+const categoryMap: CategoryMap = {
+    0: '저작권', 1: '교통사고', 2: '사기', 3: '이혼', 4: '성범죄',
+    5: '마약', 6: '의료 과실', 7: '학교 폭력', 8: '폭행', 9: '환경오염',
+};
+
 interface Post {
     id: number;
     name: string;
-    categories: string[];
+    categories: number[];
     title: string;
     content: string;
 }
@@ -30,12 +39,10 @@ const CarouselItems: React.FC = () => {
     const settings = {
         dots: true,
         infinite: true,
-
         slidesToShow: 3,
         slidesToScroll: 1,
         arrows: false,
         focusOnSelect: true,
-
         centerMode: true,
 
         beforeChange: (_: number, next: number) => setActiveSlide(next),
@@ -62,7 +69,16 @@ const CarouselItems: React.FC = () => {
             <div className="p-14">
                 <div className="text-center mb-3 font-sans font-bold text-4xl">{post.name}의 재판 결과</div>
 
-                <div className="bg-ConcordColor text-white font-sans font-bold text-xl inline-block px-3 py-1 rounded-lg">{post.categories.join(', ')}</div>
+                <div className="overflow-x-auto whitespace-nowrap custom-scrollbar ">
+                    {post.categories.map((cat, i) => (
+                        <div
+                            key={i}
+                            className="bg-ConcordColor text-white font-sans font-bold text-xl inline-block px-3 py-1 rounded-lg m-1"
+                        >
+                            {categoryMap[cat]}
+                        </div>
+                    ))}
+                </div>
 
                 <div className="text-start my-3 text-black font-sans font-normal text-2xl">판결 : {post.title}</div>
 
@@ -103,7 +119,7 @@ const CarouselItems: React.FC = () => {
                 <Slider ref={sliderRef} {...settings}>
                     {posts.map(renderPost)}
                 </Slider>
-                
+
                 <button
                     onClick={handleNext}
                     className="absolute right-[29.5%] px-4 py-2 font-bold text-3xl bg-gray-300 rounded-full z-10 border-2 border-solid border-white"
