@@ -28,11 +28,12 @@ const CategoryPage: React.FC = () => {
 
   const handleCategoryClick = (category: Category) => {
     setSelectedCategories((prevCategories) => {
-      //some :  조회, filter : 삭제
+      // 만약 선택된 카테고리 목록에 이미 클릭한 카테고리가 있다면
       if (prevCategories.some((c) => c.id === category.id)) {
+        // 그 카테고리를 목록에서 제거
         return prevCategories.filter((c) => c.id !== category.id);
       } else {
-        // 배열 확장 => 기존 카테고리에서 새 카테고리 추가
+        // 그렇지 않으면 배열 확장 => 기존 카테고리에서 새 카테고리 추가
         return [...prevCategories, category];
       }
     });
@@ -41,17 +42,14 @@ const CategoryPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    //선택된 카테고리의 ID 값을 추출합니다.
     const selectedCategoryIds = selectedCategories.map(category => category.id);
-
-    // URLSearchParams를 사용하여 쿼리 파라미터를 생성합니다.
-    const queryParams = new URLSearchParams();
-    selectedCategoryIds.forEach(id => queryParams.append('categoryIds', id.toString()));
-
-    // 다른 페이지로 이동하면서 쿼리 파라미터 전달
-    // navigate('/JudgePageCopy?${queryParams.toString()}');
-    navigate('/JudgePageCopy');
+    console.log('Selected Category IDs:', selectedCategoryIds);
+  
+    // 상태를 사용하여 카테고리 ID들을 JudgePage로 전달합니다.
+    navigate('/JudgePageCopy', { state: { categoryIds: selectedCategoryIds } });
   };
+// http://localhost:5173/ResultPage?categoryIds=0&categoryIds=1&categoryIds=2
+
 
   const categoryGrid = () => {
     return (
