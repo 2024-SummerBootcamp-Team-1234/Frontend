@@ -1,8 +1,9 @@
+// ResultPage.tsx
+
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import ScrollableBox from '../components/ScrollableBox';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
-import api from '../api';
 import React, { useState, useEffect } from 'react';
 
 const ResultPage: React.FC = () => {
@@ -24,21 +25,57 @@ const ResultPage: React.FC = () => {
     }
 
     // 페이지 로드 시 POST 요청 보내기
-    const postMessage = async () => {
+    const aiRespond = async () => {
       try {
-        const response = await api.post(
-          `/channels/virtual_messages/${channel_id}`,
+        const response = await fetch(
+          `http://localhost:8000/api/v1/channels/virtual_messages/${channel_id}`,
           {
-            message: 'string',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message: '안녕하세요' }),
           },
         );
-        console.log('POST request successful:', response.data);
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+        let done = false;
+        let partialChunk = '';
+        while (!done) {
+          const { value, done: doneReading } = await reader.read();
+          done = doneReading;
+          const chunk = decoder.decode(value, { stream: true });
+          partialChunk += chunk;
+          console.log(chunk);
+          const lines = partialChunk.split('\n');
+          if (!done) {
+            partialChunk = lines.pop() || '';
+          } else {
+            partialChunk = '';
+          }
+
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              const jsonPart = line.substring(6).trim();
+              if (jsonPart.length > 0) {
+                try {
+                  const data = JSON.parse(jsonPart);
+                  if (data.content) {
+                    setChars((prev) => prev + data.content + '\n'); // 새로운 줄로 추가
+                  }
+                } catch (error) {
+                  console.error('Error parsing JSON:', error, jsonPart);
+                }
+              }
+            }
+          }
+        }
       } catch (error) {
         console.error('Error posting message:', error);
       }
     };
 
-    postMessage();
+    aiRespond();
   }, [channel_id]);
 
   const handleButtonClick = () => {
@@ -109,7 +146,7 @@ const ResultPage: React.FC = () => {
   };
 
   return (
-    <div className="w-screen h-screen bg-cover bg-center bg-result.back-image">
+    <div className="w-screen h-screen bg-cover bg-center bg-result.back-image overflow-hidden">
       <Link to="/MainPage2" className="absolute top-[73px] left-[59px]">
         <div className="w-12 h-12 bg-home-image bg-cover bg-center"></div>
       </Link>
@@ -124,7 +161,7 @@ const ResultPage: React.FC = () => {
               <div className="flex">
                 <ScrollableBox
                   content={chars}
-                  className="w-full h-full max-w-[700px] max-h-[430px]"
+                  className=" h-[400px] w-[670px] "
                 />
               </div>
 

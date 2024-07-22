@@ -10,7 +10,7 @@ const ScrollableBox: React.FC<ScrollableBoxProps> = ({
 }) => {
   return (
     <div
-      className={`pt-10 pb-10 pr-10 pl-10 rounded-[20px] text-white  overflow-auto ${className}`}
+      className={`pt-10 pb-10 pr-10 pl-10 rounded-[20px] text-white  overflow-y-auto ${className}`}
     >
       {content}
     </div>
