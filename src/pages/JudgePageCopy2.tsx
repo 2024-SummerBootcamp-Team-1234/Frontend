@@ -7,6 +7,7 @@ import UserMessage from '../components/UserMessage';
 import AiMessage from '../components/AiMessage';
 import ChatButton from '../components/ChatButton';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 interface ChatMessage {
   message: string;
@@ -21,40 +22,55 @@ const JudgePageCopy2: React.FC = () => {
   const [isListening, setIsListening] = useState(false);
   const [cursorPosition, setCursorPosition] = useState(0);
   const [aiResponseIndex, setAiResponseIndex] = useState(0); // AI 응답의 현재 인덱스
+  const [combinedMessages, setCombinedMessages] = useState<string[]>([]);
+  const [currentAiMessage, setCurrentAiMessage] = useState<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const eventSourceRef = useRef<EventSource | null>(null);
+
+  // useLocation 훅을 사용하여 현재 페이지로 전달된 데이터를 가져옴.
+  const location = useLocation();
+  // location.state를 통해 이전 페이지에서 넘겨받은 userInput과 channelId를 추출
+  // 만약 state가 없을 경우를 대비해 기본값을 설정
+  const { userInput, channelId } = location.state || {
+    userInput: '',
+    channelId: '',
+  };
 
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate('/');
+    navigate('/ResultPage', {
+      state: {
+        combinedMessages,
+        channelId,
+      },
+    });
   };
 
-  // AI의 첫 번째 메시지
+  // AI의 첫 번째 메시지 설정 및 SSE 설정
   useEffect(() => {
-    const initialAiMessage = '원고(소송을 제기한 사람)의 입장을 적어주세요.';
-    setMessages([{ message: initialAiMessage, sender: 'ai' }]);
-  }, []);
+    if (channelId) {
+      const initialAiMessage = '원고(소송을 제기한 사람)의 입장을 적어주세요.';
+      setMessages([{ message: initialAiMessage, sender: 'ai' }]);
+      setCombinedMessages([userInput]); // 처음에 combinedMessages에 userInput을 설정
+      setAiResponseIndex(1); // 첫 번째 응답 이후로 인덱스 설정
+    }
+  }, [channelId]);
 
   // AI가 응답하는 함수
 
   const aiResponses = [
     '원고(소송을 제기한 사람)의 입장을 적어주세요.',
-    '피고(소송을 당한 사람)의 입장을 적어주세요.',
-    '적어주신 내용을 바탕으로 입장을 정리하도록 하겠습니다. 정리 이후에는 원고와 피고의 최후 변론이 있을 예정입니다. ',
+    '피고(소송을 당한 사람)의 입장을 적어주세요. 피고의 입장 입력 후에 솔로몬이 입장을 확인할 예정입니다. 틀린 내용이 있다면 최후 변론시간에 고쳐주세요.',
+    ' ',
     '원고의 최후 변론을 적어주세요',
     '피고의 최후 변론을 적어주세요',
     '주어진 주장들을 바탕으로 최종 판결을 내리겠습니다. 버튼을 클릭하여 최종 판결문으로 이동해주세요.',
   ];
-  // AI의 첫 번째 메시지 설정
-  useEffect(() => {
-    setMessages([{ message: aiResponses[0], sender: 'ai' }]);
-    setAiResponseIndex(1); // 첫 번째 응답 이후로 인덱스 설정
-  }, []);
 
-  // AI가 응답하는 함수
-  const aiRespond = () => {
+  const aiRespond = async () => {
     if (aiResponseIndex < aiResponses.length) {
       const response = aiResponses[aiResponseIndex];
       setMessages((prevMessages) => [
@@ -68,7 +84,78 @@ const JudgePageCopy2: React.FC = () => {
         },
       ]);
       setAiResponseIndex(aiResponseIndex + 1);
-      //setIsAiTurn(false);
+      if (response === ' ') {
+        await getAiResponse();
+      }
+    }
+  };
+
+  const getAiResponse = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/v1/channels/virtual_messages/${channelId}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ message: combinedMessages }),
+        },
+      );
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder('utf-8');
+      let done = false;
+      let partialChunk = '';
+
+      while (!done) {
+        const { value, done: doneReading } = await reader.read();
+        done = doneReading;
+        const chunk = decoder.decode(value, { stream: true });
+        partialChunk += chunk;
+
+        const lines = partialChunk.split('\n');
+
+        for (let line of lines) {
+          if (line.trim()) {
+            // 'data: ' 부분을 제거하고 JSON 파싱 시도
+            const cleanedLine = line.replace(/^data: /, '');
+            try {
+              const parsedLine = JSON.parse(cleanedLine);
+              if (parsedLine.content) {
+                setCurrentAiMessage((prev) => prev + parsedLine.content + ' ');
+                setMessages((prevMessages) => {
+                  const lastMessage = prevMessages[prevMessages.length - 1];
+                  const updatedMessage =
+                    lastMessage && lastMessage.sender === 'ai'
+                      ? {
+                          ...lastMessage,
+                          message:
+                            lastMessage.message + parsedLine.content + ' ',
+                        }
+                      : { message: parsedLine.content + ' ', sender: 'ai' };
+                  return [...prevMessages.slice(0, -1), updatedMessage];
+                });
+              }
+            } catch (error) {
+              console.error(
+                'Error parsing JSON:',
+                error,
+                'at line:',
+                cleanedLine,
+              );
+            }
+          }
+        }
+
+        if (!done) {
+          partialChunk = lines.pop() || '';
+        } else {
+          partialChunk = '';
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching AI response:', error);
     }
   };
 
@@ -82,7 +169,12 @@ const JudgePageCopy2: React.FC = () => {
       { message: newMessage, sender: 'user' },
     ]);
 
-    setNewMessage(''); // 메시지를 보낸 후 입력 필드를 비웁니다.
+    // combinedMessages에 새로운 메시지 추가
+    setCombinedMessages((prevMessages) => [...prevMessages, newMessage]);
+    console.log({ combinedMessages });
+
+    // 메시지를 보낸 후 입력 필드를 비웁니다.
+    setNewMessage('');
     //setIsAiTurn(true); // 사용자가 메시지를 보낸 후에는 AI가 응답할 차례
 
     // AI가 응답하도록 설정 (딜레이를 줄 수도 있음)
