@@ -16,14 +16,17 @@ function App() {
     <Routes>
       <Route path="/" element={<MainPage />} />
       <Route path="/MainPage2" element={<MainPage2 />} />
+      <Route path="/SignUp" element={<SignupPage />} />
       <Route path="/Login" element={<LoginPage />} />
-      <Route path="/signup" element={<SignupPage />} />
+
       <Route path="/CategoryPage" element={<CategoryPage />} />
       <Route path="/JudgePageCopy" element={<JudgePageCopy />} />
       <Route path="/JudgePageCopy2" element={<JudgePageCopy2 />} />
       <Route path="/result" element={<ResultPage />} />
+
       <Route path="/LatestPostPage" element={<LatestPostPage />} />
       <Route path="/MyPostPage" element={<MyPostPage />} />
+      <Route path="/ResultPage" element={<ResultPage />} />
     </Routes>
   );
 }
