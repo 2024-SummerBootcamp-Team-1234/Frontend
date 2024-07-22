@@ -30,8 +30,8 @@ interface Post {
   categories: number[];
   title: string;
   content: string;
-  likes: number;
-  likedByUser: boolean;
+  vote: number; // 좋아요 개수를 나타내는 필드
+  likedByUser: boolean; // 사용자가 좋아요를 눌렀는지 여부를 나타내는 필드
 }
 
 const CarouselItems: React.FC = () => {
@@ -70,14 +70,21 @@ const CarouselItems: React.FC = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        const token = localStorage.getItem('token');
         const response = await axios.get(
           'http://localhost:8000/api/v1/posts/all',
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
         );
+        console.log('Fetched posts data:', response.data);
         const postsData = response.data.map((post: Post) => ({
           ...post,
-          likes: post.likes ?? 0, // 서버에서 likes 값을 제공하지 않으면 기본값 0 설정
-          likedByUser: post.likedByUser ?? false, // 서버에서 likedByUser 값을 제공하지 않으면 기본값 false 설정
+          vote: post.vote !== undefined ? post.vote : 0,
+          likedByUser:
+            post.likedByUser !== undefined ? post.likedByUser : false,
         }));
+        console.log('Processed posts data:', postsData);
         setPosts(postsData);
       } catch (error) {
         console.error('게시물 가져오기 중 에러 발생:', error);
@@ -97,13 +104,13 @@ const CarouselItems: React.FC = () => {
           headers: { Authorization: `Bearer ${token}` }, // 요청 헤더에 토큰 추가
         },
       );
-      console.log('Response data:', response.data);
-      setPosts(
-        posts.map((post) =>
+      console.log('Response data:', response.data); // 응답 데이터를 콘솔에 출력
+      setPosts((prevPosts) =>
+        prevPosts.map((post) =>
           post.id === postId
             ? {
                 ...post,
-                likes: response.data.votes ?? post.likes, // 서버 응답 데이터에 likes 대신 votes가 있을 경우 사용
+                vote: post.likedByUser ? post.vote - 1 : post.vote + 1, // likedByUser 상태에 따라 vote 값을 증가 또는 감소
                 likedByUser: !post.likedByUser,
               }
             : post,
@@ -125,11 +132,20 @@ const CarouselItems: React.FC = () => {
                     }`}
     >
       <div className="p-14">
-        <div className="text-center mb-3 font-sans font-bold text-4xl">
-          {post.name}의 재판 결과
+        <div className="flex justify-between items-start mb-3">
+          <div className="font-sans font-bold text-4xl">
+            {post.name}의 재판 결과
+          </div>
+          <button
+            onClick={() => handleLike(post.id)}
+            className="flex flex-col items-center bg-like-image w-6 h-6 bg-no-repeat bg-contain"
+            style={{ marginTop: '1rem' }}
+          >
+            <span className="text-xs mt-8">{post.vote}</span>
+          </button>
         </div>
 
-        <div className="overflow-x-auto whitespace-nowrap custom-scrollbar ">
+        <div className="overflow-x-auto whitespace-nowrap custom-scrollbar">
           {post.categories.map((cat, i) => (
             <div
               key={i}
@@ -150,22 +166,6 @@ const CarouselItems: React.FC = () => {
               {post.content}
             </div>
           </div>
-        </div>
-
-        <div className="mt-[0.7pt] flex items-center">
-          {' '}
-          {/* 간격을 줄이고 상단 여백을 줄였습니다 */}
-          <div className="text-xs mr-1 text-base">{post.likes} likes</div>
-          <button
-            onClick={() => handleLike(post.id)}
-            className={`px-2 py-1 text-xs rounded ${
-              post.likedByUser
-                ? 'bg-ConcordColor text-white'
-                : 'bg-gray-300 text-black'
-            }`}
-          >
-            {post.likedByUser ? 'Unlike' : 'Like'}
-          </button>
         </div>
       </div>
     </div>
