@@ -1,26 +1,41 @@
-// ResultPage.tsx
-
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ScrollableBox from '../components/ScrollableBox';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const ResultPage: React.FC = () => {
-  const { channel_id } = useParams<{ channel_id: string }>();
+  // useLocation 훅을 사용하여 현재 페이지로 전달된 데이터를 가져옴.
+  // location.state를 통해 이전 페이지에서 넘겨받은 userInput과 channelId를 추출
+  // 만약 state가 없을 경우를 대비해 기본값을 설정
+  const location = useLocation();
+  const { combinedMessages, channelId } = location.state || {
+    combinedMessages: [],
+    channelId: '',
+  };
+
+  useEffect(() => {
+    console.log('Combined Messages:', combinedMessages);
+    console.log('Channel ID:', channelId);
+  }, [combinedMessages, channelId]);
+
   const navigate = useNavigate();
   const [chars, setChars] = useState('');
 
   useEffect(() => {
-    console.log('Component mounted or channel_id changed:', channel_id);
-    if (!channel_id) {
-      console.error('Channel ID is required');
+    console.log(
+      '컴포넌트가 마운트되거나 channelId가 변경되었습니다:',
+      channelId,
+    );
+    if (!channelId) {
+      console.error('Channel ID는 필수입니다');
       return;
     }
 
-    const channelIdNumber = parseInt(channel_id, 10); // channel_id를 숫자로 변환합니다.
+    const channelIdNumber = parseInt(channelId, 10); // channelId를 숫자로 변환합니다.
     if (isNaN(channelIdNumber)) {
-      console.error('Invalid Channel ID');
+      console.error('유효하지 않은 Channel ID입니다');
       return;
     }
 
@@ -28,13 +43,13 @@ const ResultPage: React.FC = () => {
     const aiRespond = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/api/v1/channels/virtual_messages/${channel_id}`,
+          `http://localhost:8000/api/v1/channels/virtual_messages/${channelId}`,
           {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ message: '안녕하세요' }),
+            body: JSON.stringify({ message: 'combinedMessages' }),
           },
         );
         const reader = response.body.getReader();
@@ -64,19 +79,19 @@ const ResultPage: React.FC = () => {
                     setChars((prev) => prev + data.content + '\n'); // 새로운 줄로 추가
                   }
                 } catch (error) {
-                  console.error('Error parsing JSON:', error, jsonPart);
+                  console.error('JSON 파싱 오류:', error, jsonPart);
                 }
               }
             }
           }
         }
       } catch (error) {
-        console.error('Error posting message:', error);
+        console.error('메시지 전송 오류:', error);
       }
     };
 
     aiRespond();
-  }, [channel_id]);
+  }, [channelId]);
 
   const handleButtonClick = () => {
     Swal.fire({
@@ -104,15 +119,15 @@ const ResultPage: React.FC = () => {
     Swal.fire({
       title: '게시판 공유',
       html: `<div class="text-left mb-4">게시판 제목을 입력해주세요.</div>
-             <div class="relative w-full">
-               <input
-                 type="text"
-                 id="boardTitle"
-                 placeholder="oo님의 판결결과"
-                 required
-                 class="w-full h-[53px] px-4 py-2 pl-[40px] border rounded focus:outline-none focus:ring-2 bg-WhiteCoffeeColor focus:ring-slate-600 shadow-inner"
-               />
-             </div>`,
+            <div class="relative w-full">
+              <input
+                type="text"
+                id="boardTitle"
+                placeholder="oo님의 판결결과"
+                required
+                class="w-full h-[53px] px-4 py-2 pl-[40px] border rounded focus:outline-none focus:ring-2 bg-WhiteCoffeeColor focus:ring-slate-600 shadow-inner"
+              />
+            </div>`,
       showCancelButton: true,
       cancelButtonColor: '#ffffff',
       confirmButtonColor: '#000000',
@@ -140,7 +155,7 @@ const ResultPage: React.FC = () => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log('Board title confirmed:', result.value);
+        console.log('게시판 제목 확인됨:', result.value);
       }
     });
   };

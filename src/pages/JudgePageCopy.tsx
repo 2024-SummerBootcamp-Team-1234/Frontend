@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import api from '../api';
 import Background from '../assets/Background.png';
 import Chatting from '../assets/Chatting.png';
 import Mic from '../assets/Mic.png';
@@ -28,18 +29,25 @@ const JudgePageCopy: React.FC = () => {
   //const [isAiTurn, setIsAiTurn] = useState(true); // AI가 메시지를 보낼 차례인지 여부를 나타내는 상태
   const [isListening, setIsListening] = useState(false);
   const [cursorPosition, setCursorPosition] = useState(0);
+  const [channelId, setChannelId] = useState<string | null>(null);
+  const [combinedMessages, setCombinedMessages] = useState<string[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const messageToSendRef = useRef<string>(''); // 메시지를 저장할 ref 추가
 
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate('/');
+    navigate('/ResultPage', {
+      state: { combinedMessages, channelId },
+    });
   };
 
   const handleButtonClick2 = () => {
-    navigate('/JudgePageCopy2');
+    navigate('/JudgePageCopy2', {
+      state: { combinedMessages, channelId },
+    });
   };
 
   // AI의 첫 번째 메시지
@@ -47,6 +55,19 @@ const JudgePageCopy: React.FC = () => {
     const initialAiMessage =
       '안녕하세요. 솔로몬 AI입니다. 당신의 상황을 정확히 알아야합니다. 아래 프롬프트에 당신의 상황을 입력해주세요.';
     setMessages([{ message: initialAiMessage, sender: 'ai' }]);
+
+    // 채팅이 시작되면 채널을 생성하기 위한 POST 요청
+    const createChannel = async () => {
+      try {
+        const response = await api.post('/channels/');
+        setChannelId(response.data.id); // 채널 ID 저장
+        console.log('Channel created successfully:', response.data.id);
+      } catch (error) {
+        console.error('채널 생성 실패:');
+      }
+    };
+
+    createChannel();
   }, []);
 
   // AI가 응답하는 함수
@@ -71,11 +92,15 @@ const JudgePageCopy: React.FC = () => {
   const sendMessage = () => {
     if (!newMessage.trim()) return; // 빈 메시지 방지
 
+    // newMessage를 messageToSendRef에 저장
+    messageToSendRef.current = newMessage;
+
     // 사용자 메시지를 화면에 추가
     setMessages((prevMessages) => [
       ...prevMessages,
       { message: newMessage, sender: 'user' },
     ]);
+    setCombinedMessages((prevMessages) => [...prevMessages, newMessage]);
 
     setNewMessage(''); // 메시지를 보낸 후 입력 필드를 비웁니다.
     //setIsAiTurn(true); // 사용자가 메시지를 보낸 후에는 AI가 응답할 차례
