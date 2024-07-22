@@ -23,6 +23,7 @@ const JudgePageCopy2: React.FC = () => {
   const [cursorPosition, setCursorPosition] = useState(0);
   const [aiResponseIndex, setAiResponseIndex] = useState(0); // AI 응답의 현재 인덱스
   const [combinedMessages, setCombinedMessages] = useState<string[]>([]);
+  const [isAiResponding, setIsAiResponding] = useState(false);
   const [, setCurrentAiMessage] = useState<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
@@ -84,11 +85,15 @@ const JudgePageCopy2: React.FC = () => {
       setAiResponseIndex(aiResponseIndex + 1);
       if (response === ' ') {
         await getAiResponse();
+      } else {
+        setIsAiResponding(false);
+        setAiResponseIndex(aiResponseIndex + 1);
       }
     }
   };
 
   const getAiResponse = async () => {
+    setIsAiResponding(true);
     try {
       const response = await fetch(
         `http://localhost:8000/api/v1/channels/virtual_messages/${channelId}`,
@@ -162,12 +167,14 @@ const JudgePageCopy2: React.FC = () => {
       }
     } catch (error) {
       console.error('Error fetching AI response:', error);
+    } finally {
+      setIsAiResponding(false); // AI 응답이 완료된 후 사용자가 입력할 수 있도록 설정
     }
   };
 
   // 메시지를 전송하고 AI 응답을 처리하는 함수
   const sendMessage = () => {
-    if (!newMessage.trim()) return; // 빈 메시지 방지
+    if (!newMessage.trim() || isAiResponding) return; // 빈 메시지 방지
 
     // 사용자 메시지를 화면에 추가
     setMessages((prevMessages) => [
