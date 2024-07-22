@@ -1,11 +1,12 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import ScrollableBox from '../components/ScrollableBox';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-
+import api from '../api';
 const ResultPage: React.FC = () => {
+  const { channel_id } = useParams<{ channel_id: string }>();
   // useLocation 훅을 사용하여 현재 페이지로 전달된 데이터를 가져옴.
   // location.state를 통해 이전 페이지에서 넘겨받은 userInput과 channelId를 추출
   // 만약 state가 없을 경우를 대비해 기본값을 설정
@@ -24,18 +25,15 @@ const ResultPage: React.FC = () => {
   const [chars, setChars] = useState('');
 
   useEffect(() => {
-    console.log(
-      '컴포넌트가 마운트되거나 channelId가 변경되었습니다:',
-      channelId,
-    );
+    console.log('Component mounted or channel_id changed:', channelId);
     if (!channelId) {
-      console.error('Channel ID는 필수입니다');
+      console.error('Channel ID is required');
       return;
     }
 
-    const channelIdNumber = parseInt(channelId, 10); // channelId를 숫자로 변환합니다.
+    const channelIdNumber = parseInt(channelId, 10); // channel_id를 숫자로 변환합니다.
     if (isNaN(channelIdNumber)) {
-      console.error('유효하지 않은 Channel ID입니다');
+      console.error('Invalid Channel ID');
       return;
     }
 
@@ -79,19 +77,19 @@ const ResultPage: React.FC = () => {
                     setChars((prev) => prev + data.content + '\n'); // 새로운 줄로 추가
                   }
                 } catch (error) {
-                  console.error('JSON 파싱 오류:', error, jsonPart);
+                  console.error('Error parsing JSON:', error, jsonPart);
                 }
               }
             }
           }
         }
       } catch (error) {
-        console.error('메시지 전송 오류:', error);
+        console.error('Error posting message:', error);
       }
     };
 
     aiRespond();
-  }, [channelId]);
+  }, [channel_id]);
 
   const handleButtonClick = () => {
     Swal.fire({
@@ -155,7 +153,31 @@ const ResultPage: React.FC = () => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log('게시판 제목 확인됨:', result.value);
+        const title = result.value;
+        const postData = {
+          title: title,
+          content: chars.split('\n').join(' '),
+          category_ids: [1], // 여기에 실제 카테고리 ID를 넣으세요
+        };
+
+        api
+          .post('http://localhost:8000/api/v1/posts/', postData, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+          .then((response) => {
+            console.log('게시판에 등록된 데이터:', response.data);
+            Swal.fire(
+              '등록 완료',
+              '게시판에 성공적으로 등록되었습니다.',
+              'success',
+            );
+          })
+          .catch((error) => {
+            console.error('게시판 등록 오류:', error);
+            Swal.fire('등록 실패', '게시판 등록에 실패했습니다.', 'error');
+          });
       }
     });
   };
