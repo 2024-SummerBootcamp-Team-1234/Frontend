@@ -33,6 +33,7 @@ const LoginPage: React.FC = () => {
       const { access, refresh } = response.data.token;
       localStorage.setItem('token', access);
       localStorage.setItem('refresh_token', refresh);
+      console.log('로그인 성공');
       navigate('/MainPage2');
     } catch (err) {
       setError('로그인에 실패했습니다. 다시 시도해주세요.');

@@ -45,10 +45,32 @@ const CarouselItems: React.FC = () => {
         beforeChange: (_: number, next: number) => setActiveSlide(next),
     };
 
+    // useEffect(() => {
+    //     const token = localStorage.getItem('token');
+    //     const fetchPosts = async () => {
+    //         try {
+    //             const response = await axios.get('http://localhost:8000/api/v1/posts/users'); // 실제 API 엔드포인트로 변경
+    //             setPosts(response.data);
+    //         } catch (error) {
+    //             console.error('게시물을 가져오는 중 에러 발생:', error);
+    //         }
+    //     };
+    //     fetchPosts();
+    // }, []);
+
     useEffect(() => {
+        const token = localStorage.getItem('token'); // 로컬 스토리지에서 토큰을 가져옵니다.
+        console.log('로컬 스토리지에서 가져온 토큰:', token);
         const fetchPosts = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/v1/posts/all'); // 실제 API 엔드포인트로 변경
+                const response = await axios.get('http://localhost:8000/api/v1/posts/users', {                    
+                    headers: {
+                        'accept': 'application/json',
+                        'X-CSRFToken': token, // 가져온 토큰을 X-CSRFToken 헤더에 설정합니다.
+                        'Authorization': `Bearer ${token}` // 필요한 경우 추가적인 인증 헤더를 설정합니다.
+                    }
+                });
+                console.log('토큰');
                 setPosts(response.data);
             } catch (error) {
                 console.error('게시물을 가져오는 중 에러 발생:', error);
@@ -57,9 +79,8 @@ const CarouselItems: React.FC = () => {
         fetchPosts();
     }, []);
 
-
     const renderPost = (post: Post, index: number) => (
-        <div key={index} className={`h-[57vh] my-[80px] rounded-6xl shadow-6xl transition-all duration-500 border-2 border-solid border-white
+        <div key={post.id} className={`h-[57vh] my-[80px] rounded-6xl shadow-6xl transition-all duration-500 border-2 border-solid border-white
                     ${activeSlide === index
                 ? 'bg-GainsboroColor bg-opacity-100 text-black transform scale-110'
                 : 'bg-gray-300 bg-opacity-80 text-gray-800 transform scale-85'

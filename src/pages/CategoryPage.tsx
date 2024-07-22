@@ -41,6 +41,15 @@ const CategoryPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
+    //선택된 카테고리의 ID 값을 추출합니다.
+    const selectedCategoryIds = selectedCategories.map(category => category.id);
+
+    // URLSearchParams를 사용하여 쿼리 파라미터를 생성합니다.
+    const queryParams = new URLSearchParams();
+    selectedCategoryIds.forEach(id => queryParams.append('categoryIds', id.toString()));
+
+    // 다른 페이지로 이동하면서 쿼리 파라미터 전달
+    // navigate('/JudgePageCopy?${queryParams.toString()}');
     navigate('/JudgePageCopy');
   };
 
