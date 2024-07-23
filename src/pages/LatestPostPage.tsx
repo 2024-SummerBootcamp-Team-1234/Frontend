@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
 import Slider from 'react-slick';
 import ForNextPageWhiteButton from '../components/ForNextPageWhiteButton';
 import 'slick-carousel/slick/slick.css';
@@ -32,6 +31,7 @@ interface Post {
   content: string;
   vote: number; // 좋아요 개수를 나타내는 필드
   likedByUser: boolean; // 사용자가 좋아요를 눌렀는지 여부를 나타내는 필드
+  created_at: string; // 게시물 작성 날짜를 나타내는 필드
 }
 
 const CarouselItems: React.FC = () => {
@@ -121,54 +121,67 @@ const CarouselItems: React.FC = () => {
     }
   };
 
-  const renderPost = (post: Post, index: number) => (
-    <div
-      key={index}
-      className={`h-[57vh] my-[80px] rounded-6xl shadow-6xl transition-all duration-500 border-2 border-solid border-white
-                    ${activeSlide === index
-          ? 'bg-GainsboroColor bg-opacity-100 text-black transform scale-110'
-          : 'bg-gray-300 bg-opacity-80 text-gray-800 transform scale-85'
-        }`}
-    >
-      <div className="p-14">
-        <div className="flex justify-between items-start mb-3">
-          <div className="font-sans font-bold text-4xl">
-            {post.name}의 재판 결과
-          </div>
-          <button
-            onClick={() => handleLike(post.id)}
-            className="flex flex-col items-center bg-like-image w-6 h-6 bg-no-repeat bg-contain"
-            style={{ marginTop: '1rem' }}
-          >
-            <span className="text-xs mt-8">{post.vote}</span>
-          </button>
-        </div>
+  const renderPost = (post: Post, index: number) => {
+    const formattedDate = new Date(post.created_at).toLocaleDateString(
+      'ko-KR',
+      {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      },
+    );
 
-        <div className="overflow-x-auto whitespace-nowrap custom-scrollbar">
-          {post.categories.map((cat, i) => (
-            <div
-              key={i}
-              className="bg-ConcordColor text-white font-sans font-bold text-xl inline-block px-3 py-1 rounded-lg m-1"
-            >
-              {categoryMap[cat]}
+    return (
+      <div
+        key={index}
+        className={`h-[57vh] my-[80px] rounded-6xl shadow-6xl transition-all duration-500 border-2 border-solid border-white
+                      ${
+                        activeSlide === index
+                          ? 'bg-GainsboroColor bg-opacity-100 text-black transform scale-110'
+                          : 'bg-gray-300 bg-opacity-80 text-gray-800 transform scale-85'
+                      }`}
+      >
+        <div className="p-14">
+          <div className="text-gray-600 text-xs mb-1">{formattedDate}</div>
+          <div className="flex justify-between items-start mb-2">
+            <div className="font-sans font-bold text-4xl">
+              {post.name}의 재판 결과
             </div>
-          ))}
-        </div>
+            <button
+              onClick={() => handleLike(post.id)}
+              className="flex flex-col items-center bg-like-image w-6 h-6 bg-no-repeat bg-contain"
+              style={{ marginTop: '1rem' }}
+            >
+              <span className="text-xs mt-8">{post.vote}</span>
+            </button>
+          </div>
 
-        <div className="text-start my-3 text-black font-sans font-normal text-2xl">
-          판결 : {post.title}
-        </div>
+          <div className="overflow-x-auto whitespace-nowrap custom-scrollbar">
+            {post.categories.map((cat, i) => (
+              <div
+                key={i}
+                className="bg-ConcordColor text-white font-sans font-bold text-xl inline-block px-3 py-1 rounded-lg m-1"
+              >
+                {categoryMap[cat]}
+              </div>
+            ))}
+          </div>
 
-        <div className="bg-VeryLightGrayColor w-[100%] h-[32vh] rounded-4xl py-7 pl-7 pr-4 relative">
-          <div className="overflow-y-auto scrollbar-slider h-full">
-            <div className="font-sans font-normal text-xl mx-2">
-              {post.content}
+          <div className="text-start my-3 text-black font-sans font-normal text-2xl">
+            판결 : {post.title}
+          </div>
+
+          <div className="bg-VeryLightGrayColor w-[100%] h-[32vh] rounded-4xl py-7 pl-7 pr-4 relative">
+            <div className="overflow-y-auto scrollbar-slider h-full">
+              <div className="font-sans font-normal text-xl mx-2">
+                {post.content}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="bg-postPageBg-image bg-cover bg-center w-screen h-screen flex flex-col">

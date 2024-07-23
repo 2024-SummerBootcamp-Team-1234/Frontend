@@ -8,15 +8,12 @@ import api from '../api';
 const ResultPage: React.FC = () => {
   const { channel_id } = useParams<{ channel_id: string }>();
   // useLocation 훅을 사용하여 현재 페이지로 전달된 데이터를 가져옴.
-  // location.state를 통해 이전 페이지에서 넘겨받은 userInput과 channelId를 추출
-  // 만약 state가 없을 경우를 대비해 기본값을 설정
   const location = useLocation();
-  // 동준이형 -------------------------------------
   const { combinedMessages, channelId, categoryIds } = location.state || {
     combinedMessages: [],
     channelId: '',
     categoryIds: [],
-  }; 
+  };
 
   // 콘솔에 불러오는 부분 -------------------------
   useEffect(() => {
@@ -51,9 +48,14 @@ const ResultPage: React.FC = () => {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ message: 'combinedMessages' }),
+            body: JSON.stringify({ message: combinedMessages }),
           },
         );
+
+        if (!response.body) {
+          throw new Error('Response body is null');
+        }
+
         const reader = response.body.getReader();
         const decoder = new TextDecoder('utf-8');
         let done = false;
@@ -161,7 +163,7 @@ const ResultPage: React.FC = () => {
         const postData = {
           title: title,
           content: chars.split('\n').join(' '),
-          category_ids: [1], // 여기에 실제 카테고리 ID를 넣으세요
+          category_ids: categoryIds, // 여기에 실제 카테고리 ID를 넣으세요
         };
 
         api
@@ -176,7 +178,9 @@ const ResultPage: React.FC = () => {
               '등록 완료',
               '게시판에 성공적으로 등록되었습니다.',
               'success',
-            );
+            ).then(() => {
+              navigate('/LatestPostPage'); // 게시판 페이지로 이동
+            });
           })
           .catch((error) => {
             console.error('게시판 등록 오류:', error);

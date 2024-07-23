@@ -11,23 +11,41 @@ type CategoryMap = {
 };
 
 const categoryMap: CategoryMap = {
-    0: '저작권', 1: '교통사고', 2: '사기', 3: '이혼', 4: '성범죄',
-    5: '마약', 6: '의료 과실', 7: '학교 폭력', 8: '폭행', 9: '환경오염',
+    0: '저작권',
+    1: '교통사고',
+    2: '사기',
+    3: '이혼',
+    4: '성범죄',
+    5: '마약',
+    6: '의료 과실',
+    7: '학교 폭력',
+    8: '폭행',
+    9: '환경오염',
 };
+
 interface Post {
     id: number;
     name: string;
     categories: number[];
     title: string;
     content: string;
+    created_at: string; // 게시물 작성 날짜를 나타내는 필드
 }
 
 const CarouselItems: React.FC = () => {
     const navigate = useNavigate();
-    const handleButtonClickToBack = () => { navigate('/LatestPostPage'); };
-    const handleButtonClickToHome = () => { navigate('/'); };
-    const handlePrevious = () => { sliderRef.current?.slickPrev(); };
-    const handleNext = () => { sliderRef.current?.slickNext(); };
+    const handleButtonClickToBack = () => {
+        navigate('/LatestPostPage');
+    };
+    const handleButtonClickToHome = () => {
+        navigate('/');
+    };
+    const handlePrevious = () => {
+        sliderRef.current?.slickPrev();
+    };
+    const handleNext = () => {
+        sliderRef.current?.slickNext();
+    };
 
     const [posts, setPosts] = useState<Post[]>([]);
     const [activeSlide, setActiveSlide] = useState<number>(0);
@@ -51,15 +69,25 @@ const CarouselItems: React.FC = () => {
         const fetchPosts = async () => {
             try {
                 console.log('토큰');
-                const response = await axios.get('http://localhost:8000/api/v1/posts/users', {                    
-                    headers: {
-                        'accept': 'application/json',
-                        'X-CSRFToken': token, // 가져온 토큰을 X-CSRFToken 헤더에 설정합니다.
-                        'Authorization': `Bearer ${token}` // 필요한 경우 추가적인 인증 헤더를 설정합니다.
-                    }
-                });
+                const response = await axios.get(
+                    'http://localhost:8000/api/v1/posts/users',
+                    {
+                        headers: {
+                            accept: 'application/json',
+                            'X-CSRFToken': token, // 가져온 토큰을 X-CSRFToken 헤더에 설정합니다.
+                            Authorization: `Bearer ${token}`, // 필요한 경우 추가적인 인증 헤더를 설정합니다.
+                        },
+                    },
+                );
                 console.log('토큰');
-                setPosts(response.data);
+                const postsData = response.data.map((post: Post) => ({
+                    ...post,
+                    created_at:
+                        new Date(post.created_at).toString() !== 'Invalid Date'
+                            ? new Date(post.created_at).toISOString()
+                            : '', // 유효한 날짜인지 확인
+                }));
+                setPosts(postsData);
             } catch (error) {
                 console.error('게시물을 가져오는 중 에러 발생:', error);
             }
@@ -67,40 +95,62 @@ const CarouselItems: React.FC = () => {
         fetchPosts();
     }, []);
 
-    const renderPost = (post: Post, index: number) => (
-        <div key={post.id} className={`h-[57vh] my-[80px] rounded-6xl shadow-6xl transition-all duration-500 border-2 border-solid border-white
-                    ${activeSlide === index
-                ? 'bg-GainsboroColor bg-opacity-100 text-black transform scale-110'
-                : 'bg-gray-300 bg-opacity-80 text-gray-800 transform scale-85'
-            }`}>
-            <div className="p-14">
-                <div className="text-center mb-3 font-sans font-bold text-4xl">{post.name}의 재판 결과</div>
+    const renderPost = (post: Post, index: number) => {
+        const date = new Date(post.created_at);
+        const formattedDate =
+            date.toString() !== 'Invalid Date'
+                ? date
+                    .toLocaleDateString('ko-KR', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                    })
+                    .replace(/\//g, '.')
+                : '유효하지 않은 날짜';
 
-                <div className="overflow-x-auto whitespace-nowrap custom-scrollbar ">
-                    {post.categories.map((cat, i) => (
-                        <div
-                            key={i}
-                            className="bg-ConcordColor text-white font-sans font-bold text-xl inline-block px-3 py-1 rounded-lg m-1"
-                        >
-                            {categoryMap[cat]}
-                        </div>
-                    ))}
-                </div>
-
-                <div className="text-start my-3 text-black font-sans font-normal text-2xl">판결 : {post.title}</div>
-
-                <div className="bg-VeryLightGrayColor w-[100%] h-[31vh] rounded-4xl py-7 pl-7 pr-4 relative">
-
-                    <div className="overflow-y-auto scrollbar-slider h-full">
-                        <div className="font-sans font-normal text-xl mx-2">{post.content}</div>
+        return (
+            <div
+                key={post.id}
+                className={`h-[57vh] my-[80px] rounded-6xl shadow-6xl transition-all duration-500 border-2 border-solid border-white
+                        ${activeSlide === index
+                        ? 'bg-GainsboroColor bg-opacity-100 text-black transform scale-110'
+                        : 'bg-gray-300 bg-opacity-80 text-gray-800 transform scale-85'
+                    }`}
+            >
+                <div className="p-14">
+                    <div className="text-gray-600 text-xs mb-1 text-left">
+                        {formattedDate}
+                    </div>
+                    <div className="text-left mb-3 font-sans font-bold text-4xl">
+                        {post.name}의 재판 결과
                     </div>
 
+                    <div className="overflow-x-auto whitespace-nowrap custom-scrollbar ">
+                        {post.categories.map((cat, i) => (
+                            <div
+                                key={i}
+                                className="bg-ConcordColor text-white font-sans font-bold text-xl inline-block px-3 py-1 rounded-lg m-1"
+                            >
+                                {categoryMap[cat]}
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="text-start my-3 text-black font-sans font-normal text-2xl">
+                        판결 : {post.title}
+                    </div>
+
+                    <div className="bg-VeryLightGrayColor w-[100%] h-[32vh] rounded-4xl py-7 pl-7 pr-4 relative">
+                        <div className="overflow-y-auto scrollbar-slider h-full">
+                            <div className="font-sans font-normal text-xl mx-2">
+                                {post.content}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
-
-        </div>
-    );
+        );
+    };
 
     return (
         <div className="bg-postPageBg-image bg-cover bg-center w-screen h-screen flex flex-col">
