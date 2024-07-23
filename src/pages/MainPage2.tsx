@@ -10,7 +10,7 @@ const MainPage2: React.FC = () => {
     navigate('/CategoryPage');
   };
   const forumButtonClick = () => {
-    navigate('/MyPostPage');
+    navigate('/LatestPostPage');
   };
   const myTrialButtonClick = () => {
     navigate('/');

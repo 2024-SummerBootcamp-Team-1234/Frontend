@@ -45,24 +45,12 @@ const CarouselItems: React.FC = () => {
         beforeChange: (_: number, next: number) => setActiveSlide(next),
     };
 
-    // useEffect(() => {
-    //     const token = localStorage.getItem('token');
-    //     const fetchPosts = async () => {
-    //         try {
-    //             const response = await axios.get('http://localhost:8000/api/v1/posts/users'); // 실제 API 엔드포인트로 변경
-    //             setPosts(response.data);
-    //         } catch (error) {
-    //             console.error('게시물을 가져오는 중 에러 발생:', error);
-    //         }
-    //     };
-    //     fetchPosts();
-    // }, []);
-
     useEffect(() => {
         const token = localStorage.getItem('token'); // 로컬 스토리지에서 토큰을 가져옵니다.
         console.log('로컬 스토리지에서 가져온 토큰:', token);
         const fetchPosts = async () => {
             try {
+                console.log('토큰');
                 const response = await axios.get('http://localhost:8000/api/v1/posts/users', {                    
                     headers: {
                         'accept': 'application/json',
