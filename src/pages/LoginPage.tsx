@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import { FaUser, FaLock } from 'react-icons/fa';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+//import axios from 'axios';
+import axiosInstance from '../components/axiosInstance'; // 추가된 부분
 
 const LoginPage: React.FC = () => {
   const [id, setId] = useState('');
@@ -22,13 +23,10 @@ const LoginPage: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        'http://localhost:8000/api/v1/users/login',
-        {
-          id,
-          password,
-        },
-      );
+      const response = await axiosInstance.post('/users/login', {
+        id,
+        password,
+      });
 
       const { access, refresh } = response.data.token;
       localStorage.setItem('token', access);

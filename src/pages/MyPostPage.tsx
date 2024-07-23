@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+//import axios from 'axios';
+import axiosInstance from '../components/axiosInstance';
 
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -69,7 +70,7 @@ const CarouselItems: React.FC = () => {
     const fetchPosts = async () => {
       try {
         console.log('토큰');
-        const response = await axios.get(
+        const response = await axiosInstance.get(
           'http://localhost:8000/api/v1/posts/users',
           {
             headers: {
