@@ -131,17 +131,19 @@ const CarouselItems: React.FC = () => {
       },
     );
 
+    // 카테고리가 없는지 확인하는 변수
+    const hasCategories = post.categories && post.categories.length > 0;
+
     return (
       <div
         key={index}
-        className={`h-[57vh] my-[80px] rounded-6xl shadow-6xl transition-all duration-500 border-2 border-solid border-white
-                      ${
-                        activeSlide === index
-                          ? 'bg-GainsboroColor bg-opacity-100 text-black transform scale-110'
-                          : 'bg-gray-300 bg-opacity-80 text-gray-800 transform scale-85'
-                      }`}
+        className={`h-[60vh] my-[80px] rounded-6xl shadow-6xl transition-all duration-500 border-2 border-solid border-white
+                      ${activeSlide === index
+            ? 'bg-GainsboroColor bg-opacity-100 text-black transform scale-110'
+            : 'bg-gray-300 bg-opacity-80 text-gray-800 transform scale-85'
+          }`}
       >
-        <div className="p-14">
+        <div className="px-14 pt-10 py-14">
           <div className="text-gray-600 text-xs mb-1">{formattedDate}</div>
           <div className="flex justify-between items-start mb-2">
             <div className="font-sans font-bold text-4xl">
@@ -156,22 +158,24 @@ const CarouselItems: React.FC = () => {
             </button>
           </div>
 
-          <div className="overflow-x-auto whitespace-nowrap custom-scrollbar">
-            {post.categories.map((cat, i) => (
-              <div
-                key={i}
-                className="bg-ConcordColor text-white font-sans font-bold text-xl inline-block px-3 py-1 rounded-lg m-1"
-              >
-                {categoryMap[cat]}
-              </div>
-            ))}
-          </div>
+          {hasCategories && (
+            <div className="overflow-x-auto whitespace-nowrap custom-scrollbar">
+              {post.categories.map((cat, i) => (
+                <div
+                  key={i}
+                  className="bg-ConcordColor text-white font-sans font-bold text-xl inline-block px-3 py-1 rounded-lg m-1"
+                >
+                  {categoryMap[cat]}
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="text-start my-3 text-black font-sans font-normal text-2xl">
             판결 : {post.title}
           </div>
 
-          <div className="bg-VeryLightGrayColor w-[100%] h-[32vh] rounded-4xl py-7 pl-7 pr-4 relative">
+          <div className={`bg-VeryLightGrayColor w-[100%] ${hasCategories ? 'h-[33vh]' : 'h-[39vh]'} rounded-4xl py-7 pl-7 pr-4 relative`}>
             <div className="overflow-y-auto scrollbar-slider h-full">
               <div className="font-sans font-normal text-xl mx-2">
                 {post.content}
@@ -196,7 +200,7 @@ const CarouselItems: React.FC = () => {
         ></button>
       </div>
 
-      <div className="relative flex flex-col justify-center pt-12">
+      <div className="relative flex flex-col justify-center ">
         <button
           onClick={handlePrevious}
           className="absolute left-[29.5%] px-4 py-2 font-bold text-3xl bg-gray-300 rounded-full z-10 border-2 border-solid border-white"

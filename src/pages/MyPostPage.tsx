@@ -108,6 +108,9 @@ const CarouselItems: React.FC = () => {
                     .replace(/\//g, '.')
                 : '유효하지 않은 날짜';
 
+        // 카테고리가 없는지 확인하는 변수
+        const hasCategories = post.categories && post.categories.length > 0;
+
         return (
             <div
                 key={post.id}
@@ -125,22 +128,24 @@ const CarouselItems: React.FC = () => {
                         {post.name}의 재판 결과
                     </div>
 
-                    <div className="overflow-x-auto whitespace-nowrap custom-scrollbar ">
-                        {post.categories.map((cat, i) => (
-                            <div
-                                key={i}
-                                className="bg-ConcordColor text-white font-sans font-bold text-xl inline-block px-3 py-1 rounded-lg m-1"
-                            >
-                                {categoryMap[cat]}
-                            </div>
-                        ))}
-                    </div>
+                    {hasCategories && (
+                        <div className="overflow-x-auto whitespace-nowrap custom-scrollbar">
+                            {post.categories.map((cat, i) => (
+                                <div
+                                    key={i}
+                                    className="bg-ConcordColor text-white font-sans font-bold text-xl inline-block px-3 py-1 rounded-lg m-1"
+                                >
+                                    {categoryMap[cat]}
+                                </div>
+                            ))}
+                        </div>
+                    )}
 
                     <div className="text-start my-3 text-black font-sans font-normal text-2xl">
                         판결 : {post.title}
                     </div>
 
-                    <div className="bg-VeryLightGrayColor w-[100%] h-[32vh] rounded-4xl py-7 pl-7 pr-4 relative">
+                    <div className={`bg-VeryLightGrayColor w-[100%] ${hasCategories ? 'h-[33vh]' : 'h-[39vh]'} rounded-4xl py-7 pl-7 pr-4 relative`}>
                         <div className="overflow-y-auto scrollbar-slider h-full">
                             <div className="font-sans font-normal text-xl mx-2">
                                 {post.content}
