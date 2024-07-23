@@ -109,10 +109,10 @@ const CarouselItems: React.FC = () => {
         prevPosts.map((post) =>
           post.id === postId
             ? {
-                ...post,
-                vote: post.likedByUser ? post.vote - 1 : post.vote + 1, // likedByUser 상태에 따라 vote 값을 증가 또는 감소
-                likedByUser: !post.likedByUser,
-              }
+              ...post,
+              vote: post.likedByUser ? post.vote - 1 : post.vote + 1, // likedByUser 상태에 따라 vote 값을 증가 또는 감소
+              likedByUser: !post.likedByUser,
+            }
             : post,
         ),
       );
@@ -125,11 +125,10 @@ const CarouselItems: React.FC = () => {
     <div
       key={index}
       className={`h-[57vh] my-[80px] rounded-6xl shadow-6xl transition-all duration-500 border-2 border-solid border-white
-                    ${
-                      activeSlide === index
-                        ? 'bg-GainsboroColor bg-opacity-100 text-black transform scale-110'
-                        : 'bg-gray-300 bg-opacity-80 text-gray-800 transform scale-85'
-                    }`}
+                    ${activeSlide === index
+          ? 'bg-GainsboroColor bg-opacity-100 text-black transform scale-110'
+          : 'bg-gray-300 bg-opacity-80 text-gray-800 transform scale-85'
+        }`}
     >
       <div className="p-14">
         <div className="flex justify-between items-start mb-3">

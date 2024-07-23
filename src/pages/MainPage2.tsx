@@ -13,7 +13,7 @@ const MainPage2: React.FC = () => {
     navigate('/LatestPostPage');
   };
   const myTrialButtonClick = () => {
-    navigate('/');
+    navigate('/MyPostPage');
   };
 
   const logoutButtonClick = async () => {

@@ -89,7 +89,7 @@ const CarouselItems: React.FC = () => {
 
                 <div className="text-start my-3 text-black font-sans font-normal text-2xl">판결 : {post.title}</div>
 
-                <div className="bg-VeryLightGrayColor w-[100%] h-[32vh] rounded-4xl py-7 pl-7 pr-4 relative">
+                <div className="bg-VeryLightGrayColor w-[100%] h-[31vh] rounded-4xl py-7 pl-7 pr-4 relative">
 
                     <div className="overflow-y-auto scrollbar-slider h-full">
                         <div className="font-sans font-normal text-xl mx-2">{post.content}</div>
