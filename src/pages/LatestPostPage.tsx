@@ -126,8 +126,8 @@ const CarouselItems: React.FC = () => {
       'ko-KR',
       {
         year: 'numeric',
-        month: 'long',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
       },
     );
 
@@ -142,7 +142,8 @@ const CarouselItems: React.FC = () => {
                       }`}
       >
         <div className="p-14">
-          <div className="flex justify-between items-start mb-3">
+          <div className="text-gray-600 text-xs mb-1">{formattedDate}</div>
+          <div className="flex justify-between items-start mb-2">
             <div className="font-sans font-bold text-4xl">
               {post.name}의 재판 결과
             </div>
@@ -153,9 +154,6 @@ const CarouselItems: React.FC = () => {
             >
               <span className="text-xs mt-8">{post.vote}</span>
             </button>
-          </div>
-          <div className="text-gray-600 text-sm mb-2">
-            작성 날짜: {formattedDate}
           </div>
 
           <div className="overflow-x-auto whitespace-nowrap custom-scrollbar">
