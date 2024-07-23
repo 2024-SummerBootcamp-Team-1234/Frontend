@@ -7,7 +7,7 @@ import Send from '../assets/Send.png';
 import UserMessage from '../components/UserMessage';
 import AiMessage from '../components/AiMessage';
 import ChatButton from '../components/ChatButton';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface ChatMessage {
   message: string;
@@ -36,17 +36,21 @@ const JudgePageCopy: React.FC = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messageToSendRef = useRef<string>(''); // 메시지를 저장할 ref 추가
 
+  const location = useLocation();
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
+    const { categoryIds } = location.state || { categoryIds: [] };
+
     navigate('/ResultPage', {
-      state: { combinedMessages, channelId },
+      state: { combinedMessages, channelId, categoryIds },
     });
   };
 
   const handleButtonClick2 = () => {
+    const { categoryIds } = location.state || { categoryIds: [] };
     navigate('/JudgePageCopy2', {
-      state: { combinedMessages, channelId },
+      state: { combinedMessages, channelId, categoryIds },
     });
   };
 

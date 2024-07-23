@@ -11,15 +11,19 @@ const ResultPage: React.FC = () => {
   // location.state를 통해 이전 페이지에서 넘겨받은 userInput과 channelId를 추출
   // 만약 state가 없을 경우를 대비해 기본값을 설정
   const location = useLocation();
-  const { combinedMessages, channelId } = location.state || {
+  // 동준이형 -------------------------------------
+  const { combinedMessages, channelId, categoryIds } = location.state || {
     combinedMessages: [],
     channelId: '',
-  };
+    categoryIds: [],
+  }; 
 
+  // 콘솔에 불러오는 부분 -------------------------
   useEffect(() => {
     console.log('Combined Messages:', combinedMessages);
     console.log('Channel ID:', channelId);
-  }, [combinedMessages, channelId]);
+    console.log('Category IDs:', categoryIds);
+  }, [combinedMessages, channelId, categoryIds]);
 
   const navigate = useNavigate();
   const [chars, setChars] = useState('');

@@ -40,10 +40,12 @@ const JudgePageCopy2: React.FC = () => {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
+    const { categoryIds } = location.state || { categoryIds: [] };
     navigate('/ResultPage', {
       state: {
         combinedMessages,
         channelId,
+        categoryIds,
       },
     });
   };
