@@ -84,12 +84,11 @@ const JudgePageCopy2: React.FC = () => {
           ),
         },
       ]);
+
       setAiResponseIndex(aiResponseIndex + 1);
+
       if (response === ' ') {
         await getAiResponse();
-      } else {
-        setIsAiResponding(false);
-        setAiResponseIndex(aiResponseIndex + 1);
       }
     }
   };
@@ -193,7 +192,9 @@ const JudgePageCopy2: React.FC = () => {
     //setIsAiTurn(true); // 사용자가 메시지를 보낸 후에는 AI가 응답할 차례
 
     // AI가 응답하도록 설정 (딜레이를 줄 수도 있음)
-    setTimeout(aiRespond, 1000);
+    setTimeout(() => {
+      aiRespond();
+    }, 1000);
   };
 
   useEffect(() => {
