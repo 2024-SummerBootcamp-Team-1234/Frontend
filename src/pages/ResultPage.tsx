@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import ScrollableBox from '../components/ScrollableBox';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-
+import api from '../api';
 const ResultPage: React.FC = () => {
+  const { channel_id } = useParams<{ channel_id: string }>();
   // useLocation 훅을 사용하여 현재 페이지로 전달된 데이터를 가져옴.
   // location.state를 통해 이전 페이지에서 넘겨받은 userInput과 channelId를 추출
   // 만약 state가 없을 경우를 대비해 기본값을 설정
@@ -25,6 +26,74 @@ const ResultPage: React.FC = () => {
   }, [combinedMessages, channelId, categoryIds]);
 
   const navigate = useNavigate();
+  const [chars, setChars] = useState('');
+
+  useEffect(() => {
+    console.log('Component mounted or channel_id changed:', channelId);
+    if (!channelId) {
+      console.error('Channel ID is required');
+      return;
+    }
+
+    const channelIdNumber = parseInt(channelId, 10); // channel_id를 숫자로 변환합니다.
+    if (isNaN(channelIdNumber)) {
+      console.error('Invalid Channel ID');
+      return;
+    }
+
+    // 페이지 로드 시 POST 요청 보내기
+    const aiRespond = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/api/v1/channels/virtual_messages/${channelId}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message: 'combinedMessages' }),
+          },
+        );
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+        let done = false;
+        let partialChunk = '';
+        while (!done) {
+          const { value, done: doneReading } = await reader.read();
+          done = doneReading;
+          const chunk = decoder.decode(value, { stream: true });
+          partialChunk += chunk;
+          console.log(chunk);
+          const lines = partialChunk.split('\n');
+          if (!done) {
+            partialChunk = lines.pop() || '';
+          } else {
+            partialChunk = '';
+          }
+
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              const jsonPart = line.substring(6).trim();
+              if (jsonPart.length > 0) {
+                try {
+                  const data = JSON.parse(jsonPart);
+                  if (data.content) {
+                    setChars((prev) => prev + data.content + '\n'); // 새로운 줄로 추가
+                  }
+                } catch (error) {
+                  console.error('Error parsing JSON:', error, jsonPart);
+                }
+              }
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error posting message:', error);
+      }
+    };
+
+    aiRespond();
+  }, [channel_id]);
 
   const handleButtonClick = () => {
     Swal.fire({
@@ -88,13 +157,37 @@ const ResultPage: React.FC = () => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log('Board title confirmed:', result.value);
+        const title = result.value;
+        const postData = {
+          title: title,
+          content: chars.split('\n').join(' '),
+          category_ids: [1], // 여기에 실제 카테고리 ID를 넣으세요
+        };
+
+        api
+          .post('http://localhost:8000/api/v1/posts/', postData, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+          .then((response) => {
+            console.log('게시판에 등록된 데이터:', response.data);
+            Swal.fire(
+              '등록 완료',
+              '게시판에 성공적으로 등록되었습니다.',
+              'success',
+            );
+          })
+          .catch((error) => {
+            console.error('게시판 등록 오류:', error);
+            Swal.fire('등록 실패', '게시판 등록에 실패했습니다.', 'error');
+          });
       }
     });
   };
 
   return (
-    <div className="w-screen h-screen bg-cover bg-center bg-result.back-image">
+    <div className="w-screen h-screen bg-cover bg-center bg-result.back-image overflow-hidden">
       <Link to="/MainPage2" className="absolute top-[73px] left-[59px]">
         <div className="w-12 h-12 bg-home-image bg-cover bg-center"></div>
       </Link>
@@ -108,8 +201,8 @@ const ResultPage: React.FC = () => {
             <div className="flex-col bg-black opacity-90 rounded-[25px]">
               <div className="flex">
                 <ScrollableBox
-                  content='Hello World'
-                  className="w-full h-full max-w-[700px] max-h-[430px]"
+                  content={chars}
+                  className=" h-[400px] w-[670px] "
                 />
               </div>
 
