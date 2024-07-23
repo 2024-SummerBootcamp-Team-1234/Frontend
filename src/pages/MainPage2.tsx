@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import MainPageWhiteButton from '../components/MainPageWhiteButton';
 import MainPageBlackButton from '../components/MainPageBlackButton';
-import axios from 'axios';
+
+import axiosInstance from '../components/axiosInstance';
 
 const MainPage2: React.FC = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const MainPage2: React.FC = () => {
       console.log('Token:', token); // 토큰 확인용 로그
 
       if (token) {
-        await axios.delete(
+        await axiosInstance.delete(
           'http://localhost:8000/api/v1/users/logout', // 로그아웃 엔드포인트
           {
             headers: {
