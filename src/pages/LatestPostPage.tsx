@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+//import axios from 'axios';
+import axiosInstance from '../components/axiosInstance';
 import Slider from 'react-slick';
 import ForNextPageWhiteButton from '../components/ForNextPageWhiteButton';
 import 'slick-carousel/slick/slick.css';
@@ -71,7 +72,7 @@ const CarouselItems: React.FC = () => {
     const fetchPosts = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(
+        const response = await axiosInstance.get(
           'http://localhost:8000/api/v1/posts/all',
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -97,7 +98,7 @@ const CarouselItems: React.FC = () => {
     const token = localStorage.getItem('token'); // 토큰을 로컬 저장소에서 가져오기
     console.log('Sending like request for post ID:', postId);
     try {
-      const response = await axios.patch(
+      const response = await axiosInstance.patch(
         `http://localhost:8000/api/v1/posts/votes/${postId}`,
         {},
         {

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+//import axios from 'axios';
+import axiosInstance from '../components/axiosInstance';
 
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
