@@ -3,11 +3,13 @@ import Background2 from '../assets/Background2.png';
 import Chatting from '../assets/Chatting.png';
 import Mic from '../assets/Mic.png';
 import Send from '../assets/Send.png';
-import UserMessage from '../components/UserMessage';
-import AiMessage from '../components/AiMessage';
+import UserMessageBlack from '../components/UserMessageBlack';
+import AiMessageBlack from '../components/AiMessageBlack';
+import AiMessageWhite from '../components/AiMessageWhite';
 import ChatButton from '../components/ChatButton';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import UserMessageWhite from '../components/UserMessageWhite';
 
 interface ChatMessage {
   message: string;
@@ -28,6 +30,7 @@ const JudgePageCopy2: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [userMessageCount, setUserMessageCount] = useState(0); // 사용자 메시지 카운트
 
   // useLocation 훅을 사용하여 현재 페이지로 전달된 데이터를 가져옴.
   const location = useLocation();
@@ -64,7 +67,7 @@ const JudgePageCopy2: React.FC = () => {
 
   const aiResponses = [
     '원고(소송을 제기한 사람)의 입장을 적어주세요.',
-    '피고(소송을 당한 사람)의 입장을 적어주세요. 피고의 입장 입력 후에 솔로몬이 입장을 확인할 예정입니다. 틀린 내용이 있다면 최후 변론시간에 고쳐주세요.',
+    '피고(소송을 당한 사람)의 입장을 적어주세요. <br>피고의 입장 입력 후에 솔로몬이 각 입장을 요약할 예정입니다. <br>틀린 내용이 있다면 최후 변론시간에 고쳐주세요.',
     ' ',
     '원고의 최후 변론을 적어주세요',
     '피고의 최후 변론을 적어주세요',
@@ -183,6 +186,8 @@ const JudgePageCopy2: React.FC = () => {
       ...prevMessages,
       { message: newMessage, sender: 'user' },
     ]);
+
+    setUserMessageCount(userMessageCount + 1);
 
     // combinedMessages에 새로운 메시지 추가
     setCombinedMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -307,9 +312,16 @@ const JudgePageCopy2: React.FC = () => {
                   <React.Fragment key={index}>
                     {/* 사용자가 보낸 메시지인 경우 */}
                     {msg.sender === 'user' ? (
-                      <UserMessage message={msg.message} />
+                      index === 3 || index === 9 ? (
+                        <UserMessageWhite message={msg.message} />
+                      ) : (
+                        <UserMessageBlack message={msg.message} />
+                      )
+                    ) : // AI가 보낸 메시지인 경우
+                    index === 2 || index === 8 ? (
+                      <AiMessageWhite message={msg.message} />
                     ) : (
-                      <AiMessage message={msg.message} />
+                      <AiMessageBlack message={msg.message} />
                     )}
                     {/* AI 메시지 후 버튼을 표시해야 하는 경우 */}
                     {msg.showButtons && (
