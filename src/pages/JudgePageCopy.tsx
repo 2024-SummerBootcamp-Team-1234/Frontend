@@ -4,8 +4,8 @@ import Background from '../assets/Background.png';
 import Chatting from '../assets/Chatting.png';
 import Mic from '../assets/Mic.png';
 import Send from '../assets/Send.png';
-import UserMessage from '../components/UserMessage';
-import AiMessage from '../components/AiMessage';
+import UserMessageBlack from '../components/UserMessageBlack';
+import AiMessageBlack from '../components/AiMessageBlack';
 import ChatButton from '../components/ChatButton';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -224,9 +224,9 @@ const JudgePageCopy: React.FC = () => {
                   <React.Fragment key={index}>
                     {/* 사용자가 보낸 메시지인 경우 */}
                     {msg.sender === 'user' ? (
-                      <UserMessage message={msg.message} />
+                      <UserMessageBlack message={msg.message} />
                     ) : (
-                      <AiMessage message={msg.message} />
+                      <AiMessageBlack message={msg.message} />
                     )}
                     {/* AI 메시지 후 버튼을 표시해야 하는 경우 */}
                     {msg.showButtons && (
