@@ -3,11 +3,11 @@ import React from 'react';
 import Profile from '../assets/Profile.png';
 import { marked } from 'marked';
 
-interface AiMessageProps {
+interface AiMessageBlackProps {
   message: string;
 }
 
-const AiMessage: React.FC<AiMessageProps> = ({ message }) => {
+const AiMessageBlack: React.FC<AiMessageBlackProps> = ({ message }) => {
   const createMarkup = () => {
     return { __html: marked(message) };
   };
@@ -26,4 +26,4 @@ const AiMessage: React.FC<AiMessageProps> = ({ message }) => {
   );
 };
 
-export default AiMessage;
+export default AiMessageBlack;
