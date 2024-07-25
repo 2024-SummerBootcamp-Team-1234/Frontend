@@ -86,7 +86,7 @@ const CarouselItems: React.FC = () => {
                         new Date(post.created_at).toString() !== 'Invalid Date'
                             ? new Date(post.created_at).toISOString()
                             : '', // 유효한 날짜인지 확인
-                }));
+                })).sort((a: Post, b: Post) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
                 setPosts(postsData);
             } catch (error) {
                 console.error('게시물을 가져오는 중 에러 발생:', error);

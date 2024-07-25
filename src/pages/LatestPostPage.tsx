@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import axios from 'axios';
 import axiosInstance from '../components/axiosInstance';
 import Slider from 'react-slick';
 import ForNextPageWhiteButton from '../components/ForNextPageWhiteButton';
@@ -84,7 +83,8 @@ const CarouselItems: React.FC = () => {
           vote: post.vote !== undefined ? post.vote : 0,
           likedByUser:
             post.likedByUser !== undefined ? post.likedByUser : false,
-        }));
+        })).sort((a: Post, b: Post) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        // .sort ~ : 게시물 최신순으로 정렬
         console.log('Processed posts data:', postsData);
         setPosts(postsData);
       } catch (error) {
