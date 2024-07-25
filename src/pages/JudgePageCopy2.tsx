@@ -69,7 +69,7 @@ const JudgePageCopy2: React.FC = () => {
     '원고(소송을 제기한 사람)의 입장을 적어주세요.',
     '피고(소송을 당한 사람)의 입장을 적어주세요. <br>피고의 입장 입력 후에 솔로몬이 각 입장을 요약할 예정입니다. <br>틀린 내용이 있다면 최후 변론시간에 고쳐주세요.',
     ' ',
-    '원고의 최후 변론을 적어주세요',
+    // '원고의 최후 변론을 적어주세요',
     '피고의 최후 변론을 적어주세요',
     '주어진 주장들을 바탕으로 최종 판결을 내리겠습니다. 버튼을 클릭하여 최종 판결문으로 이동해주세요.',
   ];
@@ -87,12 +87,19 @@ const JudgePageCopy2: React.FC = () => {
           ),
         },
       ]);
+
       setAiResponseIndex(aiResponseIndex + 1);
+
       if (response === ' ') {
         await getAiResponse();
-      } else {
-        setIsAiResponding(false);
-        setAiResponseIndex(aiResponseIndex + 1);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { message: '요약이 완료되었습니다.', sender: 'ai' },
+        ]);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { message: '원고의 최후 변론을 적어주세요', sender: 'ai' },
+        ]);
       }
     }
   };
@@ -195,10 +202,11 @@ const JudgePageCopy2: React.FC = () => {
 
     // 메시지를 보낸 후 입력 필드를 비웁니다.
     setNewMessage('');
-    //setIsAiTurn(true); // 사용자가 메시지를 보낸 후에는 AI가 응답할 차례
 
     // AI가 응답하도록 설정 (딜레이를 줄 수도 있음)
-    setTimeout(aiRespond, 1000);
+    setTimeout(() => {
+      aiRespond();
+    }, 1000);
   };
 
   useEffect(() => {
@@ -310,8 +318,13 @@ const JudgePageCopy2: React.FC = () => {
                 {/* 메시지 목록을 표시합니다. */}
                 {messages.map((msg, index) => (
                   <React.Fragment key={index}>
-                    {/* 사용자가 보낸 메시지인 경우 */}
-                    {msg.sender === 'user' ? (
+                    {/* 인덱스가 6번일 때 */}
+                    {index === 5 ? (
+                      <>
+                        <AiMessageBlack message="요약이 완료되었습니다." />
+                      </>
+                    ) : msg.sender === 'user' ? (
+                      // 사용자가 보낸 메시지인 경우
                       index === 3 || index === 9 ? (
                         <UserMessageWhite message={msg.message} />
                       ) : (
