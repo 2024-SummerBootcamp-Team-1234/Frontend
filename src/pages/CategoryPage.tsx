@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ForNextPageWhiteButton from '../components/ForNextPageWhiteButton';
-
+import LoadingPage from '../components/LoadingPage';
 interface Category {
   id: number;
   name: string;
@@ -131,36 +131,39 @@ const CategoryPage: React.FC = () => {
   };
 
   return (
-    <div className="bg-black bg-category-image bg-cover bg-center min-h-screen flex flex-col items-start p-4 relative">
-      <button
-        className="bg-arrow-image bg-no-repeat bg-contain w-full h-[5vh] flex flex-col items-center mt-7 ml-5"
-        style={{ maxWidth: '3rem' }}
-        onClick={handleButtonClick}
-      ></button>
-
-      {/* 이미지 + Category + Skip > */}
-      <div className="flex justify-start text-white items-center ml-[7rem]">
-        {/* <div className="w-10 h-10 bg-categoryIcon-image bg-no-repeat bg-contain mb-4 mr-4" /> */}
-        <span className="text-6xl font-sans font-bold mb-6">Category</span>
-        <button className="pt-4 pl-10 text-2xl font-sans font-normal">
-          {' '}
-          Skip {'>'}{' '}
-        </button>
-      </div>
-
-      <p className="flex justify-start mb-8 text-white text-2xl font-sans font-normal  ml-[7rem]">
-        재판하고 싶은 분야를 선택해주세요. (다중 선택 가능)
-      </p>
-
-      {categoryGrid()}
-
-      <div className="absolute bottom-12 right-16">
-        <ForNextPageWhiteButton
-          text="재판 참여 시작하기"
+    <>
+      <LoadingPage></LoadingPage>
+      <div className="bg-black bg-category-image bg-cover bg-center min-h-screen flex flex-col items-start p-4 relative">
+        <button
+          className="bg-arrow-image bg-no-repeat bg-contain w-full h-[5vh] flex flex-col items-center mt-7 ml-5"
+          style={{ maxWidth: '3rem' }}
           onClick={handleButtonClick}
-        />
+        ></button>
+
+        {/* 이미지 + Category + Skip > */}
+        <div className="flex justify-start text-white items-center ml-[7rem]">
+          {/* <div className="w-10 h-10 bg-categoryIcon-image bg-no-repeat bg-contain mb-4 mr-4" /> */}
+          <span className="text-6xl font-sans font-bold mb-6">Category</span>
+          <button className="pt-4 pl-10 text-2xl font-sans font-normal">
+            {' '}
+            Skip {'>'}{' '}
+          </button>
+        </div>
+
+        <p className="flex justify-start mb-8 text-white text-2xl font-sans font-normal  ml-[7rem]">
+          재판하고 싶은 분야를 선택해주세요. (다중 선택 가능)
+        </p>
+
+        {categoryGrid()}
+
+        <div className="absolute bottom-12 right-16">
+          <ForNextPageWhiteButton
+            text="재판 참여 시작하기"
+            onClick={handleButtonClick}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

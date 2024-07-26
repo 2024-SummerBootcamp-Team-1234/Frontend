@@ -10,7 +10,7 @@ import ChatButton from '../components/ChatButton';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import UserMessageWhite from '../components/UserMessageWhite';
-
+import LoadingPage from '../components/LoadingPage';
 interface ChatMessage {
   message: string;
   sender: 'user' | 'ai';
@@ -301,86 +301,89 @@ const JudgePageCopy2: React.FC = () => {
 
   // 컴포넌트가 화면에 렌더링하는 부분입니다.
   return (
-    <div
-      className="w-screen h-screen bg-cover bg-center"
-      // 배경 이미지를 설정합니다.
-      style={{ backgroundImage: `url(${Background2})` }}
-    >
-      <div className="w-screen h-screen bg-black bg-opacity-60 flex flex-col items-center justify-center">
-        <div className="w-[1200px] h-[800px] flex flex-col items-center justify-center">
-          <div
-            className="w-[1200px] h-[720px] flex flex-col items-center justify-center px-20 py-20 bg-no-repeat bg-center bg-contain"
-            // 채팅 배경 이미지를 설정합니다.
-            style={{ backgroundImage: `url(${Chatting})` }}
-          >
-            <div className="w-full h-full overflow-y-auto flex flex-col p-4 scrollbar-thumb-rounded scrollbar-thumb-gray-700 scrollbar-track-transparent">
-              <div className="w-full h-fit flex flex-col justify-center gap-y-3 text-white pr-3">
-                {/* 메시지 목록을 표시합니다. */}
-                {messages.map((msg, index) => (
-                  <React.Fragment key={index}>
-                    {/* 인덱스가 6번일 때 */}
-                    {index === 5 ? (
-                      <>
-                        <AiMessageBlack message="요약이 완료되었습니다." />
-                      </>
-                    ) : msg.sender === 'user' ? (
-                      // 사용자가 보낸 메시지인 경우
-                      index === 3 || index === 9 ? (
-                        <UserMessageWhite message={msg.message} />
+    <>
+      <LoadingPage></LoadingPage>
+      <div
+        className="w-screen h-screen bg-cover bg-center"
+        // 배경 이미지를 설정합니다.
+        style={{ backgroundImage: `url(${Background2})` }}
+      >
+        <div className="w-screen h-screen bg-black bg-opacity-60 flex flex-col items-center justify-center">
+          <div className="w-[1200px] h-[800px] flex flex-col items-center justify-center">
+            <div
+              className="w-[1200px] h-[720px] flex flex-col items-center justify-center px-20 py-20 bg-no-repeat bg-center bg-contain"
+              // 채팅 배경 이미지를 설정합니다.
+              style={{ backgroundImage: `url(${Chatting})` }}
+            >
+              <div className="w-full h-full overflow-y-auto flex flex-col p-4 scrollbar-thumb-rounded scrollbar-thumb-gray-700 scrollbar-track-transparent">
+                <div className="w-full h-fit flex flex-col justify-center gap-y-3 text-white pr-3">
+                  {/* 메시지 목록을 표시합니다. */}
+                  {messages.map((msg, index) => (
+                    <React.Fragment key={index}>
+                      {/* 인덱스가 6번일 때 */}
+                      {index === 5 ? (
+                        <>
+                          <AiMessageBlack message="요약이 완료되었습니다." />
+                        </>
+                      ) : msg.sender === 'user' ? (
+                        // 사용자가 보낸 메시지인 경우
+                        index === 3 || index === 9 ? (
+                          <UserMessageWhite message={msg.message} />
+                        ) : (
+                          <UserMessageBlack message={msg.message} />
+                        )
+                      ) : // AI가 보낸 메시지인 경우
+                      index === 2 || index === 8 ? (
+                        <AiMessageWhite message={msg.message} />
                       ) : (
-                        <UserMessageBlack message={msg.message} />
-                      )
-                    ) : // AI가 보낸 메시지인 경우
-                    index === 2 || index === 8 ? (
-                      <AiMessageWhite message={msg.message} />
-                    ) : (
-                      <AiMessageBlack message={msg.message} />
-                    )}
-                    {/* AI 메시지 후 버튼을 표시해야 하는 경우 */}
-                    {msg.showButtons && (
-                      <div className="flex flex-col items-end">
-                        <ChatButton
-                          text="최종 판결문 보러가기"
-                          onClick={handleButtonClick}
-                        />
-                      </div>
-                    )}
-                  </React.Fragment>
-                ))}
-                <div ref={messagesEndRef} />
+                        <AiMessageBlack message={msg.message} />
+                      )}
+                      {/* AI 메시지 후 버튼을 표시해야 하는 경우 */}
+                      {msg.showButtons && (
+                        <div className="flex flex-col items-end">
+                          <ChatButton
+                            text="최종 판결문 보러가기"
+                            onClick={handleButtonClick}
+                          />
+                        </div>
+                      )}
+                    </React.Fragment>
+                  ))}
+                  <div ref={messagesEndRef} />
+                </div>
               </div>
             </div>
-          </div>
-          {/* 메시지를 입력하는 부분입니다. */}
-          <div className="flex items-center bg-black bg-opacity-70 text-white rounded-3xl py-4 px-3 w-[100%] h-[60px]">
-            <button onClick={isListening ? stopListening : handleMicClick}>
-              <img src={Mic} alt="Mic" className="h-[2.5vh] ml-2" />{' '}
-              {/* 마이크 아이콘 버튼 */}
-            </button>
-            <textarea
-              ref={textareaRef}
-              placeholder="이곳에 내용을 적어주세요" // 안내 문구입니다.
-              className="flex-1 bg-transparent text-white placeholder-white focus:outline-none ml-[2%] resize-none overflow-y-auto"
-              value={newMessage} // 입력 필드의 값을 상태와 연결합니다.
-              onChange={handleInputChange} // 입력 필드의 값이 바뀔 때 상태를 업데이트합니다.
-              onClick={handleTextareaClick}
-              onKeyPress={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault();
-                  sendMessage();
-                }
-              }} // 엔터 키를 누르면 메시지를 보냅니다.
-              style={{ maxHeight: '25px' }} // 최대 높이 설정
-            />
-            <button onClick={sendMessage}>
-              {' '}
-              {/* 전송 버튼을 클릭하면 메시지를 보냅니다. */}
-              <img src={Send} alt="Send" className="h-[2.5vh] mr-2" />
-            </button>
+            {/* 메시지를 입력하는 부분입니다. */}
+            <div className="flex items-center bg-black bg-opacity-70 text-white rounded-3xl py-4 px-3 w-[100%] h-[60px]">
+              <button onClick={isListening ? stopListening : handleMicClick}>
+                <img src={Mic} alt="Mic" className="h-[2.5vh] ml-2" />{' '}
+                {/* 마이크 아이콘 버튼 */}
+              </button>
+              <textarea
+                ref={textareaRef}
+                placeholder="이곳에 내용을 적어주세요" // 안내 문구입니다.
+                className="flex-1 bg-transparent text-white placeholder-white focus:outline-none ml-[2%] resize-none overflow-y-auto"
+                value={newMessage} // 입력 필드의 값을 상태와 연결합니다.
+                onChange={handleInputChange} // 입력 필드의 값이 바뀔 때 상태를 업데이트합니다.
+                onClick={handleTextareaClick}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                  }
+                }} // 엔터 키를 누르면 메시지를 보냅니다.
+                style={{ maxHeight: '25px' }} // 최대 높이 설정
+              />
+              <button onClick={sendMessage}>
+                {' '}
+                {/* 전송 버튼을 클릭하면 메시지를 보냅니다. */}
+                <img src={Send} alt="Send" className="h-[2.5vh] mr-2" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
