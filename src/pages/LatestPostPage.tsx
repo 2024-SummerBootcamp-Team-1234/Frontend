@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../components/axiosInstance';
 import Slider from 'react-slick';
 import ForNextPageWhiteButton from '../components/ForNextPageWhiteButton';
+import { marked } from 'marked';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import LoadingPage from '../components/LoadingPage';
@@ -41,7 +42,7 @@ const CarouselItems: React.FC = () => {
     navigate('/JudgePageCopy');
   };
   const handleButtonClickToHome = () => {
-    navigate('/');
+    navigate('/MainPage2');
   };
   const handlePrevious = () => {
     sliderRef.current?.slickPrev();
@@ -185,6 +186,7 @@ const CarouselItems: React.FC = () => {
           </div>
 
           <div
+<<<<<<< Updated upstream
             className={`bg-VeryLightGrayColor w-[100%] ${hasCategories ? 'h-[33vh]' : 'h-[39vh]'} rounded-4xl py-7 pl-7 pr-4 relative`}
           >
             <div className="overflow-y-auto scrollbar-slider h-full">
@@ -192,6 +194,16 @@ const CarouselItems: React.FC = () => {
                 {post.content}
               </div>
             </div>
+=======
+            className={`bg-VeryLightGrayColor w-[100%] ${
+              hasCategories ? 'h-[33vh]' : 'h-[39vh]'
+            } rounded-4xl py-7 pl-7 pr-4 relative overflow-y-auto scrollbar-slider`}
+          >
+            <div
+              className="font-sans font-normal text-xl mx-2"
+              dangerouslySetInnerHTML={{ __html: marked(post.content) }}
+            />
+>>>>>>> Stashed changes
           </div>
         </div>
       </div>
