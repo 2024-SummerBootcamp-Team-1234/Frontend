@@ -1,10 +1,11 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import ScrollableBox from '../components/ScrollableBox';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import api from '../api';
+import LoadingPage from '../components/LoadingPage';
+
 const ResultPage: React.FC = () => {
   const { channel_id } = useParams<{ channel_id: string }>();
   // useLocation 훅을 사용하여 현재 페이지로 전달된 데이터를 가져옴.
@@ -191,50 +192,53 @@ const ResultPage: React.FC = () => {
   };
 
   return (
-    <div className="w-screen h-screen bg-cover bg-center bg-result.back-image overflow-hidden">
-      <Link to="/MainPage2" className="absolute top-[73px] left-[59px]">
-        <div className="w-12 h-12 bg-home-image bg-cover bg-center"></div>
-      </Link>
-      <div className="w-screen h-screen flex bg-black bg-opacity-60 justify-center items-center">
-        <div className="w-[1151px] h-[813px] flex items-center justify-center bg-cover bg-result-image">
-          {/* 왼쪽공간 */}
-          <div className="w-[330px] h-full "></div>
-          {/* 가운데 공간 */}
-          <div className="flex-col items-center justify-center">
-            <div className="flex-col w-[100%] h-[80px]"></div>
-            <div className="flex-col bg-black opacity-90 rounded-[25px]">
-              <div className="flex">
-                <ScrollableBox
-                  content={chars}
-                  className=" h-[400px] w-[670px] "
-                />
+    <>
+      <LoadingPage></LoadingPage>
+      <div className="w-screen h-screen bg-cover bg-center bg-result.back-image overflow-hidden">
+        <Link to="/MainPage2" className="absolute top-[73px] left-[59px]">
+          <div className="w-12 h-12 bg-home-image bg-cover bg-center"></div>
+        </Link>
+        <div className="w-screen h-screen flex bg-black bg-opacity-60 justify-center items-center">
+          <div className="w-[1151px] h-[813px] flex items-center justify-center bg-cover bg-result-image">
+            {/* 왼쪽공간 */}
+            <div className="w-[330px] h-full "></div>
+            {/* 가운데 공간 */}
+            <div className="flex-col items-center justify-center">
+              <div className="flex-col w-[100%] h-[80px]"></div>
+              <div className="flex-col bg-black opacity-90 rounded-[25px]">
+                <div className="flex">
+                  <ScrollableBox
+                    content={chars}
+                    className=" h-[400px] w-[670px] "
+                  />
+                </div>
+
+                <div className="flex justify-center space-x-5 pt-6 pb-6">
+                  <button
+                    type="button"
+                    className="w-[280px] h-[58px] bg-[#585858] text-white rounded-[30px] focus:outline-none shadow-inner font-bold text-2xl shadow-xl"
+                    onClick={handleButtonClick}
+                  >
+                    메인 페이지
+                  </button>
+                  <button
+                    type="button"
+                    className="w-[280px] h-[58px] bg-[#585858] text-white rounded-[30px] focus:outline-none shadow-inner font-bold text-2xl"
+                    onClick={handleButtonClick2}
+                  >
+                    게시판 공유하기
+                  </button>
+                </div>
               </div>
 
-              <div className="flex justify-center space-x-5 pt-6 pb-6">
-                <button
-                  type="button"
-                  className="w-[280px] h-[58px] bg-[#585858] text-white rounded-[30px] focus:outline-none shadow-inner font-bold text-2xl shadow-xl"
-                  onClick={handleButtonClick}
-                >
-                  메인 페이지
-                </button>
-                <button
-                  type="button"
-                  className="w-[280px] h-[58px] bg-[#585858] text-white rounded-[30px] focus:outline-none shadow-inner font-bold text-2xl"
-                  onClick={handleButtonClick2}
-                >
-                  게시판 공유하기
-                </button>
-              </div>
+              <div className=""></div>
             </div>
-
-            <div className=""></div>
+            {/* 오른쪽 공간 */}
+            <div className="w-[160px] h-full "></div>
           </div>
-          {/* 오른쪽 공간 */}
-          <div className="w-[160px] h-full "></div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
