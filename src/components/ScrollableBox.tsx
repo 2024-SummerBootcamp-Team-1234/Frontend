@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { marked } from 'marked';
 
 interface ScrollableBoxProps {
   content: string;
@@ -17,12 +18,16 @@ const ScrollableBox: React.FC<ScrollableBoxProps> = ({
     }
   }, [content]);
 
+  const createMarkup = (markdown: string) => {
+    return { __html: marked(markdown) };
+  };
+
   return (
     <div
       ref={scrollRef}
       className={`pt-10 pb-10 pr-10 pl-10 rounded-[20px] text-white overflow-y-auto ${className}`}
     >
-      {content}
+      <div dangerouslySetInnerHTML={createMarkup(content)} />
     </div>
   );
 };
