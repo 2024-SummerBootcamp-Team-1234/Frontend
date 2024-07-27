@@ -38,6 +38,10 @@ export default {
         'postPageBg-image': "url('./public/PostPageBg.png')",
         'homeButton-image': "url('./public/HomeButton.png')",
         'like-image': "url('./public/like_icon.png')",
+
+        'summary-image': "url('./public/SummaryBackGround.png')",
+        'judge-image': "url('./public/Judge.png')",
+        'judgeChat-image': "url('./public/JudgeChat.png')",
       },
 
       backgroundSize: {
