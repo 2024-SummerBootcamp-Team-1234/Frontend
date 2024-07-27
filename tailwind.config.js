@@ -38,6 +38,11 @@ export default {
         'postPageBg-image': "url('./public/PostPageBg.png')",
         'homeButton-image': "url('./public/HomeButton.png')",
         'like-image': "url('./public/like_icon.png')",
+
+        'trialBg-image' : "url('./public/trialImage/TrialBackground')",
+        'microphone-image' : "url('./public/trialImage/Microphone.png')",
+        'plaintiffLawyer-image':"url('./public/trialImage/Plaintiff's_lawyer.png')",
+        'dependantLawyer-image':"url('./public/trialImage/Defendant's_lawyer.png')",
       },
 
       backgroundSize: {
