@@ -1,11 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../components/axiosInstance';
-<<<<<<< Updated upstream
 import LoadingPage from '../components/LoadingPage';
-=======
 import { marked } from 'marked';
->>>>>>> Stashed changes
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -42,11 +39,7 @@ const CarouselItems: React.FC = () => {
     navigate('/LatestPostPage');
   };
   const handleButtonClickToHome = () => {
-<<<<<<< Updated upstream
-    navigate('/');
-=======
     navigate('/MainPage2');
->>>>>>> Stashed changes
   };
   const handlePrevious = () => {
     sliderRef.current?.slickPrev();
@@ -88,7 +81,6 @@ const CarouselItems: React.FC = () => {
           },
         );
         console.log('토큰');
-<<<<<<< Updated upstream
         const postsData = response.data
           .map((post: Post) => ({
             ...post,
@@ -102,15 +94,6 @@ const CarouselItems: React.FC = () => {
               new Date(b.created_at).getTime() -
               new Date(a.created_at).getTime(),
           );
-=======
-        const postsData = response.data.map((post: Post) => ({
-          ...post,
-          created_at:
-            new Date(post.created_at).toString() !== 'Invalid Date'
-              ? new Date(post.created_at).toISOString()
-              : '', // 유효한 날짜인지 확인
-        }));
->>>>>>> Stashed changes
         setPosts(postsData);
       } catch (error) {
         console.error('게시물을 가져오는 중 에러 발생:', error);
@@ -171,15 +154,6 @@ const CarouselItems: React.FC = () => {
           </div>
 
           <div
-<<<<<<< Updated upstream
-            className={`bg-VeryLightGrayColor w-[100%] ${hasCategories ? 'h-[33vh]' : 'h-[39vh]'} rounded-4xl py-7 pl-7 pr-4 relative`}
-          >
-            <div className="overflow-y-auto scrollbar-slider h-full">
-              <div className="font-sans font-normal text-xl mx-2">
-                {post.content}
-              </div>
-            </div>
-=======
             className={`bg-VeryLightGrayColor w-[100%] ${
               hasCategories ? 'h-[33vh]' : 'h-[39vh]'
             } rounded-4xl py-7 pl-7 pr-4 relative overflow-y-auto scrollbar-slider`}
@@ -188,7 +162,6 @@ const CarouselItems: React.FC = () => {
               className="font-sans font-normal text-xl mx-2"
               dangerouslySetInnerHTML={{ __html: marked(post.content) }}
             />
->>>>>>> Stashed changes
           </div>
         </div>
       </div>
@@ -196,7 +169,6 @@ const CarouselItems: React.FC = () => {
   };
 
   return (
-<<<<<<< Updated upstream
     <>
       <LoadingPage></LoadingPage>
       <div className="bg-postPageBg-image bg-cover bg-center w-screen h-screen flex flex-col">
@@ -232,40 +204,6 @@ const CarouselItems: React.FC = () => {
         </div>
       </div>
     </>
-=======
-    <div className="bg-postPageBg-image bg-cover bg-center w-screen h-screen flex flex-col">
-      <div className="w-[8rem] h-[4rem] flex flex-row justify-between ml-6 mt-8">
-        <button
-          className="bg-arrow-image bg-no-repeat bg-contain w-[3.5rem] h-[3.5rem]"
-          onClick={handleButtonClickToBack}
-        ></button>
-        <button
-          className="bg-homeButton-image bg-no-repeat bg-contain w-[3.5rem] h-[3.5rem]"
-          onClick={handleButtonClickToHome}
-        ></button>
-      </div>
-
-      <div className="relative flex flex-col justify-center pt-12">
-        <button
-          onClick={handlePrevious}
-          className="absolute left-[29.5%] px-4 py-2 font-bold text-3xl bg-gray-300 rounded-full z-10 border-2 border-solid border-white"
-        >
-          {'<'}
-        </button>
-
-        <Slider ref={sliderRef} {...settings}>
-          {posts.map(renderPost)}
-        </Slider>
-
-        <button
-          onClick={handleNext}
-          className="absolute right-[29.5%] px-4 py-2 font-bold text-3xl bg-gray-300 rounded-full z-10 border-2 border-solid border-white"
-        >
-          {'>'}
-        </button>
-      </div>
-    </div>
->>>>>>> Stashed changes
   );
 };
 

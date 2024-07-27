@@ -186,15 +186,6 @@ const CarouselItems: React.FC = () => {
           </div>
 
           <div
-<<<<<<< Updated upstream
-            className={`bg-VeryLightGrayColor w-[100%] ${hasCategories ? 'h-[33vh]' : 'h-[39vh]'} rounded-4xl py-7 pl-7 pr-4 relative`}
-          >
-            <div className="overflow-y-auto scrollbar-slider h-full">
-              <div className="font-sans font-normal text-xl mx-2">
-                {post.content}
-              </div>
-            </div>
-=======
             className={`bg-VeryLightGrayColor w-[100%] ${
               hasCategories ? 'h-[33vh]' : 'h-[39vh]'
             } rounded-4xl py-7 pl-7 pr-4 relative overflow-y-auto scrollbar-slider`}
@@ -203,7 +194,6 @@ const CarouselItems: React.FC = () => {
               className="font-sans font-normal text-xl mx-2"
               dangerouslySetInnerHTML={{ __html: marked(post.content) }}
             />
->>>>>>> Stashed changes
           </div>
         </div>
       </div>
