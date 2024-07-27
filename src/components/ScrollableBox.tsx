@@ -17,6 +17,7 @@ const ScrollableBox: React.FC<ScrollableBoxProps> = ({
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [content]);
+  // [content] : useEffect 훅의 두 번째 인자로 전달되는 배열, 의존성 배열 (Dependency Array)
 
   const createMarkup = (markdown: string) => {
     return { __html: marked(markdown) };
