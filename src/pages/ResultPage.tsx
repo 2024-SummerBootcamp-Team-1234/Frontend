@@ -43,7 +43,7 @@ const ResultPage: React.FC = () => {
     const aiRespond = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/api/v1/channels/virtual_messages/${channelId}`,
+          `http://localhost:8000/api/v1/channels/results/${channelId}`,
           {
             method: 'POST',
             headers: {
