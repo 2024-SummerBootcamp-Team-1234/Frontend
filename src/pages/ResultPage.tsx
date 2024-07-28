@@ -49,7 +49,7 @@ const ResultPage: React.FC = () => {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ message: combinedMessages }),
+            body: JSON.stringify({ message: `상황: ${combinedMessages}` }),
           },
         );
 

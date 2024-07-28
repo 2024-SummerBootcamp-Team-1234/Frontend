@@ -9,7 +9,7 @@ import JudgePageCopy2 from './pages/JudgePageCopy2';
 import ResultPage from './pages/ResultPage';
 import LatestPostPage from './pages/LatestPostPage';
 import MyPostPage from './pages/MyPostPage';
-
+import ResultPage2 from './pages/ResultPage2';
 function App() {
   return (
     <Routes>
@@ -25,6 +25,7 @@ function App() {
       <Route path="/LatestPostPage" element={<LatestPostPage />} />
       <Route path="/MyPostPage" element={<MyPostPage />} />
       <Route path="/ResultPage" element={<ResultPage />} />
+      <Route path="/ResultPage2" element={<ResultPage2 />} />
     </Routes>
   );
 }
