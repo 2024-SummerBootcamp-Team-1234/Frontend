@@ -10,6 +10,9 @@ import ResultPage from './pages/ResultPage';
 import LatestPostPage from './pages/LatestPostPage';
 import MyPostPage from './pages/MyPostPage';
 import ResultPage2 from './pages/ResultPage2';
+import SummaryPage from './pages/SummaryPage';
+
+
 function App() {
   return (
     <Routes>
@@ -17,11 +20,10 @@ function App() {
       <Route path="/MainPage2" element={<MainPage2 />} />
       <Route path="/SignUp" element={<SignupPage />} />
       <Route path="/Login" element={<LoginPage />} />
-
       <Route path="/CategoryPage" element={<CategoryPage />} />
       <Route path="/JudgePageCopy" element={<JudgePageCopy />} />
       <Route path="/JudgePageCopy2" element={<JudgePageCopy2 />} />
-
+      <Route path="/SummaryPage" element={<SummaryPage />} />
       <Route path="/LatestPostPage" element={<LatestPostPage />} />
       <Route path="/MyPostPage" element={<MyPostPage />} />
       <Route path="/ResultPage" element={<ResultPage />} />
