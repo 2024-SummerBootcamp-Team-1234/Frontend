@@ -9,6 +9,8 @@ import JudgePageCopy2 from './pages/JudgePageCopy2';
 import ResultPage from './pages/ResultPage';
 import LatestPostPage from './pages/LatestPostPage';
 import MyPostPage from './pages/MyPostPage';
+import PlaintiffTrial from './pages/PlaintiffTrial';
+import DefendantTrial from './pages/DefendantTrial';
 
 function App() {
   return (
@@ -21,6 +23,9 @@ function App() {
       <Route path="/CategoryPage" element={<CategoryPage />} />
       <Route path="/JudgePageCopy" element={<JudgePageCopy />} />
       <Route path="/JudgePageCopy2" element={<JudgePageCopy2 />} />
+
+      <Route path="/PlaintiffTrial" element={<PlaintiffTrial />} />
+      <Route path="/DefendantTrial" element={<DefendantTrial />} />
 
       <Route path="/LatestPostPage" element={<LatestPostPage />} />
       <Route path="/MyPostPage" element={<MyPostPage />} />

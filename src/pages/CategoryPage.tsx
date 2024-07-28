@@ -94,9 +94,9 @@ const CategoryPage: React.FC = () => {
     console.log('Selected Category IDs:', selectedCategoryIds);
 
     // 상태를 사용하여 카테고리 ID들을 JudgePage로 전달합니다.
-    navigate('/JudgePageCopy', { state: { categoryIds: selectedCategoryIds } });
+    // navigate('/PlaintiffTrial', { state: { categoryIds: selectedCategoryIds } });
+    navigate('/PlaintiffTrial');
   };
-  // http://localhost:5173/ResultPage?categoryIds=0&categoryIds=1&categoryIds=2
 
   const categoryGrid = () => {
     return (
@@ -146,7 +146,8 @@ const CategoryPage: React.FC = () => {
           <span className="text-6xl font-sans font-bold mb-6">Category</span>
           <button className="pt-4 pl-10 text-2xl font-sans font-normal">
             {' '}
-            Skip {'>'}{' '}
+            Skip {'>'}
+            {' '}
           </button>
         </div>
 
