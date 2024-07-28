@@ -6,15 +6,17 @@ import React, { useState, useEffect } from 'react';
 import api from '../api';
 import LoadingPage from '../components/LoadingPage';
 
-const ResultPage: React.FC = () => {
+interface LocationState {
+  combinedMessages: string[];
+  channelId: string;
+  categoryIds: string[];
+}
+
+const ResultPage2: React.FC = () => {
   const { channel_id } = useParams<{ channel_id: string }>();
-  // useLocation 훅을 사용하여 현재 페이지로 전달된 데이터를 가져옴.
   const location = useLocation();
-  const { combinedMessages, channelId, categoryIds } = location.state || {
-    combinedMessages: [],
-    channelId: '',
-    categoryIds: [],
-  };
+  const { combinedMessages, channelId, categoryIds } = (location.state ||
+    {}) as LocationState;
 
   // 콘솔에 불러오는 부분 -------------------------
   useEffect(() => {
@@ -39,17 +41,41 @@ const ResultPage: React.FC = () => {
       return;
     }
 
+    const taggedMessages = combinedMessages.map((message, index) => {
+      let tag = '';
+      switch (index) {
+        case 0:
+          tag = '상황: ';
+          break;
+        case 1:
+          tag = '원고 주장: ';
+          break;
+        case 2:
+          tag = '피고 주장: ';
+          break;
+        case 3:
+          tag = '원고 최후 변론: ';
+          break;
+        case 4:
+          tag = '피고 최후 변론: ';
+          break;
+        default:
+          tag = '';
+      }
+      return `${tag}${message}`;
+    });
+
     // 페이지 로드 시 POST 요청 보내기
     const aiRespond = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/api/v1/channels/results/${channelId}`,
+          `http://localhost:8000/api/v1/channels/messages/${channelId}`,
           {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ message: `상황: ${combinedMessages}` }),
+            body: JSON.stringify({ message: taggedMessages }),
           },
         );
 
@@ -242,4 +268,4 @@ const ResultPage: React.FC = () => {
   );
 };
 
-export default ResultPage;
+export default ResultPage2;
