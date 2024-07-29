@@ -10,8 +10,8 @@ import LawyerInfo from '../components/trialComponents/LawyerInfo';
 // image를 URL로 받아오고 있음
 import PlaintiffLawyer from '../public/PlaintiffLawyer.png';
 
-// 애니매이션 받아오기위한 import문
-import '../index.css';
+// AI Voice 받아오기 위한 import문
+import audioData from '../TrialAudio.json'
 
 const PlaintiffTrial: React.FC = () => {
   const [inputPlaintiffText, setInputPlaintiffText] = useState('상황 입력 : ')
@@ -19,6 +19,32 @@ const PlaintiffTrial: React.FC = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  // 오디오 받아오는 함수 시작
+  const playAudio = (base64Audio: string) => {
+    const audioBlob = base64ToBlob(base64Audio, 'audio/wav');
+    const audioUrl = URL.createObjectURL(audioBlob);
+    const audio = new Audio(audioUrl);
+    audio.play();
+  };
+
+  const base64ToBlob = (base64: string, mime: string): Blob => {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: mime });
+  };
+
+  useEffect(() => {
+    const base64Audio = audioData.PlaintiffAudioData; // JSON 파일에서 base64 문자열 가져오기
+    setTimeout(() => {
+      playAudio(base64Audio);
+    }, 1000);
+  }, []);
+  // 오디오 받아오는 함수 끝
 
   useEffect(() => {
     setIsMounted(true);

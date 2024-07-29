@@ -18,6 +18,7 @@ const LawyerInfo: React.FC<LawyerInfoProps> = ({imageUrl, title, description}) =
     console.log(desc.length);
 
     const updateText = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // 페이지가 열릴 때 1초 딜레이 추가
       for (let index = 0; index < desc.length; index++) {
         setDisplayedText((prev) => {
           const newText = prev + desc[index];
