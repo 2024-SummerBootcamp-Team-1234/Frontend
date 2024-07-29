@@ -56,9 +56,10 @@ const PlaintiffTrial: React.FC = () => {
 
   const handleVoiceInputClick = (newTranscript: string) => {
     console.log('Voice input button clicked');
-    setInputDefendantText((prevText) => prevText + newTranscript);
+    setInputDefendantText(newTranscript);
   };
 
+  // 데이터 보내는 함수 시작
   const handleSubmitClick = () => {
     const { categoryIds } = location.state || { categoryIds: [] };
     const { inputPlaintiffText } = location.state || { inputPlaintiffText: '' };
@@ -69,6 +70,7 @@ const PlaintiffTrial: React.FC = () => {
 
     navigate('/PlaintiffFinalTrial', { state: { categoryIds, inputPlaintiffText, inputDefendantText } })
   };
+  // 데이터 보내는 함수 끝
 
   return (
     <div className="scroll-hidden bg-trialBg-image bg-cover bg-center w-screen h-screen flex justify-center">

@@ -14,7 +14,7 @@ import DefendantLawyer from '../public/DefendantLawyer.png';
 import audioData from '../TrialAudio.json'
 
 const PlaintiffTrial: React.FC = () => {
-  const [inputDefendantText, setInputDefendantText] = useState('상황 입력 : ')
+  const [inputDefendantFinalText, setInputDefendantFinalText] = useState('상황 입력 : ')
   const [isMounted, setIsMounted] = useState(false); // 애니매이션 넣기
 
   const navigate = useNavigate();
@@ -51,24 +51,31 @@ const PlaintiffTrial: React.FC = () => {
   }, []);
 
   const handleInputChange = (newValue: string) => {
-    setInputDefendantText(newValue);
+    setInputDefendantFinalText(newValue);
   };
 
   const handleVoiceInputClick = (newTranscript: string) => {
     console.log('Voice input button clicked');
-    setInputDefendantText((prevText) => prevText + newTranscript);
+    setInputDefendantFinalText(newTranscript);
   };
 
+  // 데이터 보내는 함수 시작
   const handleSubmitClick = () => {
     const { categoryIds } = location.state || { categoryIds: [] };
     const { inputPlaintiffText } = location.state || { inputPlaintiffText: '' };
+    const { inputDefendantText } = location.state || { inputDefendantText: '' };
+    const { inputPlaintiffFinalText } = location.state || { inputPlaintiffFinalText: '' };
+    const { inputDefendantFinalText } = location.state || { inputDefendantFinalText: '' };
 
     console.log('Submit Category Ids : ', categoryIds);
     console.log('Submit Plaintiff Text : ', inputPlaintiffText);
     console.log('Submit Defendant Text : ', inputDefendantText);
+    console.log('Submit Plaintiff Final Text : ', inputPlaintiffFinalText);
+    console.log('Submit Defendant Final Text : ', inputDefendantFinalText);
 
-    navigate('/', { state: { categoryIds, inputPlaintiffText, inputDefendantText } })
+    navigate('/DefendantFinalTrial', { state: { categoryIds, inputPlaintiffText, inputDefendantText, inputPlaintiffFinalText, inputDefendantFinalText} });
   };
+  // 데이터 보내는 함수 끝
 
   return (
     <div className="scroll-hidden bg-trialBg-image bg-cover bg-center w-screen h-screen flex justify-center">
@@ -82,7 +89,7 @@ const PlaintiffTrial: React.FC = () => {
 
       <div className={`h-full bottom-1/9 inline-flex flex-col justify-center ml-9 ${isMounted ? 'fade-in' : ''}`}>
         <InputScrollableBox
-          initialValue={inputDefendantText}
+          initialValue={inputDefendantFinalText}
           placeholder="육하원칙을 따라 자세하게 입력하시현 더 상세한 결과를 기대하실 수 있습니다."
           onChange={handleInputChange}
         />

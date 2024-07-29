@@ -22,8 +22,8 @@ const LawyerInfo: React.FC<LawyerInfoProps> = ({imageUrl, title, description}) =
       for (let index = 0; index < desc.length; index++) {
         setDisplayedText((prev) => {
           const newText = prev + desc[index];
-          console.log('desc index : ', index, desc[index]);
-          console.log('New text:', newText); // 로그로 새로운 텍스트 출력
+          // console.log('desc index : ', index, desc[index]);
+          // console.log('New text:', newText); // 로그로 새로운 텍스트 출력
           return newText;
         });
         await new Promise((resolve) => setTimeout(resolve, 100)); // 100ms 대기
