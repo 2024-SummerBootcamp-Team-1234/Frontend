@@ -11,6 +11,8 @@ import LatestPostPage from './pages/LatestPostPage';
 import MyPostPage from './pages/MyPostPage';
 import ResultPage2 from './pages/ResultPage2';
 import SummaryPage from './pages/SummaryPage';
+import SituationPage from './pages/SituationPage';
+import ChoicePage from './pages/ChoicePage';
 
 
 function App() {
@@ -24,6 +26,12 @@ function App() {
       <Route path="/JudgePageCopy" element={<JudgePageCopy />} />
       <Route path="/JudgePageCopy2" element={<JudgePageCopy2 />} />
       <Route path="/SummaryPage" element={<SummaryPage />} />
+<<<<<<< Updated upstream
+=======
+      <Route path="/SituationPage" element={<SituationPage />} />
+      <Route path="/ChoicePage" element={<ChoicePage />} />
+
+>>>>>>> Stashed changes
       <Route path="/LatestPostPage" element={<LatestPostPage />} />
       <Route path="/MyPostPage" element={<MyPostPage />} />
       <Route path="/ResultPage" element={<ResultPage />} />

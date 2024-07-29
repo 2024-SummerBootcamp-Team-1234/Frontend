@@ -38,6 +38,8 @@ export default {
         'postPageBg-image': "url('./public/PostPageBg.png')",
         'homeButton-image': "url('./public/HomeButton.png')",
         'like-image': "url('./public/like_icon.png')",
+        'mic-image': "url('./public/mic_image.png')",
+        'select-image': "url('./public/select.png')",
 
         'summary-image': "url('./public/SummaryBackGround.png')",
         'judge-image': "url('./public/Judge.png')",
