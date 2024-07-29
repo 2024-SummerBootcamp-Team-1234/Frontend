@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import audioData from '../SitAudio.json';
 
 function ChoicePage() {
   const location = useLocation();
@@ -31,6 +32,30 @@ function ChoicePage() {
       },
     });
   };
+
+  const playAudio = (base64Audio: string) => {
+    const audioBlob = base64ToBlob(base64Audio, 'audio/wav');
+    const audioUrl = URL.createObjectURL(audioBlob);
+    const audio = new Audio(audioUrl);
+    setTimeout(() => {
+      audio.play();
+    }, 2000); // 2초 딜레이
+  };
+
+  const base64ToBlob = (base64: string, mime: string): Blob => {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: mime });
+  };
+
+  useEffect(() => {
+    const base64Audio = audioData.page2_audio; // JSON 파일에서 base64 문자열 가져오기
+    playAudio(base64Audio);
+  }, []);
 
   return (
     <div className="flex w-screen h-screen bg-cover bg-center bg-summary-image items-center">
