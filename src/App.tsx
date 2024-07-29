@@ -11,6 +11,8 @@ import LatestPostPage from './pages/LatestPostPage';
 import MyPostPage from './pages/MyPostPage';
 import PlaintiffTrial from './pages/PlaintiffTrial';
 import DefendantTrial from './pages/DefendantTrial';
+import PlaintiffFinalTrial from './pages/PlaintiffFinalTrial';
+import DefendantFinalTrial from './pages/DefendantFinalTrial';
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
 
       <Route path="/PlaintiffTrial" element={<PlaintiffTrial />} />
       <Route path="/DefendantTrial" element={<DefendantTrial />} />
+      <Route path="/PlaintiffFinalTrial" element={<PlaintiffFinalTrial />} />
+      <Route path="/DefendantFinalTrial" element={<DefendantFinalTrial />} />
 
       <Route path="/LatestPostPage" element={<LatestPostPage />} />
       <Route path="/MyPostPage" element={<MyPostPage />} />

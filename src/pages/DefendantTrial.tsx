@@ -42,7 +42,7 @@ const PlaintiffTrial: React.FC = () => {
   };
 
   return (
-    <div className="bg-trialBg-image bg-cover bg-center w-screen h-screen flex justify-center">
+    <div className="scroll-hidden bg-trialBg-image bg-cover bg-center w-screen h-screen flex justify-center">
       <div className={`flex items-center h-full ${isMounted ? 'fade-in' : ''}`}>
         <LawyerInfo
           imageUrl={DefendantLawyer}

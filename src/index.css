@@ -4,30 +4,31 @@
 
 /* 커스텀 스크롤바 스타일 */
 ::-webkit-scrollbar {
-  width: 8px; /* 스크롤바의 너비를 설정합니다. */
+  width: 8px;
+  /* 스크롤바의 너비를 설정합니다. */
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent; /* 스크롤바 트랙을 투명하게 설정합니다. */
+  background: transparent;
+  /* 스크롤바 트랙을 투명하게 설정합니다. */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(
-    255,
-    255,
-    255,
-    0.3
-  ); /* 스크롤바 손잡이를 반투명하게 설정합니다. */
-  border-radius: 4px; /* 스크롤바 손잡이에 둥근 모서리를 추가합니다. */
+  background: rgba(255,
+      255,
+      255,
+      0.3);
+  /* 스크롤바 손잡이를 반투명하게 설정합니다. */
+  border-radius: 4px;
+  /* 스크롤바 손잡이에 둥근 모서리를 추가합니다. */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(
-    255,
-    255,
-    255,
-    0.5
-  ); /* 스크롤바 손잡이를 호버했을 때 약간 더 불투명하게 설정합니다. */
+  background: rgba(255,
+      255,
+      255,
+      0.5);
+  /* 스크롤바 손잡이를 호버했을 때 약간 더 불투명하게 설정합니다. */
 }
 
 /* 애니메이션 정의 */
@@ -36,6 +37,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -44,6 +46,16 @@
 
 .fade-in {
   animation: fadeIn 1s ease-in-out;
+}
+
+.scroll-hidden {
+  overflow: auto;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+.scroll-hidden::-webkit-scrollbar {
+  display: none;  /* Webkit browsers */
 }
 
 /* index.css */

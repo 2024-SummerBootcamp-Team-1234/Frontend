@@ -43,7 +43,7 @@ const PlaintiffTrial: React.FC = () => {
   };
 
   return (
-    <div className="bg-trialBg-image bg-cover bg-center w-screen h-screen flex justify-center">
+    <div className="scroll-hidden bg-trialBg-image bg-cover bg-center w-screen h-screen flex justify-center">
 
       <div className={`h-full bottom-1/9 inline-flex flex-col justify-center mr-9 ${isMounted ? 'fade-in' : ''}`}>
         <div className="">
