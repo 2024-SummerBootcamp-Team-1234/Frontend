@@ -26,7 +26,7 @@ const ResultPage2: React.FC = () => {
   }, [combinedMessages, channelId, categoryIds]);
 
   const navigate = useNavigate();
-  const [chars, setChars] = useState('');
+  const [chars, setChars] = useState<string[]>([]);
 
   useEffect(() => {
     console.log('Component mounted or channel_id changed:', channelId);
@@ -87,12 +87,13 @@ const ResultPage2: React.FC = () => {
         const decoder = new TextDecoder('utf-8');
         let done = false;
         let partialChunk = '';
+
         while (!done) {
           const { value, done: doneReading } = await reader.read();
           done = doneReading;
           const chunk = decoder.decode(value, { stream: true });
           partialChunk += chunk;
-          console.log(chunk);
+
           const lines = partialChunk.split('\n');
           if (!done) {
             partialChunk = lines.pop() || '';
@@ -107,7 +108,7 @@ const ResultPage2: React.FC = () => {
                 try {
                   const data = JSON.parse(jsonPart);
                   if (data.content) {
-                    setChars((prev) => prev + data.content + '\n'); // 새로운 줄로 추가
+                    setChars((prevChars) => [...prevChars, data.content]);
                   }
                 } catch (error) {
                   console.error('Error parsing JSON:', error, jsonPart);
@@ -122,7 +123,7 @@ const ResultPage2: React.FC = () => {
     };
 
     aiRespond();
-  }, [channel_id]);
+  }, [channelId, combinedMessages]);
 
   const handleButtonClick = () => {
     Swal.fire({
@@ -216,6 +217,10 @@ const ResultPage2: React.FC = () => {
       }
     });
   };
+
+  useEffect(() => {
+    console.log(combinedMessages);
+  }, []);
 
   return (
     <>
