@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import ScrollableBox2, { ScrollableBoxRef } from '../components/ScrollableBox2';
 import api from '../api'; // API 호출을 위한 모듈을 불러옵니다.
