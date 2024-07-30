@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { FaUser, FaLock } from 'react-icons/fa';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../components/axiosInstance'; // 추가된 부분
+import axiosInstance from '../api/axiosInstance'; // 추가된 부분
 import LoadingPage from '../components/LoadingPage';
 const LoginPage: React.FC = () => {
   const [id, setId] = useState('');
@@ -39,7 +39,6 @@ const LoginPage: React.FC = () => {
 
   return (
     <>
-      <LoadingPage></LoadingPage>
       <div className="relative w-full h-screen flex justify-center items-center bg-cover bg-login-image">
         <Link to="/" className="absolute top-[73px] left-[59px]">
           <div className="w-12 h-12 bg-arrow-image bg-cover bg-center"></div>

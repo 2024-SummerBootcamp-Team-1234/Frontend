@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../components/axiosInstance';
+import axiosInstance from '../api/axiosInstance';
 import Slider from 'react-slick';
 import ForNextPageWhiteButton from '../components/ForNextPageWhiteButton';
 import { marked } from 'marked';

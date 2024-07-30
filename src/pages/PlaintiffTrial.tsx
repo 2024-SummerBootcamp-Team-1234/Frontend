@@ -11,14 +11,26 @@ import LawyerInfo from '../components/trialComponents/LawyerInfo';
 import PlaintiffLawyer from '../public/PlaintiffLawyer.png';
 
 // AI Voice 받아오기 위한 import문
-import audioData from '../TrialAudio.json'
+import audioData from '../TrialAudio.json';
+
+interface LocationState {
+  combinedMessages: string[];
+  categoryIds: string[];
+  channelId: string;
+}
 
 const PlaintiffTrial: React.FC = () => {
-  const [inputPlaintiffText, setInputPlaintiffText] = useState('상황 입력 : ')
+  const [inputPlaintiffText, setInputPlaintiffText] = useState('원고 입장 : ');
   const [isMounted, setIsMounted] = useState(false); // 애니매이션 넣기
 
   const navigate = useNavigate();
   const location = useLocation();
+  const { combinedMessages, categoryIds, channelId } =
+    (location.state as LocationState) || {
+      combinedMessages: [],
+      categoryIds: [],
+      channelId: '',
+    };
 
   // 오디오 받아오는 함수 시작
   const playAudio = (base64Audio: string) => {
@@ -61,19 +73,33 @@ const PlaintiffTrial: React.FC = () => {
 
   // 데이터 보내는 함수 시작
   const handleSubmitClick = () => {
-    const { categoryIds } = location.state || { categoryIds: [] };
-
     console.log('Submit Category Ids : ', categoryIds);
     console.log('Submit Plaintiff Text : ', inputPlaintiffText);
+    console.log('Submit Channel Id : ', channelId);
 
-    navigate('/DefendantTrial', { state: { categoryIds, inputPlaintiffText } });
+    const updatedCombinedMessages = [...combinedMessages];
+    updatedCombinedMessages[1] = inputPlaintiffText;
+
+    // combinedMessages 콘솔로 인덱스 순서대로 출력
+    updatedCombinedMessages.forEach((message, index) => {
+      console.log(`combinedMessages[${index}] : ${message}`);
+    });
+
+    navigate('/DefendantTrial', {
+      state: {
+        categoryIds,
+        combinedMessages: updatedCombinedMessages,
+        channelId,
+      },
+    });
   };
   // 데이터 보내는 함수 끝
 
   return (
     <div className="scroll-hidden bg-trialBg-image bg-cover bg-center w-screen h-screen flex justify-center">
-
-      <div className={`h-full bottom-1/9 inline-flex flex-col justify-center mr-9 ${isMounted ? 'fade-in' : ''}`}>
+      <div
+        className={`h-full bottom-1/9 inline-flex flex-col justify-center mr-9 ${isMounted ? 'fade-in' : ''}`}
+      >
         <div className="">
           <InputScrollableBox
             initialValue={inputPlaintiffText}

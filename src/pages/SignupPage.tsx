@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { FaUser, FaLock } from 'react-icons/fa';
 import { useState } from 'react';
 import axios from 'axios';
-import LoadingPage from '../components/LoadingPage';
 const LoginPage = () => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
@@ -36,7 +35,6 @@ const LoginPage = () => {
 
   return (
     <>
-      <LoadingPage></LoadingPage>
       <div className="relative w-full h-screen flex justify-center items-center bg-cover bg-login-image">
         <Link to="/login" className="absolute top-[73px] left-[59px]">
           <div className="w-12 h-12 bg-arrow-image bg-cover bg-center"></div>

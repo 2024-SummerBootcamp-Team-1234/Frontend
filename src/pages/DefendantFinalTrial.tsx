@@ -11,14 +11,28 @@ import LawyerInfo from '../components/trialComponents/LawyerInfo';
 import DefendantLawyer from '../public/DefendantLawyer.png';
 
 // AI Voice 받아오기 위한 import문
-import audioData from '../TrialAudio.json'
+import audioData from '../TrialAudio.json';
+
+interface LocationState {
+  combinedMessages: string[];
+  categoryIds: string[];
+  channelId: string;
+}
 
 const PlaintiffTrial: React.FC = () => {
-  const [inputDefendantFinalText, setInputDefendantFinalText] = useState('상황 입력 : ')
+  const [inputDefendantFinalText, setInputDefendantFinalText] =
+    useState('피고의 최후 변론 : ');
   const [isMounted, setIsMounted] = useState(false); // 애니매이션 넣기
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { combinedMessages, categoryIds, channelId } =
+    (location.state as LocationState) || {
+      combinedMessages: [],
+      categoryIds: [],
+      channelId: '',
+    };
 
   // 오디오 받아오는 함수 시작
   const playAudio = (base64Audio: string) => {
@@ -61,19 +75,25 @@ const PlaintiffTrial: React.FC = () => {
 
   // 데이터 보내는 함수 시작
   const handleSubmitClick = () => {
-    const { categoryIds } = location.state || { categoryIds: [] };
-    const { inputPlaintiffText } = location.state || { inputPlaintiffText: '' };
-    const { inputDefendantText } = location.state || { inputDefendantText: '' };
-    const { inputPlaintiffFinalText } = location.state || { inputPlaintiffFinalText: '' };
-    const { inputDefendantFinalText } = location.state || { inputDefendantFinalText: '' };
-
     console.log('Submit Category Ids : ', categoryIds);
-    console.log('Submit Plaintiff Text : ', inputPlaintiffText);
-    console.log('Submit Defendant Text : ', inputDefendantText);
-    console.log('Submit Plaintiff Final Text : ', inputPlaintiffFinalText);
-    console.log('Submit Defendant Final Text : ', inputDefendantFinalText);
+    console.log('Submit Plaintiff Text : ', inputDefendantFinalText);
+    console.log('Submit Channel Id : ', channelId);
 
-    navigate('/DefendantFinalTrial', { state: { categoryIds, inputPlaintiffText, inputDefendantText, inputPlaintiffFinalText, inputDefendantFinalText} });
+    const updatedCombinedMessages = [...combinedMessages];
+    updatedCombinedMessages[4] = inputDefendantFinalText;
+
+    // combinedMessages 콘솔로 인덱스 순서대로 출력
+    updatedCombinedMessages.forEach((message, index) => {
+      console.log(`combinedMessages[${index}] : ${message}`);
+    });
+
+    navigate('/ResultPage2', {
+      state: {
+        categoryIds,
+        combinedMessages: updatedCombinedMessages,
+        channelId,
+      },
+    });
   };
   // 데이터 보내는 함수 끝
 
@@ -87,7 +107,9 @@ const PlaintiffTrial: React.FC = () => {
         />
       </div>
 
-      <div className={`h-full bottom-1/9 inline-flex flex-col justify-center ml-9 ${isMounted ? 'fade-in' : ''}`}>
+      <div
+        className={`h-full bottom-1/9 inline-flex flex-col justify-center ml-9 ${isMounted ? 'fade-in' : ''}`}
+      >
         <InputScrollableBox
           initialValue={inputDefendantFinalText}
           placeholder="육하원칙을 따라 자세하게 입력하시현 더 상세한 결과를 기대하실 수 있습니다."

@@ -1,9 +1,9 @@
-import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import ScrollableBox from '../components/ScrollableBox';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
 import React, { useState, useEffect } from 'react';
-import api from '../api';
+import api from '../api/api';
 import LoadingPage from '../components/LoadingPage';
 
 interface LocationState {
@@ -13,7 +13,6 @@ interface LocationState {
 }
 
 const ResultPage2: React.FC = () => {
-  const { channel_id } = useParams<{ channel_id: string }>();
   const location = useLocation();
   const { combinedMessages, channelId, categoryIds } = (location.state ||
     {}) as LocationState;
@@ -45,19 +44,19 @@ const ResultPage2: React.FC = () => {
       let tag = '';
       switch (index) {
         case 0:
-          tag = '상황: ';
+          tag = '';
           break;
         case 1:
-          tag = '원고 주장: ';
+          tag = '';
           break;
         case 2:
-          tag = '피고 주장: ';
+          tag = '';
           break;
         case 3:
-          tag = '원고 최후 변론: ';
+          tag = '';
           break;
         case 4:
-          tag = '피고 최후 변론: ';
+          tag = '';
           break;
         default:
           tag = '';
