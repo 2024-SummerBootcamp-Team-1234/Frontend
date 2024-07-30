@@ -43,6 +43,12 @@ export default {
         'microphone-image' : "url('./public/Microphone.png')",
         'plaintiffLawyer-image':"url('./public/PlaintiffLawyer.png')",
         'dependantLawyer-image':"url('./public/DefendantLawyer.png')",
+        'mic-image': "url('./public/mic_image.png')",
+        'select-image': "url('./public/select.png')",
+
+        'summary-image': "url('./public/SummaryBackGround.png')",
+        'judge-image': "url('./public/Judge.png')",
+        'judgeChat-image': "url('./public/JudgeChat.png')",
       },
 
       backgroundSize: {

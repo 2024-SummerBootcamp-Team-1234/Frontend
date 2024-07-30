@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { marked } from 'marked';
 
 interface ScrollableBoxProps {
-  content: string;
+  content: string[];
   className?: string;
 }
 
@@ -19,8 +19,16 @@ const ScrollableBox: React.FC<ScrollableBoxProps> = ({
   }, [content]);
   // [content] : useEffect 훅의 두 번째 인자로 전달되는 배열, 의존성 배열 (Dependency Array)
 
-  const createMarkup = (markdown: string) => {
-    return { __html: marked(markdown) };
+  const decodeUnicode = (str: string) => {
+    return str.replace(/\\u([a-fA-F0-9]{4})/g, (match, p1) =>
+      String.fromCharCode(parseInt(p1, 16)),
+    );
+  };
+
+  const createMarkup = (markdown: string[]) => {
+    const decodedMarkdown = markdown.map(decodeUnicode).join('');
+    const html = marked(decodedMarkdown, { breaks: true, gfm: true });
+    return { __html: html };
   };
 
   return (

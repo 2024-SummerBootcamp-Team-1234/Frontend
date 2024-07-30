@@ -13,6 +13,10 @@ import PlaintiffTrial from './pages/PlaintiffTrial';
 import DefendantTrial from './pages/DefendantTrial';
 import PlaintiffFinalTrial from './pages/PlaintiffFinalTrial';
 import DefendantFinalTrial from './pages/DefendantFinalTrial';
+import ResultPage2 from './pages/ResultPage2';
+import SummaryPage from './pages/SummaryPage';
+import SituationPage from './pages/SituationPage';
+import ChoicePage from './pages/ChoicePage';
 
 function App() {
   return (
@@ -21,10 +25,12 @@ function App() {
       <Route path="/MainPage2" element={<MainPage2 />} />
       <Route path="/SignUp" element={<SignupPage />} />
       <Route path="/Login" element={<LoginPage />} />
-
       <Route path="/CategoryPage" element={<CategoryPage />} />
       <Route path="/JudgePageCopy" element={<JudgePageCopy />} />
       <Route path="/JudgePageCopy2" element={<JudgePageCopy2 />} />
+      <Route path="/SummaryPage" element={<SummaryPage />} />
+      <Route path="/SituationPage" element={<SituationPage />} />
+      <Route path="/ChoicePage" element={<ChoicePage />} />
 
       <Route path="/PlaintiffTrial" element={<PlaintiffTrial />} />
       <Route path="/DefendantTrial" element={<DefendantTrial />} />
@@ -34,6 +40,7 @@ function App() {
       <Route path="/LatestPostPage" element={<LatestPostPage />} />
       <Route path="/MyPostPage" element={<MyPostPage />} />
       <Route path="/ResultPage" element={<ResultPage />} />
+      <Route path="/ResultPage2" element={<ResultPage2 />} />
     </Routes>
   );
 }

@@ -93,9 +93,7 @@ const CategoryPage: React.FC = () => {
     );
     console.log('Selected Category IDs:', selectedCategoryIds);
 
-    // 상태를 사용하여 카테고리 ID들을 JudgePage로 전달합니다.
-    // navigate('/PlaintiffTrial', { state: { categoryIds: selectedCategoryIds } });
-    navigate('/PlaintiffTrial');
+    navigate('/SituationPage', { state: { categoryIds: selectedCategoryIds } });
   };
 
   const categoryGrid = () => {
