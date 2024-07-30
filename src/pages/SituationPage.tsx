@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import ScrollableBox2, { ScrollableBoxRef } from '../components/ScrollableBox2';
 import api from '../api'; // API 호출을 위한 모듈을 불러옵니다.
+import audioData from '../SitAudio.json';
 
 function SituationPage() {
   const scrollableBoxRef = useRef<ScrollableBoxRef>(null);
@@ -57,6 +58,9 @@ function SituationPage() {
         }
         if (finalTranscript) {
           insertAtCursor(finalTranscript);
+          if (channelId) {
+            sendTranscriptToServer(finalTranscript, channelId);
+          }
         }
       };
 
@@ -94,6 +98,19 @@ function SituationPage() {
   const handleButtonClick = async () => {
     const { categoryIds } = location.state || { categoryIds: [] };
     const combinedMessages = scrollableBoxRef.current?.getValue() || '';
+
+    // getValue 함수가 반환하는 값을 확인
+    console.log('Combined Messages:', combinedMessages);
+
+    // 내용이 비어있는지 확인 (PREFIX만 있는 경우 제외)
+    if (
+      combinedMessages.trim() === '상황:' ||
+      combinedMessages.trim().length <= '상황:'.length
+    ) {
+      alert('내용을 입력해주세요.');
+      return;
+    }
+
     const newChannelId = await createChannel(); // 채널 생성 및 ID 가져오기
 
     if (newChannelId) {
@@ -104,6 +121,44 @@ function SituationPage() {
       alert('채널 생성에 실패했습니다. 다시 시도해주세요.');
     }
   };
+
+  const sendTranscriptToServer = async (
+    transcript: string,
+    channelId: string,
+  ) => {
+    try {
+      await api.post(`/channels/${channelId}/messages/`, {
+        message: transcript,
+      });
+      console.log('Transcript sent to server:', transcript);
+    } catch (error) {
+      console.error('Failed to send transcript:', error);
+    }
+  };
+
+  const playAudio = (base64Audio: string) => {
+    const audioBlob = base64ToBlob(base64Audio, 'audio/wav');
+    const audioUrl = URL.createObjectURL(audioBlob);
+    const audio = new Audio(audioUrl);
+    setTimeout(() => {
+      audio.play();
+    }, 2000); // 2초 딜레이
+  };
+
+  const base64ToBlob = (base64: string, mime: string): Blob => {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: mime });
+  };
+
+  useEffect(() => {
+    const base64Audio = audioData.page1_audio; // JSON 파일에서 base64 문자열 가져오기
+    playAudio(base64Audio);
+  }, []);
 
   return (
     <>

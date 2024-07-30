@@ -24,8 +24,7 @@ const ResultPage: React.FC = () => {
   }, [combinedMessages, channelId, categoryIds]);
 
   const navigate = useNavigate();
-  const [chars, setChars] = useState('');
-
+  const [chars, setChars] = useState<string[]>([]);
   useEffect(() => {
     console.log('Component mounted or channel_id changed:', channelId);
     if (!channelId) {
@@ -81,7 +80,7 @@ const ResultPage: React.FC = () => {
                 try {
                   const data = JSON.parse(jsonPart);
                   if (data.content) {
-                    setChars((prev) => prev + data.content + '\n'); // 새로운 줄로 추가
+                    setChars((prev) => [...prev, data.content]); // 새로운 줄로 추가
                   }
                 } catch (error) {
                   console.error('Error parsing JSON:', error, jsonPart);
@@ -163,7 +162,7 @@ const ResultPage: React.FC = () => {
         const title = result.value;
         const postData = {
           title: title,
-          content: chars.split('\n').join(' '),
+          content: chars.join(' ').split('\n').join(' '),
           category_ids: categoryIds, // 여기에 실제 카테고리 ID를 넣으세요
         };
 
