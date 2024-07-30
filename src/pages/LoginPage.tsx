@@ -3,7 +3,7 @@ import { FaUser, FaLock } from 'react-icons/fa';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../api/axiosInstance'; // 추가된 부분
-import LoadingPage from '../components/LoadingPage';
+// import LoadingPage from '../components/LoadingPage';
 const LoginPage: React.FC = () => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
