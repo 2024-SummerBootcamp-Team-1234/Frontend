@@ -154,9 +154,7 @@ const CarouselItems: React.FC = () => {
           </div>
 
           <div
-            className={`bg-VeryLightGrayColor w-[100%] ${
-              hasCategories ? 'h-[33vh]' : 'h-[39vh]'
-            } rounded-4xl py-7 pl-7 pr-4 relative overflow-y-auto scrollbar-slider`}
+            className={`bg-VeryLightGrayColor w-[100%] ${hasCategories ? 'h-[33vh]' : 'h-[39vh]'} rounded-4xl py-7 pl-7 pr-4 relative overflow-y-auto scrollbar-slider`}
           >
             <div
               className="font-sans font-normal text-xl mx-2"

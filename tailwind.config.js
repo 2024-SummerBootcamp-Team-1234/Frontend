@@ -38,6 +38,11 @@ export default {
         'postPageBg-image': "url('./public/PostPageBg.png')",
         'homeButton-image': "url('./public/HomeButton.png')",
         'like-image': "url('./public/like_icon.png')",
+
+        'trialBg-image' : "url('./public/TrialBackground.png')",
+        'microphone-image' : "url('./public/Microphone.png')",
+        'plaintiffLawyer-image':"url('./public/PlaintiffLawyer.png')",
+        'dependantLawyer-image':"url('./public/DefendantLawyer.png')",
         'mic-image': "url('./public/mic_image.png')",
         'select-image': "url('./public/select.png')",
 
@@ -97,6 +102,15 @@ export default {
         '4xl': '2.25rem',
         '5xl': '3rem',
         '6xl': '3.75rem',
+      },
+
+      inset : {
+        '1/5' : '20%',
+        '1/6' : '16.666667%',
+        '1/7' : '14.285714%',
+        '1/8' : '12.5%',
+        '1/9' : '11.11111%',
+        '1/10' : '10%',
       },
     },
   },

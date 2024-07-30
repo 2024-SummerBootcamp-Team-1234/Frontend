@@ -9,6 +9,10 @@ import JudgePageCopy2 from './pages/JudgePageCopy2';
 import ResultPage from './pages/ResultPage';
 import LatestPostPage from './pages/LatestPostPage';
 import MyPostPage from './pages/MyPostPage';
+import PlaintiffTrial from './pages/PlaintiffTrial';
+import DefendantTrial from './pages/DefendantTrial';
+import PlaintiffFinalTrial from './pages/PlaintiffFinalTrial';
+import DefendantFinalTrial from './pages/DefendantFinalTrial';
 import ResultPage2 from './pages/ResultPage2';
 import SummaryPage from './pages/SummaryPage';
 import SituationPage from './pages/SituationPage';
@@ -27,6 +31,11 @@ function App() {
       <Route path="/SummaryPage" element={<SummaryPage />} />
       <Route path="/SituationPage" element={<SituationPage />} />
       <Route path="/ChoicePage" element={<ChoicePage />} />
+
+      <Route path="/PlaintiffTrial" element={<PlaintiffTrial />} />
+      <Route path="/DefendantTrial" element={<DefendantTrial />} />
+      <Route path="/PlaintiffFinalTrial" element={<PlaintiffFinalTrial />} />
+      <Route path="/DefendantFinalTrial" element={<DefendantFinalTrial />} />
 
       <Route path="/LatestPostPage" element={<LatestPostPage />} />
       <Route path="/MyPostPage" element={<MyPostPage />} />

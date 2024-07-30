@@ -95,7 +95,6 @@ const CategoryPage: React.FC = () => {
 
     navigate('/SituationPage', { state: { categoryIds: selectedCategoryIds } });
   };
-  // http://localhost:5173/ResultPage?categoryIds=0&categoryIds=1&categoryIds=2
 
   const categoryGrid = () => {
     return (
@@ -145,7 +144,8 @@ const CategoryPage: React.FC = () => {
           <span className="text-6xl font-sans font-bold mb-6">Category</span>
           <button className="pt-4 pl-10 text-2xl font-sans font-normal">
             {' '}
-            Skip {'>'}{' '}
+            Skip {'>'}
+            {' '}
           </button>
         </div>
 
