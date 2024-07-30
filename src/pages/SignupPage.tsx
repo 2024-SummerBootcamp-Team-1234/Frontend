@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaUser, FaLock } from 'react-icons/fa';
 import { useState } from 'react';
 import axios from 'axios';
@@ -7,6 +7,8 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,6 +29,7 @@ const LoginPage = () => {
       );
       console.log(response.data);
       alert('회원가입 성공');
+      navigate('/login'); // Redirect to the login page
     } catch (error) {
       console.error('error');
       alert('회원가입 실패');
