@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../components/axiosInstance';
+import axiosInstance from '../api/axiosInstance';
 import LoadingPage from '../components/LoadingPage';
 import { marked } from 'marked';
 import Slider from 'react-slick';

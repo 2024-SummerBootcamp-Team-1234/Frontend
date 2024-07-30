@@ -20,7 +20,7 @@ const ScrollableBox: React.FC<ScrollableBoxProps> = ({
   // [content] : useEffect 훅의 두 번째 인자로 전달되는 배열, 의존성 배열 (Dependency Array)
 
   const decodeUnicode = (str: string) => {
-    return str.replace(/\\u([a-fA-F0-9]{4})/g, (match, p1) =>
+    return str.replace(/\\u([a-fA-F0-9]{4})/g, (_match, p1) =>
       String.fromCharCode(parseInt(p1, 16)),
     );
   };

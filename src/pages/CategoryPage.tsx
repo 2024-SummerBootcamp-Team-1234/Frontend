@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ForNextPageWhiteButton from '../components/ForNextPageWhiteButton';
-import LoadingPage from '../components/LoadingPage';
 interface Category {
   id: number;
   name: string;
@@ -130,7 +129,6 @@ const CategoryPage: React.FC = () => {
 
   return (
     <>
-      <LoadingPage></LoadingPage>
       <div className="bg-black bg-category-image bg-cover bg-center min-h-screen flex flex-col items-start p-4 relative">
         <button
           className="bg-arrow-image bg-no-repeat bg-contain w-full h-[5vh] flex flex-col items-center mt-7 ml-5"
@@ -144,8 +142,7 @@ const CategoryPage: React.FC = () => {
           <span className="text-6xl font-sans font-bold mb-6">Category</span>
           <button className="pt-4 pl-10 text-2xl font-sans font-normal">
             {' '}
-            Skip {'>'}
-            {' '}
+            Skip {'>'}{' '}
           </button>
         </div>
 

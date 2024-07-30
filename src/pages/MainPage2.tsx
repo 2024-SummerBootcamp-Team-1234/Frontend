@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import MainPageWhiteButton from '../components/MainPageWhiteButton';
 import MainPageBlackButton from '../components/MainPageBlackButton';
 
-import axiosInstance from '../components/axiosInstance';
+import axiosInstance from '../api/axiosInstance';
 
 const MainPage2: React.FC = () => {
   const navigate = useNavigate();

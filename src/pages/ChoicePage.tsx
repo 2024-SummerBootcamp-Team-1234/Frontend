@@ -8,10 +8,12 @@ function ChoicePage() {
 
   // 이전 페이지에서 전달된 데이터를 가져옵니다.
   const { combinedMessages, channelId, categoryIds } = location.state || {
-    combinedMessages: '',
+    combinedMessages: [],
     channelId: '',
     categoryIds: [],
   };
+
+  console.log(`combinedMessages : ${combinedMessages}`);
 
   const handleResultClick = () => {
     navigate('/ResultPage', {
@@ -24,7 +26,7 @@ function ChoicePage() {
   };
 
   const handleParticipationClick = () => {
-    navigate('/JudgePageCopy2', {
+    navigate('/PlaintiffTrial', {
       state: {
         combinedMessages,
         channelId,
@@ -39,7 +41,7 @@ function ChoicePage() {
     const audio = new Audio(audioUrl);
     setTimeout(() => {
       audio.play();
-    }, 2000); // 2초 딜레이
+    }, 1000); // 2초 딜레이
   };
 
   const base64ToBlob = (base64: string, mime: string): Blob => {

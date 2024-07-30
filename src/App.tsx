@@ -4,8 +4,8 @@ import CategoryPage from './pages/CategoryPage';
 import MainPage2 from './pages/MainPage2';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
-import JudgePageCopy from './pages/JudgePageCopy';
-import JudgePageCopy2 from './pages/JudgePageCopy2';
+//import JudgePageCopy from './pages/JudgePageCopy';
+//import JudgePageCopy2 from './pages/JudgePageCopy2';
 import ResultPage from './pages/ResultPage';
 import LatestPostPage from './pages/LatestPostPage';
 import MyPostPage from './pages/MyPostPage';
@@ -26,8 +26,8 @@ function App() {
       <Route path="/SignUp" element={<SignupPage />} />
       <Route path="/Login" element={<LoginPage />} />
       <Route path="/CategoryPage" element={<CategoryPage />} />
-      <Route path="/JudgePageCopy" element={<JudgePageCopy />} />
-      <Route path="/JudgePageCopy2" element={<JudgePageCopy2 />} />
+      {/* <Route path="/JudgePageCopy" element={<JudgePageCopy />} />
+      <Route path="/JudgePageCopy2" element={<JudgePageCopy2 />} /> */}
       <Route path="/SummaryPage" element={<SummaryPage />} />
       <Route path="/SituationPage" element={<SituationPage />} />
       <Route path="/ChoicePage" element={<ChoicePage />} />

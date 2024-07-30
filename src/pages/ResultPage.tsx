@@ -1,13 +1,12 @@
-import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import ScrollableBox from '../components/ScrollableBox';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
 import React, { useState, useEffect } from 'react';
-import api from '../api';
+import api from '../api/api';
 import LoadingPage from '../components/LoadingPage';
 
 const ResultPage: React.FC = () => {
-  const { channel_id } = useParams<{ channel_id: string }>();
   // useLocation 훅을 사용하여 현재 페이지로 전달된 데이터를 가져옴.
   const location = useLocation();
   const { combinedMessages, channelId, categoryIds } = location.state || {
@@ -48,7 +47,7 @@ const ResultPage: React.FC = () => {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ message: `상황: ${combinedMessages}` }),
+            body: JSON.stringify({ message: `${combinedMessages}` }),
           },
         );
 
@@ -95,7 +94,7 @@ const ResultPage: React.FC = () => {
     };
 
     aiRespond();
-  }, [channel_id]);
+  }, [channelId]);
 
   const handleButtonClick = () => {
     Swal.fire({

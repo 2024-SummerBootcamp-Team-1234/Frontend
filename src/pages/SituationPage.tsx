@@ -1,8 +1,14 @@
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import ScrollableBox2, { ScrollableBoxRef } from '../components/ScrollableBox2';
-import api from '../api'; // API 호출을 위한 모듈을 불러옵니다.
+import api from '../api/api'; // API 호출을 위한 모듈을 불러옵니다.
 import audioData from '../SitAudio.json';
+
+// interface LocationState {
+//   combinedMessages: string[];
+//   channelId: string;
+//   categoryIds: string[];
+// }
 
 function SituationPage() {
   const scrollableBoxRef = useRef<ScrollableBoxRef>(null);
@@ -11,6 +17,7 @@ function SituationPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [channelId, setChannelId] = useState<string | null>(null);
+  const [combinedMessages, setCombinedMessages] = useState<string[]>(['']);
 
   const insertAtCursor = (text: string) => {
     if (scrollableBoxRef.current) {
@@ -97,15 +104,15 @@ function SituationPage() {
 
   const handleButtonClick = async () => {
     const { categoryIds } = location.state || { categoryIds: [] };
-    const combinedMessages = scrollableBoxRef.current?.getValue() || '';
+    const inputMessage = scrollableBoxRef.current?.getValue() || '';
 
     // getValue 함수가 반환하는 값을 확인
-    console.log('Combined Messages:', combinedMessages);
+    console.log('Input Message:', inputMessage);
 
     // 내용이 비어있는지 확인 (PREFIX만 있는 경우 제외)
     if (
-      combinedMessages.trim() === '상황:' ||
-      combinedMessages.trim().length <= '상황:'.length
+      inputMessage.trim() === '상황:' ||
+      inputMessage.trim().length <= '상황:'.length
     ) {
       alert('내용을 입력해주세요.');
       return;
@@ -114,8 +121,14 @@ function SituationPage() {
     const newChannelId = await createChannel(); // 채널 생성 및 ID 가져오기
 
     if (newChannelId) {
+      const newCombinedMessages = [inputMessage, ...combinedMessages.slice(1)];
+      setCombinedMessages(newCombinedMessages);
       navigate('/ChoicePage', {
-        state: { combinedMessages, channelId: newChannelId, categoryIds },
+        state: {
+          combinedMessages: newCombinedMessages,
+          channelId: newChannelId,
+          categoryIds,
+        },
       });
     } else {
       alert('채널 생성에 실패했습니다. 다시 시도해주세요.');

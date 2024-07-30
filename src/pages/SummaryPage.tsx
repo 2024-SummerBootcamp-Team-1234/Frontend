@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ScrollableBox from '../components/ScrollableBox';
 import audioData from '../SitAudio.json';
+import LoadingPage from '../components/LoadingPage';
 
 interface LocationState {
   combinedMessages: string[];
@@ -22,7 +23,7 @@ function SummaryPage() {
     {}) as LocationState;
 
   const handleButtonClick = () => {
-    navigate('/', {
+    navigate('/PlaintiffFinalTrial', {
       state: {
         combinedMessages,
         channelId,
@@ -50,13 +51,13 @@ function SummaryPage() {
       let tag = '';
       switch (index) {
         case 0:
-          tag = '상황: ';
+          tag = '';
           break;
         case 1:
-          tag = '원고 주장: ';
+          tag = '';
           break;
         case 2:
-          tag = '피고 주장: ';
+          tag = '';
           break;
         default:
           tag = '';
@@ -151,6 +152,7 @@ function SummaryPage() {
 
   return (
     <>
+      <LoadingPage></LoadingPage>
       <div className="flex w-screen h-screen bg-cover bg-center bg-summary-image">
         {/* 왼쪽 가로 45% 박스 */}
         <div className="flex-col w-[45%] h-[100%] p-4 pb-16">
