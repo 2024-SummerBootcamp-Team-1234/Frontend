@@ -1,12 +1,24 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef } from 'react';
 
-interface VoiceInputButtonProps {
-  onClick: (trnascript :string) => void;
+// SpeechRecognition 타입 정의
+interface SpeechRecognition extends EventTarget {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  start: () => void;
+  stop: () => void;
+  onstart: () => void;
+  onspeechend: () => void;
+  onresult: (event: any) => void;
+  onerror: (event: any) => void;
+  onend: () => void;
 }
 
-const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({
-  onClick,
-}) => {
+interface VoiceInputButtonProps {
+  onClick: (transcript: string) => void;
+}
+
+const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({ onClick }) => {
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isListening, setIsListening] = useState(false);
@@ -15,10 +27,10 @@ const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({
 
   const handleVoiceInputClick = () => {
     console.log('Voice input button clicked--------------------------------');
-    
+
     const SpeechRecognition =
-    (window as any).SpeechRecognition ||
-    (window as any).webkitSpeechRecognition;
+      (window as any).SpeechRecognition ||
+      (window as any).webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
       alert('Your browser does not support speech SpeechRecognition.');
@@ -66,9 +78,9 @@ const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({
     }
 
     if (isListening) {
-      recognitionRef.current.stop(); // 음성 인식 종료
+      recognitionRef.current?.stop(); // 음성 인식 종료
     } else {
-      recognitionRef.current.start(); // 음성 인식 시작
+      recognitionRef.current?.start(); // 음성 인식 시작
     }
   };
 
@@ -85,7 +97,6 @@ const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({
     }
   };
 
-
   return (
     <button
       className={`w-[440px] h-[82px] flex justify-around items-center border rounded-3xl font-sans font-light text-3xl transition-colors duration-300 
@@ -93,7 +104,9 @@ const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({
       onClick={handleVoiceInputClick}
     >
       <span className="ml-3 bg-microphone-image w-[30px] h-[36.65px]" />
-      <span className="mr-20">{isListening ? '음성인식 중지하기' : '음성으로 입력하기'}</span>
+      <span className="mr-20">
+        {isListening ? '음성인식 중지하기' : '음성으로 입력하기'}
+      </span>
     </button>
   );
 };
