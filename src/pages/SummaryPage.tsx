@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ScrollableBox from '../components/ScrollableBox';
+import audioData from '../SitAudio.json';
 
 interface LocationState {
   combinedMessages: string[];
@@ -8,12 +9,27 @@ interface LocationState {
   categoryIds: string[];
 }
 
+interface AudioData {
+  summary_audio: string; // 추가된 속성
+}
+
 function SummaryPage() {
   const [chars, setChars] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   const location = useLocation();
   const { combinedMessages, channelId, categoryIds } = (location.state ||
     {}) as LocationState;
+
+  const handleButtonClick = () => {
+    navigate('/', {
+      state: {
+        combinedMessages,
+        channelId,
+        categoryIds,
+      },
+    });
+  };
 
   useEffect(() => {
     console.log('Component mounted or channel_id changed:', channelId);
@@ -108,6 +124,31 @@ function SummaryPage() {
     aiRespond();
   }, [channelId, combinedMessages]);
 
+  const playAudio = (base64Audio: string) => {
+    const audioBlob = base64ToBlob(base64Audio, 'audio/wav');
+    const audioUrl = URL.createObjectURL(audioBlob);
+    const audio = new Audio(audioUrl);
+    setTimeout(() => {
+      audio.play();
+    }, 2000); // 2초 딜레이
+  };
+
+  const base64ToBlob = (base64: string, mime: string): Blob => {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: mime });
+  };
+
+  useEffect(() => {
+    const audio = audioData as unknown as AudioData; // JSON 파일에서 AudioData 타입으로 가져오기
+    const base64Audio = audio.summary_audio; // JSON 파일에서 base64 문자열 가져오기
+    playAudio(base64Audio);
+  }, []);
+
   return (
     <>
       <div className="flex w-screen h-screen bg-cover bg-center bg-summary-image">
@@ -115,7 +156,11 @@ function SummaryPage() {
         <div className="flex-col w-[45%] h-[100%] p-4 pb-16">
           <div className="w-[100%] h-[20%]"></div>
           <div className="flex w-[100%] h-[80%] items-end bg-contain bg-no-repeat bg-center-bottom bg-judge-image">
-            <div className="flex-col w-[100%] h-[30%] bg-contain bg-no-repeat bg-center-bottom bg-judgeChat-image"></div>
+            <div className="flex flex-col w-[100%] h-[30%] bg-contain bg-no-repeat bg-center-bottom bg-judgeChat-image justify-center items-center">
+              <div className="text-white text-2xl mt-4">
+                안녕하세요. 현재까지 적은 내용을 정리해드리겠습니다.
+              </div>
+            </div>
           </div>
         </div>
 
@@ -133,7 +178,10 @@ function SummaryPage() {
 
           {/* 하단 10% 박스 */}
           <div className="flex-col w-[100%] h-[13%] content-end">
-            <button className="w-[100%] h-[60%] bg-black rounded-2xl opacity-90 border-solid border-white hover:bg-zinc-900 border font-sans text-white text-[20px]">
+            <button
+              className="w-[100%] h-[60%] bg-black rounded-2xl opacity-90 border-solid border-white hover:bg-zinc-900 border font-sans text-white text-[20px]"
+              onClick={handleButtonClick}
+            >
               계속하기
             </button>
           </div>
