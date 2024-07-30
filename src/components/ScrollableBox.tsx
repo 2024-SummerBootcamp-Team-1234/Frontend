@@ -25,8 +25,8 @@ const ScrollableBox: React.FC<ScrollableBoxProps> = ({
     );
   };
 
-  const createMarkup = (markdown: string[]) => {
-    const decodedMarkdown = markdown.map(decodeUnicode).join('');
+  const createMarkup = (markdownArray: string[]) => {
+    const decodedMarkdown = markdownArray.map(decodeUnicode).join('');
     const html = marked(decodedMarkdown, { breaks: true, gfm: true });
     return { __html: html };
   };

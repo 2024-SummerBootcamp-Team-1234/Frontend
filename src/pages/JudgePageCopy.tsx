@@ -43,7 +43,7 @@ const JudgePageCopy: React.FC = () => {
   const handleButtonClick = () => {
     const { categoryIds } = location.state || { categoryIds: [] };
 
-    navigate('/SummaryPage', {
+    navigate('/ResultPage', {
       state: { combinedMessages, channelId, categoryIds },
     });
   };
