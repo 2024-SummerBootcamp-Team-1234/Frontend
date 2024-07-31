@@ -20,7 +20,7 @@ const LoginPage = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/v1/users/register',
+        'https://solo-mon.site/api/v1/users/register',
         {
           id,
           password,
