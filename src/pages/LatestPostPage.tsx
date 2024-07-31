@@ -39,7 +39,7 @@ interface Post {
 const CarouselItems: React.FC = () => {
   const navigate = useNavigate();
   const handleButtonClickToBack = () => {
-    navigate('/JudgePageCopy');
+    navigate('/MainPage2');
   };
   const handleButtonClickToHome = () => {
     navigate('/MainPage2');
@@ -143,6 +143,10 @@ const CarouselItems: React.FC = () => {
     // 카테고리가 없는지 확인하는 변수
     const hasCategories = post.categories && post.categories.length > 0;
 
+    const renderMarkdown = (content: string) => {
+      return { __html: marked(content) };
+    };
+
     return (
       <div
         key={index}
@@ -192,7 +196,7 @@ const CarouselItems: React.FC = () => {
           >
             <div
               className="font-sans font-normal text-xl mx-2"
-              dangerouslySetInnerHTML={{ __html: marked(post.content) }}
+              dangerouslySetInnerHTML={renderMarkdown(post.content)}
             />
           </div>
         </div>
