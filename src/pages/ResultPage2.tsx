@@ -189,7 +189,8 @@ const ResultPage2: React.FC = () => {
         const title = result.value;
         const postData = {
           title: title,
-          content: chars.join(' ').split('\n').join(' '),
+          //content: chars.join(' ').split('\n').join(' '),
+          content: chars.join(''),
           category_ids: categoryIds, // 여기에 실제 카테고리 ID를 넣으세요
         };
 
