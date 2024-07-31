@@ -71,7 +71,7 @@ const CarouselItems: React.FC = () => {
       try {
         console.log('토큰');
         const response = await axiosInstance.get(
-          'https://solo-mon.site/v1/posts/users',
+          `${import.meta.env.VITE_API_URL}/posts/users`,
           {
             headers: {
               accept: 'application/json',

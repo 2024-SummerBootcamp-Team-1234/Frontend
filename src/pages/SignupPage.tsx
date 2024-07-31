@@ -1,7 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUser, FaLock } from 'react-icons/fa';
 import { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../api/axiosInstance';
+
 const LoginPage = () => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
@@ -19,14 +20,11 @@ const LoginPage = () => {
     }
 
     try {
-      const response = await axios.post(
-        'https://solo-mon.site/api/v1/users/register',
-        {
-          id,
-          password,
-          name,
-        },
-      );
+      const response = await axiosInstance.post('/users/register', {
+        id,
+        password,
+        name,
+      });
       console.log(response.data);
       alert('회원가입 성공');
       navigate('/login'); // Redirect to the login page

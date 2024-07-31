@@ -3,7 +3,8 @@ import ScrollableBox from '../components/ScrollableBox';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
 import React, { useState, useEffect } from 'react';
-import api from '../api/api';
+// import api from '../api/api';
+import axiosInstance from '../api/axiosInstance';
 import LoadingPage from '../components/LoadingPage';
 
 interface LocationState {
@@ -68,7 +69,7 @@ const ResultPage2: React.FC = () => {
     const aiRespond = async () => {
       try {
         const response = await fetch(
-          `https://solo-mon.site/api/v1/channels/messages/${channelId}`,
+          `${import.meta.env.VITE_API_URL}/channels/messages/${channelId}`,
           {
             method: 'POST',
             headers: {
@@ -194,8 +195,8 @@ const ResultPage2: React.FC = () => {
           category_ids: categoryIds, // 여기에 실제 카테고리 ID를 넣으세요
         };
 
-        api
-          .post('http://localhost:8000/api/v1/posts/', postData, {
+        axiosInstance
+          .post('/posts/', postData, {
             headers: {
               'Content-Type': 'application/json',
             },

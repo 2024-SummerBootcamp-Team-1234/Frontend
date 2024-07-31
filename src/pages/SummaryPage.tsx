@@ -69,7 +69,7 @@ function SummaryPage() {
     const aiRespond = async () => {
       try {
         const response = await fetch(
-          `https://solo-mon.site/api/v1/channels/messages/${channelId}`,
+          `${import.meta.env.VITE_API_URL}/channels/messages/${channelId}`,
           {
             method: 'POST',
             headers: {
