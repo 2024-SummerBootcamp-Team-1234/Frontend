@@ -68,7 +68,7 @@ const ResultPage2: React.FC = () => {
     const aiRespond = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/api/v1/channels/messages/${channelId}`,
+          `https://solo-mon.site/api/v1/channels/messages/${channelId}`,
           {
             method: 'POST',
             headers: {
