@@ -5,10 +5,10 @@ WORKDIR /frontend
 
 # 소스 코드 복사
 COPY ./package.json ./
-RUN yarn install
+RUN npm install
 
 COPY . ./
 
-RUN yarn build
+RUN npm build
 
-CMD ["yarn", "start"]
+CMD ["npm", "start"]
