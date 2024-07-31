@@ -2,7 +2,7 @@ import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
 // axios 인스턴스를 생성합니다.
 const api = axios.create({
-  baseURL: 'http://localhost:8000/api/v1', // 기본 URL 설정
+  baseURL: 'https://solo-mon.site/api/v1', // 기본 URL 설정
 });
 
 // 요청 인터셉터를 설정합니다.

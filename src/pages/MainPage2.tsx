@@ -24,7 +24,7 @@ const MainPage2: React.FC = () => {
 
       if (token) {
         await axiosInstance.delete(
-          'http://localhost:8000/api/v1/users/logout', // 로그아웃 엔드포인트
+          'https://solo-mon.site/api/v1/users/logout', // 로그아웃 엔드포인트
           {
             headers: {
               Authorization: `Bearer ${token}`,

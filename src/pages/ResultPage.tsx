@@ -167,7 +167,7 @@ const ResultPage: React.FC = () => {
         };
 
         api
-          .post('http://localhost:8000/api/v1/posts/', postData, {
+          .post('https://solo-mon.site/api/v1/posts/', postData, {
             headers: {
               'Content-Type': 'application/json',
             },

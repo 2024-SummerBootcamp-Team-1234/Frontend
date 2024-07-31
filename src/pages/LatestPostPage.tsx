@@ -107,7 +107,7 @@ const CarouselItems: React.FC = () => {
     console.log('Sending like request for post ID:', postId);
     try {
       const response = await axiosInstance.patch(
-        `http://localhost:8000/api/v1/posts/votes/${postId}`,
+        `https://solo-mon.site/api/v1/posts/votes/${postId}`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` }, // 요청 헤더에 토큰 추가
