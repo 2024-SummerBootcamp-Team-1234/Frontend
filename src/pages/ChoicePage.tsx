@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import audioData from '../SitAudio.json';
 
 function ChoicePage() {
   const location = useLocation();
   const navigate = useNavigate();
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // 이전 페이지에서 전달된 데이터를 가져옵니다.
   const { combinedMessages, channelId, categoryIds } = location.state || {
@@ -39,6 +40,7 @@ function ChoicePage() {
     const audioBlob = base64ToBlob(base64Audio, 'audio/wav');
     const audioUrl = URL.createObjectURL(audioBlob);
     const audio = new Audio(audioUrl);
+    audioRef.current = audio;
     setTimeout(() => {
       audio.play();
     }, 1000); // 2초 딜레이
@@ -57,6 +59,14 @@ function ChoicePage() {
   useEffect(() => {
     const base64Audio = audioData.page2_audio; // JSON 파일에서 base64 문자열 가져오기
     playAudio(base64Audio);
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause(); // 오디오 정지
+        audioRef.current.currentTime = 0; // 오디오 시간 초기화
+        audioRef.current = null; // 오디오 객체 해제
+      }
+    };
   }, []);
 
   return (
